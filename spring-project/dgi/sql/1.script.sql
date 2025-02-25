@@ -1,6 +1,9 @@
 CREATE DATABASE dgi;
 \c dgi;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 CREATE TABLE user_(
    id UUID DEFAULT uuid_generate_v4(),
    email TEXT NOT NULL,
@@ -41,6 +44,14 @@ CREATE TABLE user_pin(
    id_user UUID NOT NULL,
    PRIMARY KEY(id),
    FOREIGN KEY(id_user) REFERENCES user_(id)
+);
+
+CREATE TABLE configuration(
+   id SERIAL,
+   keys VARCHAR(50) ,
+   valeurs TEXT,
+   PRIMARY KEY(id),
+   unique(keys) 
 );
 
 CREATE TABLE langue(

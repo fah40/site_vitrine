@@ -30,8 +30,8 @@ public class Actualite {
     private Timestamp dateAjout;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_utilisateur", nullable = false)
-    private Utilisateur utilisateur;
+    @JoinColumn(name = "id_user", nullable = false)
+    private User user;
 
     public Actualite() {}
 
@@ -43,6 +43,6 @@ public class Actualite {
     public void setDescription(String description) { this.description = description; }
     public Timestamp getDateAjout() { return dateAjout; }
     public void setDateAjout(Timestamp dateAjout) { this.dateAjout = dateAjout; }
-    public Utilisateur getUtilisateur() { return utilisateur; }
-    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }

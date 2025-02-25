@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+</head>
+<body>
+    <h2>Connexion - Étape 1</h2>
+    <form action="/auth/login" method="POST">
+        <label>Email :</label>
+        <input type="email" name="email" required>
+        
+        <!-- hCaptcha -->
+        <div class="h-captcha" data-sitekey="6ab0bd14-6612-46da-a266-52306aecf550"></div>
+    
+        <button type="submit">Se connecter</button>
+    </form>
+    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+    <!-- erreur dans param  -->
+    <p th:if="${param.error}" th:text="${param.error}" style="color: red;"></p>
+    <div th:if="${param.minute != null and param.seconds != null}">
+        <p>Réessayez dans <span id="countdown" th:text="${param.minute + ' min ' + param.seconds + ' sec'}"></span></p>
+    </div>
+    
+    <script th:if="${param.minute != null and param.seconds != null}">
+        let minutes = parseInt([[${param.minute}]]);
+        let seconds = parseInt([[${param.seconds}]]);
+        
+        function updateCountdown() {
+            if (seconds === 0) {
+                if (minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                }
+            } else {
+                seconds--;
+            }
+        
+            document.getElementById('countdown').innerText = minutes + " min " + seconds + " sec";
+        
+            if (minutes > 0 || seconds > 0) {
+                setTimeout(updateCountdown, 1000);
+            }
+
+            if (minutes == 0 && seconds == 0) {
+                // Rediriger vers /auth/login une fois que le compte à rebours est terminé
+                window.location.href = "/auth/login";
+                return;
+            }
+        }
+        
+        setTimeout(updateCountdown, 1000);
+    </script>
+    
+    
+    <script src="/api.js" async defer></script>
+</body>
+</html>
