@@ -7,14 +7,48 @@
 <body>
     <h2>Bienvenue sur votre espace</h2>
     <p>Connexion réussie !</p>
-    
+
+    <!-- Sélection de la langue -->
     <label for="langue">Choisir une langue :</label>
     <select id="langue" onchange="window.location.href='accueil?langue=' + this.value">
         <option th:each="langue : ${langues}" 
-                th:value="${langue.nom}"
-                th:selected="${langue.nom == langueSelectionnee}"
+                th:value="${langue.id}"
+                th:selected="${langue.id == langueSelectionnee}"
                 th:text="${langue.nom}">
         </option>
     </select>
+
+    <!-- Affichage des sections de l'accueil -->
+    <section>
+        <h3 th:text="${a_propos?.titre}"></h3>
+        <p th:text="${a_propos?.valeur}"></p>
+    </section>
+
+    <section>
+        <h3 th:text="${dgi?.titre}"></h3>
+        <p th:text="${dgi?.valeur}"></p>
+    </section>
+
+    <section>
+        <h3 th:text="${mot_du_dgi?.titre}"></h3>
+        <p th:text="${mot_du_dgi?.valeur}"></p>
+        <button><a href="/general_info_static/mot_du_dgi">Modifier</a></button>  
+    </section>
+
+    <section>
+        <h3 th:text="${legislation?.titre}"></h3>
+        <p th:text="${legislation?.valeur}"></p>
+    </section>
+
+    <section>
+        <h3 th:text="${ressources?.titre}"></h3>
+        <p th:text="${ressources?.valeur}"></p>
+    </section>
+
+    <section>
+        <h3 th:text="${analytiques_fiscales?.titre}"></h3>
+        <p th:text="${analytiques_fiscales?.valeur}"></p>
+    </section>
+
 </body>
 </html>

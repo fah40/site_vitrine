@@ -1,15 +1,18 @@
 package project.back.dgi.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
-import project.back.dgi.entity.GeneralInfo;
+import project.back.dgi.repository.GeneralInfoRepository;
 import project.back.dgi.repository.GeneralInfoValeurRepository;
 import project.back.dgi.repository.LangueRepository;
-import project.back.dgi.repository.GeneralInfoRepository;
-
-import java.util.Optional;
 
 @Service
 public class GeneralInfoValeurService {
@@ -39,5 +42,12 @@ public class GeneralInfoValeurService {
 
         return generalInfoValeurOpt.orElseThrow(() -> 
             new RuntimeException("Aucune valeur trouvée pour la clé : " + cle + " et la langue : " + idLangue));
+    }
+
+    @Transactional
+    public void saveAll(List<GeneralInfoValeur> generalInfo) {
+        for (GeneralInfoValeur elem : generalInfo) {
+            generalInfoValeurRepository.save(elem);
+        }
     }
 }

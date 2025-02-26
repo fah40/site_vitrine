@@ -28,11 +28,12 @@ public class GeneralInfo {
     private String lien;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_groupe")
-    private Groupe groupe;
+    @JoinColumn(name = "id_general_info")
+    private GeneralInfo parentGeneralInfo; // Relation réflexive
 
     public GeneralInfo() {}
 
+    // Getters et Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getCle() { return cle; }
@@ -41,6 +42,6 @@ public class GeneralInfo {
     public void setIcone(String icone) { this.icone = icone; }
     public String getLien() { return lien; }
     public void setLien(String lien) { this.lien = lien; }
-    public Groupe getGroupe() { return groupe; }
-    public void setGroupe(Groupe groupe) { this.groupe = groupe; }
+    public GeneralInfo getParentGeneralInfo() { return parentGeneralInfo; }
+    public void setParentGeneralInfo(GeneralInfo parentGeneralInfo) { this.parentGeneralInfo = parentGeneralInfo; }
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifier General Info</title>
+</head>
+<body>
+
+<h2>Modifier General Info</h2>
+
+<!-- Formulaire principal -->
+<form th:action="@{/general_info_static/update}" method="post" enctype="multipart/form-data">
+    
+    <!-- Champ caché pour l'ID -->
+    <input type="hidden" name="id" th:value="${generalInfo.id}" />
+
+    <!-- Clé -->
+    <label>Clé:</label>
+    <input type="text" name="cle" th:value="${generalInfo.cle}" required />
+
+    <!-- Icône actuelle -->
+    <div>
+        <label>Icône actuelle:</label>
+        <img th:src="${generalInfo.icone}" alt="Icône" width="50" height="50"/>
+    </div>
+
+    <!-- Upload d'une nouvelle icône -->
+    <label>Nouvelle Icône:</label>
+    <input type="file" name="iconeFile" accept="image/*" />
+
+    <!-- Lien -->
+    <label>Lien:</label>
+    <input type="text" name="lien" th:value="${generalInfo.lien}" />
+
+    <h3>Traductions</h3>
+
+    <!-- Boucle sur les langues -->
+    <div th:each="langue : ${langues}">
+        <h4 th:text="${langue.nom}"></h4>
+        
+        <!-- Récupération des valeurs existantes -->
+        <input type="hidden" th:name="${langue.id} + '.idLangue'" th:value="${langue.id}" />
+
+        <label>Titre:</label>
+        <input type="text" th:name="${langue.id} + '.titre'" th:value="${valeurs[langue.id]?.titre}" required />
+
+        <label>Valeur:</label>
+        <textarea th:name="${langue.id} + '.valeur'" required>[[${valeurs[langue.id]?.valeur}]]</textarea>
+    </div>
+
+    <button type="submit">Enregistrer</button>
+
+</form>
+
+</body>
+</html>
