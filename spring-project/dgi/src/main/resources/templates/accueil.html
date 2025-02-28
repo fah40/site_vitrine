@@ -32,7 +32,7 @@
     <section>
         <h3 th:text="${mot_du_dgi?.titre}"></h3>
         <p th:text="${mot_du_dgi?.valeur}"></p>
-        <button><a href="/general_info_static/mot_du_dgi">Modifier</a></button>  
+        <button><a href="/general_info_static/${mot_du_dgi?.cle}">Modifier</a></button>  
     </section>
 
     <section>

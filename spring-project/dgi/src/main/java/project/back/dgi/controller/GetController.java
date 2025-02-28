@@ -56,7 +56,7 @@ public class GetController {
         return "general_info_static";
     }
 
-        @PostMapping("/update")
+        @PostMapping("/general_info_static/update")
     public String updateGeneralInfo(@RequestParam Map<String, String> params,
                                     @RequestParam("iconeFile") MultipartFile iconeFile) {
         Long generalInfoId = Long.parseLong(params.get("id"));
@@ -83,6 +83,7 @@ public class GetController {
         List<GeneralInfoValeur> valeursToUpdate = new ArrayList<>();
 
         for (String key : params.keySet()) {
+            System.out.println("key : "+key);
             if (key.contains(".")) {
                 String[] parts = key.split("\\.");
                 Long idLangue = Long.parseLong(parts[0]);
@@ -104,7 +105,7 @@ public class GetController {
 
         generalInfoValeurService.saveAll(valeursToUpdate);
 
-        return "redirect:/general_info_static/" + generalInfo.getCle();
+        return "redirect:/accueil";
     }
 
      

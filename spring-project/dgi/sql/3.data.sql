@@ -14,7 +14,7 @@ INSERT INTO configuration (keys, valeurs) VALUES
 ('count_attempt', '3'),
 ('next_attempt_minute', '10');
 
-INSERT INTO langue (nom) 
+INSERT INTO langue (id,nom) 
 VALUES 
 (1, 'MLG'),
 (2, 'FRA'),
