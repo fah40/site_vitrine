@@ -20,6 +20,9 @@ public class GeneralInfoService {
     @Autowired
     private GeneralInfoValeurRepository generalInfoValeurRepository;
 
+    public Optional<GeneralInfo> findById (Long id){
+        return generalInfoRepository.findById(id);
+    }
 
     public Optional<GeneralInfo> getByCle(String cle) {
         return generalInfoRepository.findByCle(cle);
@@ -54,5 +57,12 @@ public class GeneralInfoService {
 
     public void saveGeneralInfoValeurs(Map<Long, GeneralInfoValeur> valeurs) {
         generalInfoValeurRepository.saveAll(valeurs.values());
+    }
+
+    public List<GeneralInfo> findChildrenByParent(GeneralInfo parentGeneralInfo) {
+        if (parentGeneralInfo == null || parentGeneralInfo.getId() == null) {
+            throw new IllegalArgumentException("Le GeneralInfo parent ne peut pas être null.");
+        }
+        return generalInfoRepository.findByParentGeneralInfo(parentGeneralInfo);
     }
 }

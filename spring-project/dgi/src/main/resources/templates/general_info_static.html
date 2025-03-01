@@ -15,12 +15,13 @@
 
     <!-- Clé -->
     <label>Clé:</label>
-    <input type="text" name="cle" th:value="${generalInfo.cle}" required />
+    <input type="text" name="cle" th:value="${generalInfo.cle}"  readonly/>
 
     <!-- Icône actuelle -->
     <div>
         <label>Icône actuelle:</label>
-        <img th:src="${generalInfo.icone}" alt="Icône" width="50" height="50"/>
+        <!-- width="50" height="50" -->
+        <img th:src="${generalInfo.icone}" alt="Icône" />
     </div>
 
     <!-- Upload d'une nouvelle icône -->

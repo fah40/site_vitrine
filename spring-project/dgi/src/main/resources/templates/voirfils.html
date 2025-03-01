@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Enfants - General Info</title>
+</head>
+<body>
+    <h2>Liste des enfants de la catégorie : <span th:text="${parentGeneralInfo.cle}"></span></h2>
+
+    <!-- Vérification si la liste des enfants est vide -->
+    <div th:if="${#lists.isEmpty(children)}">
+        <p>Aucun enfant trouvé pour cette catégorie.</p>
+    </div>
+
+    <!-- Affichage des enfants si la liste n'est pas vide -->
+    <div th:unless="${#lists.isEmpty(children)}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Icône</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="child : ${children}">
+                    <td th:text="${child.cle}"></td>
+                    <td>
+                        <img th:if="${child.icone != null}" th:src="@{${child.icone}}" alt="Icône" width="50">
+                        <img th:if="${child.icone == null}" src="path/to/default-icon.png" alt="Icône" width="50">
+                    </td>
+                    <td>
+                        <a th:href="@{/general_info_static/{cle}(cle=${child.cle})}">Modifier</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

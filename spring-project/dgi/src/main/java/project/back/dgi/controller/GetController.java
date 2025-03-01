@@ -1,4 +1,9 @@
 package project.back.dgi.controller;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +23,10 @@ import project.back.dgi.entity.Langue;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
+import project.back.dgi.util.MyUtil;
+import project.back.dgi.util.PasswordUtil;
+
+import java.nio.file.Path;
 
 @Controller
 public class GetController {
@@ -29,7 +38,7 @@ public class GetController {
     private GeneralInfoService generalInfoService;
 
     @GetMapping("/accueil")
-    public String accueil(@RequestParam(required = false, defaultValue = "1") String langue, Model model) {
+    public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
         List<Langue> langues = langueService.findAll();
         long id_langue = Long.parseLong(langue);
         model.addAttribute("langues", langues);
@@ -56,7 +65,7 @@ public class GetController {
         return "general_info_static";
     }
 
-        @PostMapping("/general_info_static/update")
+    @PostMapping("/general_info_static/update")
     public String updateGeneralInfo(@RequestParam Map<String, String> params,
                                     @RequestParam("iconeFile") MultipartFile iconeFile) {
         Long generalInfoId = Long.parseLong(params.get("id"));
@@ -71,10 +80,31 @@ public class GetController {
         generalInfo.setLien(params.get("lien"));
 
         // Gestion de l'icône
-        if (!iconeFile.isEmpty()) {
-            // String newIconPath = "/uploads/" + iconeFile.getOriginalFilename();
-            generalInfo.setIcone("newIconPath");
+    if (!iconeFile.isEmpty()) {
+        try {
+            // Nom du fichier avec timestamp pour éviter les conflits
+            String fileName = System.currentTimeMillis() + "_" + iconeFile.getOriginalFilename();
+            String relativePath = "/uploads/img_uploads/" + fileName;
+            
+            // Emplacement du fichier dans /static/uploads/
+            String uploadDir = "src/main/resources/static/uploads/img_uploads/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            // Vérifier si le dossier existe, sinon le créer
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Copier le fichier
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(iconeFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Mettre à jour l'icône dans la BDD
+            generalInfo.setIcone(relativePath);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
         generalInfoService.save(generalInfo);
 
@@ -104,8 +134,18 @@ public class GetController {
         }
 
         generalInfoValeurService.saveAll(valeursToUpdate);
-
+        PasswordUtil.waitError(3000); // attendre que l'image soit correctement copie avant de rediriger
         return "redirect:/accueil";
+    }
+
+    @GetMapping("/voirfils")
+    public String voirfilsGeneralInfo(@RequestParam("id") Long id, Model model) {
+        GeneralInfo parent = generalInfoService.findById(id).orElse(null);
+        List<GeneralInfo> children = generalInfoService.findChildrenByParent(parent);
+        System.out.println("nombre " + children.size());
+        model.addAttribute("parentGeneralInfo", parent);
+        model.addAttribute("children", children);
+        return "voirfils"; // La page JSP/Thymeleaf pour modifier l'info
     }
 
      
