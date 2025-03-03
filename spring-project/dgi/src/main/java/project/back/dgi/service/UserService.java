@@ -1,15 +1,13 @@
 package project.back.dgi.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import project.back.dgi.entity.Attempt;
 import project.back.dgi.entity.User;
-import project.back.dgi.repository.UserRepository;
 import project.back.dgi.repository.AttemptRepository;
-
-import jakarta.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.Optional;
+import project.back.dgi.repository.UserRepository;
 
 @Service
 public class UserService {

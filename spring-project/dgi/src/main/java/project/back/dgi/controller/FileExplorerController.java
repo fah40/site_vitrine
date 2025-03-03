@@ -1,18 +1,4 @@
 package project.back.dgi.controller;
-import org.springframework.web.multipart.MultipartFile;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import jakarta.servlet.ServletContext;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +8,18 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class FileExplorerController {
@@ -33,26 +31,25 @@ public class FileExplorerController {
     private String storagePath;
 
     @GetMapping("/explorer")
-    public String listFiles(@RequestParam(required = false, defaultValue = "") String path, Model model) {
-        // Construire le chemin final
-        File directory = new File(storagePath + File.separator + path);
-        System.out.println("Chemin utilisé : " + directory.getAbsolutePath());
+    public String listFiles(@RequestParam(required = false, defaultValue = "") String path, Model model, HttpServletResponse response) throws IOException {
+        File fileOrDirectory = new File(storagePath + File.separator + path);
+        System.out.println("Chemin utilisé : " + fileOrDirectory.getAbsolutePath());
 
-        // Vérifier si le dossier existe, sinon le créer
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
-            if (!created) {
-                throw new RuntimeException("Impossible de créer le dossier : " + directory.getAbsolutePath());
-            }
+        if (!fileOrDirectory.exists()) {
+            throw new RuntimeException("Le chemin spécifié n'existe pas.");
         }
 
-        // Vérifier si c'est bien un dossier
-        if (!directory.isDirectory()) {
-            throw new RuntimeException("Le chemin spécifié n'est pas un dossier.");
+        // Si c'est un fichier, on déclenche le téléchargement
+        if (fileOrDirectory.isFile()) {
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileOrDirectory.getName() + "\"");
+            Files.copy(fileOrDirectory.toPath(), response.getOutputStream());
+            response.getOutputStream().flush();
+            return null; // Empêche Thymeleaf de traiter une vue
         }
 
-        // Lister les fichiers et dossiers
-        File[] filesArray = directory.listFiles();
+        // Si c'est un dossier, on affiche la liste des fichiers
+        File[] filesArray = fileOrDirectory.listFiles();
         if (filesArray == null) {
             throw new RuntimeException("Impossible de lister les fichiers dans le dossier.");
         }
@@ -61,11 +58,12 @@ public class FileExplorerController {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
-        // Ajouter les données au modèle Thymeleaf
         model.addAttribute("files", files);
         model.addAttribute("currentPath", path);
-        return "explorer"; // Nom de la vue Thymeleaf
+        return "explorer"; // Retourne la vue Thymeleaf
     }
+
+
 
     @PostMapping("/create-folder")
     public String createFolder(@RequestParam String path, @RequestParam String folderName) {

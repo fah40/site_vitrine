@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une Actualité</title>
+    <!-- Inclure QuillJS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        .ql-editor {
+            min-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ajouter une Actualité</h1>
+    <form th:action="@{/actualites/save}" method="post" enctype="multipart/form-data">
+        <!-- Champ Titre -->
+        <div>
+            <label for="titre">Titre :</label>
+            <input type="text" id="titre" name="title" required>
+        </div>
+
+        <!-- Champ Description (QuillJS) -->
+        <div>
+            <label for="description">Description :</label>
+            <div id="editor" style="height: 300px;"></div>
+            <input type="hidden" id="description" name="content">
+        </div>
+
+        <!-- Champ Pièces jointes -->
+        <div>
+            <label for="pieces-jointes">Pièces jointes :</label>
+            <input type="file" id="pieces-jointes" name="files" multiple>
+        </div>
+
+        <!-- Bouton de soumission -->
+        <div>
+            <button type="submit">Enregistrer</button>
+        </div>
+    </form>
+
+    <!-- Scripts QuillJS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        // Initialiser QuillJS
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+        // Mettre à jour le champ caché avec le contenu de Quill avant la soumission du formulaire
+        document.querySelector('form').onsubmit = function() {
+            var description = document.querySelector('#description');
+            description.value = quill.root.innerHTML;
+        };
+    </script>
+</body>
+</html>

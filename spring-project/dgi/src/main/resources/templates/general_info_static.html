@@ -2,6 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Modifier General Info</title>
+    <!-- Inclure QuillJS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        .ql-editor {
+            min-height: 200px;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,12 +22,11 @@
 
     <!-- Clé -->
     <label>Clé:</label>
-    <input type="text" name="cle" th:value="${generalInfo.cle}"  readonly/>
+    <input type="text" name="cle" th:value="${generalInfo.cle}" readonly />
 
     <!-- Icône actuelle -->
     <div>
         <label>Icône actuelle:</label>
-        <!-- width="50" height="50" -->
         <img th:src="${generalInfo.icone}" alt="Icône" />
     </div>
 
@@ -44,13 +50,48 @@
         <label>Titre:</label>
         <input type="text" th:name="${langue.id} + '.titre'" th:value="${valeurs[langue.id]?.titre}" required />
 
+        <!-- Champ Valeur avec QuillJS -->
         <label>Valeur:</label>
-        <textarea th:name="${langue.id} + '.valeur'" required>[[${valeurs[langue.id]?.valeur}]]</textarea>
+        <div th:id="'editor-' + ${langue.id}" class="quill-editor">[[${valeurs[langue.id]?.valeur}]]</div>
+        <input type="hidden" th:id="'valeur-' + ${langue.id}" th:name="${langue.id} + '.valeur'" />
     </div>
 
     <button type="submit">Enregistrer</button>
 
 </form>
+
+<!-- Scripts QuillJS -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script>
+    // Initialiser QuillJS pour chaque éditeur
+    document.querySelectorAll('.quill-editor').forEach(function(editorDiv) {
+        var langueId = editorDiv.id.split('-')[1]; // Récupérer l'ID de la langue
+        var quill = new Quill(editorDiv, {
+            theme: 'snow'
+        });
+
+        // Mettre à jour le champ caché avec le contenu de Quill avant la soumission du formulaire
+        var hiddenInput = document.getElementById('valeur-' + langueId);
+        quill.on('text-change', function() {
+            hiddenInput.value = quill.root.innerHTML;
+        });
+
+        // Initialiser le contenu de Quill avec la valeur existante
+        if (hiddenInput.value) {
+            quill.root.innerHTML = hiddenInput.value;
+        }
+    });
+
+    // Mettre à jour tous les champs cachés avant la soumission du formulaire
+    document.querySelector('form').onsubmit = function() {
+        document.querySelectorAll('.quill-editor').forEach(function(editorDiv) {
+            var langueId = editorDiv.id.split('-')[1];
+            var quill = Quill.find(editorDiv);
+            var hiddenInput = document.getElementById('valeur-' + langueId);
+            hiddenInput.value = quill.root.innerHTML;
+        });
+    };
+</script>
 
 </body>
 </html>
