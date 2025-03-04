@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import project.back.dgi.entity.GeneralInfo;
@@ -20,6 +21,7 @@ import project.back.dgi.service.LangueService;
 import project.back.dgi.util.PasswordUtil;
 
 @Controller
+@RequestMapping("/admin")
 public class GetController {
     @Autowired
     private LangueService langueService;
@@ -40,6 +42,9 @@ public class GetController {
         model.addAttribute("legislation", generalInfoValeurService.getGeneralInfoByKey("legislation", id_langue));
         model.addAttribute("ressources", generalInfoValeurService.getGeneralInfoByKey("ressources", id_langue));
         model.addAttribute("analytiques_fiscales", generalInfoValeurService.getGeneralInfoByKey("analytiques_fiscales", id_langue));
+        model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("historique", id_langue));
+        model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("vision", id_langue));
+        model.addAttribute("attributions", generalInfoValeurService.getGeneralInfoByKey("attributions", id_langue));
         
         return "accueil";
     }
@@ -104,16 +109,4 @@ public class GetController {
         PasswordUtil.waitError(3000); // attendre que l'image soit correctement copie avant de rediriger
         return "redirect:/accueil";
     }
-
-    @GetMapping("/voirfils")
-    public String voirfilsGeneralInfo(@RequestParam("id") Long id, Model model) {
-        GeneralInfo parent = generalInfoService.findById(id).orElse(null);
-        List<GeneralInfo> children = generalInfoService.findChildrenByParent(parent);
-        System.out.println("nombre " + children.size());
-        model.addAttribute("parentGeneralInfo", parent);
-        model.addAttribute("children", children);
-        return "voirfils"; // La page JSP/Thymeleaf pour modifier l'info
-    }
-
-     
 }

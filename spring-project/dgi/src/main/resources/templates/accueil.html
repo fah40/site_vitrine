@@ -24,7 +24,7 @@
         <p th:text="${a_propos?.valeur}"></p>
         <img th:if="${a_propos?.generalInfo?.icone}" th:src="@{${a_propos.generalInfo.icone}}" alt="Icône" width="50">
         <button>
-            <a th:href="@{/general_info_static/{cle}(cle='a_propos')}">Modifier</a>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='a_propos')}">Modifier</a>
         </button>
     </section>
 
@@ -33,7 +33,7 @@
         <p th:text="${dgi?.valeur}"></p>
         <img th:if="${dgi?.generalInfo?.icone}" th:src="@{${dgi.generalInfo.icone}}" alt="Icône" width="50">
         <button>
-            <a th:href="@{/general_info_static/{cle}(cle='dgi')}">Modifier</a>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='dgi')}">Modifier</a>
         </button>
     </section>
 
@@ -42,7 +42,55 @@
         <p th:text="${mot_du_dgi?.valeur}"></p>
         <img th:if="${mot_du_dgi?.generalInfo?.icone}" th:src="@{${mot_du_dgi.generalInfo.icone}}" alt="Icône" width="50">
         <button>
-            <a th:href="@{/general_info_static/{cle}(cle='mot_du_dgi')}">Modifier</a>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='mot_du_dgi')}">Modifier</a>
+        </button>
+    </section>
+
+    <section>
+        <h3 th:text="${historique?.titre}"></h3>
+        <p th:text="${historique?.valeur}"></p>
+        <a th:if="${historique?.generalInfo?.icone}" 
+           th:href="@{/admin/explorer?path=/historique}">
+            <img th:src="@{${historique.generalInfo.icone}}" alt="Icône" width="50">
+        </a>
+        <a th:if="${historique?.generalInfo?.icone == null}" 
+           th:href="@{/admin/explorer?path=/historique}">
+            <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+        </a>
+        <button>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='historique')}">Modifier</a>
+        </button>
+    </section>
+    
+    <section>
+        <h3 th:text="${vision?.titre}"></h3>
+        <p th:text="${vision?.valeur}"></p>
+        <a th:if="${vision?.generalInfo?.icone}" 
+           th:href="@{/admin/explorer?path=/vision}">
+            <img th:src="@{${vision.generalInfo.icone}}" alt="Icône" width="50">
+        </a>
+        <a th:if="${vision?.generalInfo?.icone == null}" 
+           th:href="@{/admin/explorer?path=/vision}">
+            <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+        </a>
+        <button>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='vision')}">Modifier</a>
+        </button>
+    </section>
+    
+    <section>
+        <h3 th:text="${attributions?.titre}"></h3>
+        <p th:text="${attributions?.valeur}"></p>
+        <a th:if="${attributions?.generalInfo?.icone}" 
+           th:href="@{/admin/explorer?path=/attributions}">
+            <img th:src="@{${attributions.generalInfo.icone}}" alt="Icône" width="50">
+        </a>
+        <a th:if="${attributions?.generalInfo?.icone == null}" 
+           th:href="@{/admin/explorer?path=/attributions}">
+            <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+        </a>
+        <button>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='attributions')}">Modifier</a>
         </button>
     </section>
 
@@ -50,15 +98,15 @@
         <h3 th:text="${legislation?.titre}"></h3>
         <p th:text="${legislation?.valeur}"></p>
         <a th:if="${legislation?.generalInfo?.icone}" 
-           th:href="@{/voirfils(id=${legislation.generalInfo.id})}">
+           th:href="@{/admin/explorer?path=/legislation}">
             <img th:src="@{${legislation.generalInfo.icone}}" alt="Icône" width="50">
         </a>
         <a th:if="${legislation?.generalInfo?.icone == null}" 
-           th:href="@{/voirfils(id=${legislation.generalInfo.id})}">
+           th:href="@{/admin/explorer?path=/legislation}">
             <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
         </a>
         <button>
-            <a th:href="@{/general_info_static/{cle}(cle='legislation')}">Modifier</a>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='legislation')}">Modifier</a>
         </button>
     </section>
     
@@ -66,15 +114,15 @@
         <h3 th:text="${ressources?.titre}"></h3>
         <p th:text="${ressources?.valeur}"></p>
         <a th:if="${ressources?.generalInfo?.icone}" 
-           th:href="@{/voirfils(id=${ressources.generalInfo.id})}">
+           th:href="@{/admin/explorer?path=/ressources}">
             <img th:src="@{${ressources.generalInfo.icone}}" alt="Icône" width="50">
         </a>
         <a th:if="${ressources?.generalInfo?.icone == null}" 
-           th:href="@{/voirfils(id=${ressources.generalInfo.id})}">
+           th:href="@{/admin/explorer?path=/ressources}">
             <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
         </a>
         <button>
-            <a th:href="@{/general_info_static/{cle}(cle='ressources')}">Modifier</a>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='ressources')}">Modifier</a>
         </button>
     </section>
     
@@ -82,15 +130,15 @@
         <h3 th:text="${analytiques_fiscales?.titre}"></h3>
         <p th:text="${analytiques_fiscales?.valeur}"></p>
         <a th:if="${analytiques_fiscales?.generalInfo?.icone}" 
-           th:href="@{/voirfils(id=${analytiques_fiscales.generalInfo.id})}">
+           th:href="@{/admin/explorer?path=/analytiques_fiscales}">
             <img th:src="@{${analytiques_fiscales.generalInfo.icone}}" alt="Icône" width="50">
         </a>
         <a th:if="${analytiques_fiscales?.generalInfo?.icone == null}" 
-           th:href="@{/voirfils(id=${analytiques_fiscales.generalInfo.id})}">
+           th:href="@{/admin/explorer?path=/analytiques_fiscales}">
             <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
         </a>
         <button>
-            <a th:href="@{/general_info_static/{cle}(cle='analytiques_fiscales')}">Modifier</a>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='analytiques_fiscales')}">Modifier</a>
         </button>
     </section>
     

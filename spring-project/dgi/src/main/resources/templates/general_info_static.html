@@ -15,7 +15,7 @@
 <h2>Modifier General Info</h2>
 
 <!-- Formulaire principal -->
-<form th:action="@{/general_info_static/update}" method="post" enctype="multipart/form-data">
+<form th:action="@{/admin/general_info_static/update}" method="post" enctype="multipart/form-data">
     
     <!-- Champ caché pour l'ID -->
     <input type="hidden" name="id" th:value="${generalInfo.id}" />

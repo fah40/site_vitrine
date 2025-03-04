@@ -27,7 +27,7 @@ import project.back.dgi.service.PieceJointeService;
 import project.back.dgi.service.UserService;
 
 @Controller
-@RequestMapping("/actualites")
+@RequestMapping("/admin/actualites")
 public class ActualiteController {
 
     @Autowired

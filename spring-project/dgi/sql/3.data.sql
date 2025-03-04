@@ -27,7 +27,10 @@ VALUES
 (3, 'mot_du_dgi', NULL, NULL),
 (4, 'legislation', NULL, NULL),
 (5, 'ressources', NULL, NULL),
-(6, 'analytiques_fiscales', NULL, NULL);
+(6, 'analytiques_fiscales', NULL, NULL),
+(7, 'historique', NULL, NULL),
+(8, 'vision', NULL, NULL),
+(9, 'attributions', NULL, NULL);
 
 INSERT INTO general_info_valeur (titre, valeur, id_langue, id_general_info)
 VALUES
@@ -48,4 +51,13 @@ VALUES
 ('Resources', 'Books and guides', 3, 5),
 ('Famakafakana ara-bola', 'Antontanisa ara-bola', 1, 6),
 ('Analytiques fiscales', 'Statistiques fiscales', 2, 6),
-('Fiscal analytics', 'Tax statistics', 3, 6);
+('Fiscal analytics', 'Tax statistics', 3, 6),
+('Tantara', 'Tantara ny DGI', 1, 7), 
+('Historique', 'Historique de la DGI', 2, 7), 
+('History', 'History of the DGI', 3, 7),
+('Fahitana', 'Fahitana ny DGI', 1, 8),
+('Vision', 'Vision de la DGI', 2, 8),
+('Vision', 'Vision of the DGI', 3, 8),
+('Adidy', 'Adidy sy andraikitra', 1, 9),
+('Attributions', 'Attributions et responsabilités', 2, 9),
+('Responsibilities', 'Duties and responsibilities', 3, 9);
