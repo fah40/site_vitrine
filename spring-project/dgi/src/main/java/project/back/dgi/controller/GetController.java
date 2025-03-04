@@ -1,9 +1,4 @@
 package project.back.dgi.controller;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
@@ -23,10 +17,7 @@ import project.back.dgi.entity.Langue;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
-import project.back.dgi.util.MyUtil;
 import project.back.dgi.util.PasswordUtil;
-
-import java.nio.file.Path;
 
 @Controller
 public class GetController {
@@ -67,7 +58,7 @@ public class GetController {
 
     @PostMapping("/general_info_static/update")
     public String updateGeneralInfo(@RequestParam Map<String, String> params,
-                                    @RequestParam("iconeFile") MultipartFile iconeFile) {
+                                    @RequestParam("icone") String icone) {
         Long generalInfoId = Long.parseLong(params.get("id"));
         GeneralInfo generalInfo = generalInfoService.getById(generalInfoId).orElse(null);
 
@@ -80,31 +71,7 @@ public class GetController {
         generalInfo.setLien(params.get("lien"));
 
         // Gestion de l'icône
-    if (!iconeFile.isEmpty()) {
-        try {
-            // Nom du fichier avec timestamp pour éviter les conflits
-            String fileName = System.currentTimeMillis() + "_" + iconeFile.getOriginalFilename();
-            String relativePath = "/uploads/img_uploads/" + fileName;
-            
-            // Emplacement du fichier dans /static/uploads/
-            String uploadDir = "src/main/resources/static/uploads/img_uploads/";
-            Path uploadPath = Paths.get(uploadDir);
-
-            // Vérifier si le dossier existe, sinon le créer
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            // Copier le fichier
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(iconeFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            // Mettre à jour l'icône dans la BDD
-            generalInfo.setIcone(relativePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        generalInfo.setIcone(icone);
 
         generalInfoService.save(generalInfo);
 
