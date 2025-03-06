@@ -61,7 +61,7 @@ public class AuthController {
      */
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "pagLogin/login";
     }
 
     /**
@@ -73,7 +73,7 @@ public class AuthController {
                         Model model) {
         if ( (hCaptchaResponse==null || hCaptchaResponse.isEmpty()) || (!HCaptchaUtil.verifyHCaptcha(hCaptchaResponse))) {
             model.addAttribute("error", "Vérification hCaptcha échouée !");
-            return "login";
+            return "pagLogin/login";
         }
 
         User user = userService.findByEmail(email).orElse(null);
@@ -95,7 +95,7 @@ public class AuthController {
         emailUtil.sendHtmlEmail(user.getEmail(),configurationService.getValueByKey("sending_email_pin_content"),pinGenerated);
 
         model.addAttribute("email", email);
-        return "login2";
+        return "pagLogin/login2";
     }
 
     /**
@@ -114,7 +114,7 @@ public class AuthController {
 
         if (!lastUserPin.isPresent()) {
             model.addAttribute("error", "Aucun PIN trouvé. Log pour en demander un nouveau.");
-            return "login";
+            return "pagLogin/login";
         }
 
         UserPin userPin = lastUserPin.get();
@@ -122,7 +122,7 @@ public class AuthController {
         // Vérifie si le PIN est obsolète (expiration passée)
         if (userPin.getExpirationDate().isBefore(LocalDateTime.now())) {
             model.addAttribute("error", "Le PIN est obsolète. Veuillez en demander un nouveau.");
-            return "login";
+            return "pagLogin/login";
         }
 
         // Vérifie si le PIN est correct
@@ -130,12 +130,12 @@ public class AuthController {
             PasswordUtil.waitError();  // Vous pouvez définir un délai d'attente ici si nécessaire
             model.addAttribute("email", email);
             model.addAttribute("error", "Le PIN est incorrect ou obsolète. Vérifiez le dernier dans votre email.");
-            return "login2";
+            return "pagLogin/login2";
         }
 
         // Si le PIN est correct, redirige vers la page suivante
         model.addAttribute("email", email);
-        return "login3"; // Redirige vers la page de saisie du mot de passe
+        return "pagLogin/login3"; // Redirige vers la page de saisie du mot de passe
     }
 
 
@@ -182,7 +182,7 @@ public class AuthController {
             // Si le mot de passe est incorrect mais il n'est pas à la x ième tentative, on le renvoie à login3
             model.addAttribute("email", email);
             model.addAttribute("error", "Mot de passe incorrect !");
-            return "login3";
+            return "pagLogin/login3";
         }
 
         // Si le mot de passe est correct, on réinitialise les tentatives et on redirige vers l'accueil
@@ -192,6 +192,6 @@ public class AuthController {
 
         model.addAttribute("email", email);
         session.setAttribute("user", user);
-        return "accueil"; // Redirige vers la page d'accueil
+        return "redirect:/accueil"; // Redirige vers la page d'accueil
     }
 }

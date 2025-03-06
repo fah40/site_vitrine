@@ -7,6 +7,15 @@ VALUES ('b49f1f09-6798-421d-9546-f1771d952f39',
         crypt('123', gen_salt('bf')), 
         true);
 
+INSERT INTO user_ (id, email, name, firstname, validation_date, password, id_admin)
+VALUES ('b49f1f09-6798-421d-9546-f1792d952f39', 
+        'fanasinamanantsoa30@gmail.com', 
+        '', 
+        'Admin', 
+        CURRENT_DATE, 
+        crypt('123', gen_salt('bf')), 
+        true);
+
 INSERT INTO configuration (keys, valeurs) VALUES 
 ('pin_expiration_minute', '10'),
 ('pin_length', '6'),

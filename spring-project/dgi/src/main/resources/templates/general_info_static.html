@@ -18,21 +18,21 @@
 <form th:action="@{/general_info_static/update}" method="post" enctype="multipart/form-data">
     
     <!-- Champ caché pour l'ID -->
-    <input type="hidden" name="id" th:value="${generalInfo.id}" />
+    <input type="hidden" name="id" th:value="${generalInfo.id}" /><br>
 
     <!-- Clé -->
     <label>Clé:</label>
-    <input type="text" name="cle" th:value="${generalInfo.cle}" readonly />
+    <input type="text" name="cle" th:value="${generalInfo.cle}" readonly /><br>
 
     <!-- Icône actuelle -->
     <div>
         <label>Icône actuelle:</label>
         <img th:src="${generalInfo.icone}" alt="Icône" />
-    </div>
+    </div><br>
 
     <!-- Upload d'une nouvelle icône -->
     <label>Nouvelle Icône:</label>
-    <input type="file" name="iconeFile" accept="image/*" />
+    <input type="file" name="iconeFile" accept="image/*" /><br>
 
     <!-- Lien -->
     <label>Lien:</label>

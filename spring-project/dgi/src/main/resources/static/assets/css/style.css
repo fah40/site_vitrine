@@ -1,0 +1,118 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	color: rgb(111, 111, 111);	
+	background-color: #ECECEA;
+	margin: 10px;
+}
+.base{
+	display: flex;
+	align-content: center;
+}
+
+.logo{
+	margin-top: 100px;
+	display: flexbox;
+	text-align: center;
+}
+.custom-file-input {
+	position: relative;
+	overflow: hidden;
+}
+
+.custom-file-input input[type="file"] {
+	position: absolute;
+	z-index: 2;
+	cursor: pointer;
+	height: 100%;
+	width: 100%;
+}
+
+.custom-file-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f8f9fa;
+	border: 1px solid #ced4da;
+	border-radius: 0.375rem;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.actu{
+	border-radius: 5px;
+	border: 1px solid #ced4da;
+	padding: 10px;
+	background-color: #f8f9fa;
+}
+
+.img-actu{
+	width:100%;
+	height: auto;
+}
+
+.formulaire{
+	padding: 30px;
+	border: 1px solid #ced4da;
+	height: 96vh;
+}
+
+.custom-file-label i {
+	margin-right: 10px;
+}
+
+.champ{
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #278a80;
+	border: 1px solid #ced4da;
+	color: white;
+	text-decoration: none;
+	list-style-type: none;
+}
+.champ:hover{
+	color: black;
+	background-color: #f8f9fa;
+	transition: all 0.5s ease;
+	text-decoration: none;border: none;list-style-type: none;
+}
+.box{
+	background: linear-gradient(160deg,rgb(215, 221, 226) -5%, rgb(246, 246, 246) 90%) ;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.526),
+				5px 5px 10px rgba(0, 0, 0, 0.134);
+	transition: all 0.5s ease;
+}
+.menu{
+	border-radius: 5px;
+	box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.526),
+				5px 5px 10px rgba(0, 0, 0, 0.134);
+	transition: all 0.5s ease;
+}
+.icon-bar{
+	background: grey;
+}
+.bot{
+	background-color: #f8f9fa;
+	border: 1px solid #ced4da;
+	padding: 20px;
+	
+}
+.bot:hover{
+	box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.642),
+	-2px -2px 10px rgba(0, 0, 0, 0.234);
+	transition: all 0.5s ease;
+}
+.liste{
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: inset 0px 0px 15px white,
+				inset 5px 5px 15px grey;
+}
+.blur{
+	position: sticky;
+	backdrop-filter: blur(10px) brightness(95%) !important;
+}
