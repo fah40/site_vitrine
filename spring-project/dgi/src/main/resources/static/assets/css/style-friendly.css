@@ -1177,6 +1177,14 @@ breadcrumbs
 buttons
 
 ------------------------------------------- */
+.btn-modif{
+  padding: 10px;
+  background: rgb(100, 212, 171);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
 .fah-btn {
   position: relative;
   border: none;
