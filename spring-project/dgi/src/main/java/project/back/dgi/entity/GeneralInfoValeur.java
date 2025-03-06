@@ -24,6 +24,12 @@ public class GeneralInfoValeur {
     @Column(name = "valeur", nullable = false)
     private String valeur;
 
+    @Column(name = "entete")
+    private String entete;
+
+    @Column(name = "bouton")
+    private String bouton;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_langue", nullable = false)
     private Langue langue;
@@ -36,12 +42,22 @@ public class GeneralInfoValeur {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public String getTitre() { return titre; }
     public void setTitre(String titre) { this.titre = titre; }
+
     public String getValeur() { return valeur; }
     public void setValeur(String valeur) { this.valeur = valeur; }
+
+    public String getEntete() { return entete; }
+    public void setEntete(String entete) { this.entete = entete; }
+
+    public String getBouton() { return bouton; }
+    public void setBouton(String bouton) { this.bouton = bouton; }
+
     public Langue getLangue() { return langue; }
     public void setLangue(Langue langue) { this.langue = langue; }
+
     public GeneralInfo getGeneralInfo() { return generalInfo; }
     public void setGeneralInfo(GeneralInfo generalInfo) { this.generalInfo = generalInfo; }
 }

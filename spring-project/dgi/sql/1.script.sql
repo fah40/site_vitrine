@@ -73,6 +73,7 @@ CREATE TABLE actualite(
 
 CREATE TABLE piece_jointe(
    id SERIAL,
+   nom_fichier TEXT NOT NULL,
    url_fichier TEXT NOT NULL,
    id_actualite INTEGER NOT NULL,
    PRIMARY KEY(id),
@@ -93,6 +94,8 @@ CREATE TABLE general_info_valeur(
    id SERIAL,
    titre TEXT NOT NULL,
    valeur TEXT NOT NULL,
+   entete TEXT,
+   bouton TEXT,
    id_langue INTEGER NOT NULL,
    id_general_info INTEGER NOT NULL,
    PRIMARY KEY(id),

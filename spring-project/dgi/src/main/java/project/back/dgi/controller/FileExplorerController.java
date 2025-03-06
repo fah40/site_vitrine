@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
+@RequestMapping("/admin")
 public class FileExplorerController {
 
     @Autowired
@@ -29,6 +31,9 @@ public class FileExplorerController {
 
     @Value("${app.storage.location}") // Injection du chemin défini dans application.properties
     private String storagePath;
+
+    @Value("${file.upload-dir}")
+    private String uploadPath;
 
     @GetMapping("/explorer")
     public String listFiles(@RequestParam(required = false, defaultValue = "") String path, Model model, HttpServletResponse response) throws IOException {
@@ -58,6 +63,11 @@ public class FileExplorerController {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
+        // au cas ou vide
+        if (files.isEmpty()) {
+            return "dossier-vide";
+        }
+
         model.addAttribute("files", files);
         model.addAttribute("currentPath", path);
         return "explorer"; // Retourne la vue Thymeleaf
@@ -82,7 +92,7 @@ public class FileExplorerController {
             }
         }
 
-        return "redirect:/explorer?path=" + path;
+        return "redirect:/admin/explorer?path=" + path;
     }
 
     @PostMapping("/delete")
@@ -104,7 +114,7 @@ public class FileExplorerController {
             }
         }
 
-        return "redirect:/explorer?path=" + path;
+        return "redirect:/admin/explorer?path=" + path;
     }
 
     private void deleteDirectory(File directory) {
@@ -146,8 +156,6 @@ public class FileExplorerController {
             throw new RuntimeException("Erreur lors de l'enregistrement du fichier : " + e.getMessage());
         }
 
-        return "redirect:/explorer?path=" + path;
+        return "redirect:/admin/explorer?path=" + path;
     }
-
-
 }

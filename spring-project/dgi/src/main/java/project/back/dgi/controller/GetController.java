@@ -1,9 +1,4 @@
 package project.back.dgi.controller;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,21 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
+import project.back.dgi.service.ActualiteService;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
-import project.back.dgi.util.MyUtil;
 import project.back.dgi.util.PasswordUtil;
 
-import java.nio.file.Path;
-
 @Controller
+@RequestMapping("/admin")
 public class GetController {
     @Autowired
     private LangueService langueService;
@@ -36,6 +30,8 @@ public class GetController {
     private GeneralInfoValeurService generalInfoValeurService;
     @Autowired
     private GeneralInfoService generalInfoService;
+    @Autowired
+    private ActualiteService actualiteService;
 
     @GetMapping("/accueil")
     public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
@@ -49,7 +45,15 @@ public class GetController {
         model.addAttribute("legislation", generalInfoValeurService.getGeneralInfoByKey("legislation", id_langue));
         model.addAttribute("ressources", generalInfoValeurService.getGeneralInfoByKey("ressources", id_langue));
         model.addAttribute("analytiques_fiscales", generalInfoValeurService.getGeneralInfoByKey("analytiques_fiscales", id_langue));
-        
+        model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("historique", id_langue));
+        model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("vision", id_langue));
+        model.addAttribute("attributions", generalInfoValeurService.getGeneralInfoByKey("attributions", id_langue));
+        model.addAttribute("e_service", generalInfoValeurService.getGeneralInfoByKey("e_service", id_langue));
+        model.addAttribute("votre_avis", generalInfoValeurService.getGeneralInfoByKey("votre_avis", id_langue));
+        model.addAttribute("centre_contact", generalInfoValeurService.getGeneralInfoByKey("centre_contact", id_langue));
+
+        model.addAttribute("allActualites", actualiteService.getAllActualites());
+
         return "accueil";
     }
 
@@ -67,7 +71,7 @@ public class GetController {
 
     @PostMapping("/general_info_static/update")
     public String updateGeneralInfo(@RequestParam Map<String, String> params,
-                                    @RequestParam("iconeFile") MultipartFile iconeFile) {
+                                @RequestParam("icone") String icone) {
         Long generalInfoId = Long.parseLong(params.get("id"));
         GeneralInfo generalInfo = generalInfoService.getById(generalInfoId).orElse(null);
 
@@ -80,31 +84,7 @@ public class GetController {
         generalInfo.setLien(params.get("lien"));
 
         // Gestion de l'icône
-    if (!iconeFile.isEmpty()) {
-        try {
-            // Nom du fichier avec timestamp pour éviter les conflits
-            String fileName = System.currentTimeMillis() + "_" + iconeFile.getOriginalFilename();
-            String relativePath = "/uploads/img_uploads/" + fileName;
-            
-            // Emplacement du fichier dans /static/uploads/
-            String uploadDir = "src/main/resources/static/uploads/img_uploads/";
-            Path uploadPath = Paths.get(uploadDir);
-
-            // Vérifier si le dossier existe, sinon le créer
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            // Copier le fichier
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(iconeFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            // Mettre à jour l'icône dans la BDD
-            generalInfo.setIcone(relativePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        generalInfo.setIcone(icone);
 
         generalInfoService.save(generalInfo);
 
@@ -113,7 +93,6 @@ public class GetController {
         List<GeneralInfoValeur> valeursToUpdate = new ArrayList<>();
 
         for (String key : params.keySet()) {
-            System.out.println("key : "+key);
             if (key.contains(".")) {
                 String[] parts = key.split("\\.");
                 Long idLangue = Long.parseLong(parts[0]);
@@ -123,10 +102,19 @@ public class GetController {
                 valeur.setGeneralInfo(generalInfo);
                 valeur.setLangue(langueService.findById(idLangue));
 
-                if ("titre".equals(field)) {
-                    valeur.setTitre(params.get(key));
-                } else if ("valeur".equals(field)) {
-                    valeur.setValeur(params.get(key));
+                switch (field) {
+                    case "titre":
+                        valeur.setTitre(params.get(key));
+                        break;
+                    case "entete":
+                        valeur.setEntete(params.get(key));
+                        break;
+                    case "bouton":
+                        valeur.setBouton(params.get(key));
+                        break;
+                    case "valeur":
+                        valeur.setValeur(params.get(key));
+                        break;
                 }
 
                 valeursToUpdate.add(valeur);
@@ -134,19 +122,7 @@ public class GetController {
         }
 
         generalInfoValeurService.saveAll(valeursToUpdate);
-        PasswordUtil.waitError(3000); // attendre que l'image soit correctement copie avant de rediriger
-        return "redirect:/accueil";
+        PasswordUtil.waitError(3000);
+        return "redirect:/admin/accueil";
     }
-
-    @GetMapping("/voirfils")
-    public String voirfilsGeneralInfo(@RequestParam("id") Long id, Model model) {
-        GeneralInfo parent = generalInfoService.findById(id).orElse(null);
-        List<GeneralInfo> children = generalInfoService.findChildrenByParent(parent);
-        System.out.println("nombre " + children.size());
-        model.addAttribute("parentGeneralInfo", parent);
-        model.addAttribute("children", children);
-        return "voirfils"; // La page JSP/Thymeleaf pour modifier l'info
-    }
-
-     
 }
