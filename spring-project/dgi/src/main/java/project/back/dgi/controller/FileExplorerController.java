@@ -32,6 +32,9 @@ public class FileExplorerController {
     @Value("${app.storage.location}") // Injection du chemin défini dans application.properties
     private String storagePath;
 
+    @Value("${file.upload-dir}")
+    private String uploadPath;
+
     @GetMapping("/explorer")
     public String listFiles(@RequestParam(required = false, defaultValue = "") String path, Model model, HttpServletResponse response) throws IOException {
         File fileOrDirectory = new File(storagePath + File.separator + path);
@@ -60,6 +63,11 @@ public class FileExplorerController {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
+        // au cas ou vide
+        if (files.isEmpty()) {
+            return "dossier-vide";
+        }
+
         model.addAttribute("files", files);
         model.addAttribute("currentPath", path);
         return "explorer"; // Retourne la vue Thymeleaf
@@ -84,7 +92,7 @@ public class FileExplorerController {
             }
         }
 
-        return "redirect:/explorer?path=" + path;
+        return "redirect:/admin/explorer?path=" + path;
     }
 
     @PostMapping("/delete")
@@ -106,7 +114,7 @@ public class FileExplorerController {
             }
         }
 
-        return "redirect:/explorer?path=" + path;
+        return "redirect:/admin/explorer?path=" + path;
     }
 
     private void deleteDirectory(File directory) {
@@ -148,8 +156,6 @@ public class FileExplorerController {
             throw new RuntimeException("Erreur lors de l'enregistrement du fichier : " + e.getMessage());
         }
 
-        return "redirect:/explorer?path=" + path;
+        return "redirect:/admin/explorer?path=" + path;
     }
-
-
 }

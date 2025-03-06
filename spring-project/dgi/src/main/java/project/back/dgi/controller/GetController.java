@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
+import project.back.dgi.service.ActualiteService;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
@@ -29,6 +30,8 @@ public class GetController {
     private GeneralInfoValeurService generalInfoValeurService;
     @Autowired
     private GeneralInfoService generalInfoService;
+    @Autowired
+    private ActualiteService actualiteService;
 
     @GetMapping("/accueil")
     public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
@@ -45,7 +48,12 @@ public class GetController {
         model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("historique", id_langue));
         model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("vision", id_langue));
         model.addAttribute("attributions", generalInfoValeurService.getGeneralInfoByKey("attributions", id_langue));
-        
+        model.addAttribute("e_service", generalInfoValeurService.getGeneralInfoByKey("e_service", id_langue));
+        model.addAttribute("votre_avis", generalInfoValeurService.getGeneralInfoByKey("votre_avis", id_langue));
+        model.addAttribute("centre_contact", generalInfoValeurService.getGeneralInfoByKey("centre_contact", id_langue));
+
+        model.addAttribute("allActualites", actualiteService.getAllActualites());
+
         return "accueil";
     }
 
@@ -63,7 +71,7 @@ public class GetController {
 
     @PostMapping("/general_info_static/update")
     public String updateGeneralInfo(@RequestParam Map<String, String> params,
-                                    @RequestParam("icone") String icone) {
+                                @RequestParam("icone") String icone) {
         Long generalInfoId = Long.parseLong(params.get("id"));
         GeneralInfo generalInfo = generalInfoService.getById(generalInfoId).orElse(null);
 
@@ -85,7 +93,6 @@ public class GetController {
         List<GeneralInfoValeur> valeursToUpdate = new ArrayList<>();
 
         for (String key : params.keySet()) {
-            System.out.println("key : "+key);
             if (key.contains(".")) {
                 String[] parts = key.split("\\.");
                 Long idLangue = Long.parseLong(parts[0]);
@@ -95,10 +102,19 @@ public class GetController {
                 valeur.setGeneralInfo(generalInfo);
                 valeur.setLangue(langueService.findById(idLangue));
 
-                if ("titre".equals(field)) {
-                    valeur.setTitre(params.get(key));
-                } else if ("valeur".equals(field)) {
-                    valeur.setValeur(params.get(key));
+                switch (field) {
+                    case "titre":
+                        valeur.setTitre(params.get(key));
+                        break;
+                    case "entete":
+                        valeur.setEntete(params.get(key));
+                        break;
+                    case "bouton":
+                        valeur.setBouton(params.get(key));
+                        break;
+                    case "valeur":
+                        valeur.setValeur(params.get(key));
+                        break;
                 }
 
                 valeursToUpdate.add(valeur);
@@ -106,7 +122,7 @@ public class GetController {
         }
 
         generalInfoValeurService.saveAll(valeursToUpdate);
-        PasswordUtil.waitError(3000); // attendre que l'image soit correctement copie avant de rediriger
-        return "redirect:/accueil";
+        PasswordUtil.waitError(3000);
+        return "redirect:/admin/accueil";
     }
 }

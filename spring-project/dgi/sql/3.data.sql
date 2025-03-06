@@ -61,3 +61,26 @@ VALUES
 ('Adidy', 'Adidy sy andraikitra', 1, 9),
 ('Attributions', 'Attributions et responsabilités', 2, 9),
 ('Responsibilities', 'Duties and responsibilities', 3, 9);
+
+INSERT INTO general_info (id, cle, lien, id_general_info)
+VALUES
+(10, 'e_service', NULL, NULL),
+(11, 'votre_avis', NULL, NULL),
+(12, 'centre_contact', NULL, NULL);
+
+INSERT INTO general_info_valeur (titre, valeur, entete, bouton, id_langue, id_general_info)
+VALUES
+-- Données pour la clé 'e_service' (id_general_info = 10)
+('E-Service', 'Accédez à nos services en ligne.', 'Services en ligne', 'Accéder', 2, 10), -- Français
+('E-Service', 'Access our online services.', 'Online Services', 'Access', 3, 10), -- Anglais
+('E-Service', 'Midiraho amin''ny tolotra an-tserasera.', 'Tolotra an-tserasera', 'Midira', 1, 10), -- Malgache
+
+-- Données pour la clé 'votre_avis' (id_general_info = 11)
+('Votre Avis', 'Donnez-nous votre avis.', 'Votre opinion compte', 'Donner mon avis', 2, 11), -- Français
+('Your Opinion', 'Give us your feedback.', 'Your opinion matters', 'Give feedback', 3, 11), -- Anglais
+('Hevitrao', 'Omeo hevitra aminay.', 'Ny hevitrao dia zava-dehibe', 'Omeo hevitra', 1, 11), -- Malgache
+
+-- Données pour la clé 'centre_contact' (id_general_info = 12)
+('Centre de Contact', 'Contactez-nous pour toute question.', 'Nous sommes là pour vous', 'Nous contacter', 2, 12), -- Français
+('Contact Center', 'Reach out to us for any inquiries.', 'We are here for you', 'Contact us', 3, 12), -- Anglais
+('Ivontoerana Fifandraisana', 'Mifandraisa aminay raha misy fanontaniana.', 'Miaraka aminay ianao', 'Mifandraisa aminay', 1, 12); -- Malgache

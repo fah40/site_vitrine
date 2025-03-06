@@ -18,6 +18,9 @@ public class PieceJointe {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "nom_fichier", nullable = false)
+    private String nomFichier;
+    
     @Column(name = "url_fichier", nullable = false)
     private String urlFichier;
 
@@ -29,6 +32,8 @@ public class PieceJointe {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    public String getNomFichier() { return nomFichier; }
+    public void setNomFichier(String nomFichier) { this.nomFichier = nomFichier; }
     public String getUrlFichier() { return urlFichier; }
     public void setUrlFichier(String urlFichier) { this.urlFichier = urlFichier; }
     public Actualite getActualite() { return actualite; }

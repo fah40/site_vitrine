@@ -14,14 +14,14 @@
         <option th:each="langue : ${langues}" 
                 th:value="${langue.id}"
                 th:selected="${langue.id == langueSelectionnee}"
-                th:text="${langue.nom}">
+                th:utext="${langue.nom}">
         </option>
     </select>
 
     <!-- Affichage des sections de l'accueil avec icônes et boutons de modification -->
     <section>
-        <h3 th:text="${a_propos?.titre}"></h3>
-        <p th:text="${a_propos?.valeur}"></p>
+        <h3 th:utext="${a_propos?.titre}"></h3>
+        <p th:utext="${a_propos?.valeur}"></p>
         <img th:if="${a_propos?.generalInfo?.icone}" th:src="@{${a_propos.generalInfo.icone}}" alt="Icône" width="50">
         <button>
             <a th:href="@{/admin/general_info_static/{cle}(cle='a_propos')}">Modifier</a>
@@ -29,8 +29,8 @@
     </section>
 
     <section>
-        <h3 th:text="${dgi?.titre}"></h3>
-        <p th:text="${dgi?.valeur}"></p>
+        <h3 th:utext="${dgi?.titre}"></h3>
+        <p th:utext="${dgi?.valeur}"></p>
         <img th:if="${dgi?.generalInfo?.icone}" th:src="@{${dgi.generalInfo.icone}}" alt="Icône" width="50">
         <button>
             <a th:href="@{/admin/general_info_static/{cle}(cle='dgi')}">Modifier</a>
@@ -38,8 +38,8 @@
     </section>
 
     <section>
-        <h3 th:text="${mot_du_dgi?.titre}"></h3>
-        <p th:text="${mot_du_dgi?.valeur}"></p>
+        <h3 th:utext="${mot_du_dgi?.titre}"></h3>
+        <p th:utext="${mot_du_dgi?.valeur}"></p>
         <img th:if="${mot_du_dgi?.generalInfo?.icone}" th:src="@{${mot_du_dgi.generalInfo.icone}}" alt="Icône" width="50">
         <button>
             <a th:href="@{/admin/general_info_static/{cle}(cle='mot_du_dgi')}">Modifier</a>
@@ -47,8 +47,8 @@
     </section>
 
     <section>
-        <h3 th:text="${historique?.titre}"></h3>
-        <p th:text="${historique?.valeur}"></p>
+        <h3 th:utext="${historique?.titre}"></h3>
+        <p th:utext="${historique?.valeur}"></p>
         <a th:if="${historique?.generalInfo?.icone}" 
            th:href="@{/admin/explorer?path=/historique}">
             <img th:src="@{${historique.generalInfo.icone}}" alt="Icône" width="50">
@@ -63,8 +63,8 @@
     </section>
     
     <section>
-        <h3 th:text="${vision?.titre}"></h3>
-        <p th:text="${vision?.valeur}"></p>
+        <h3 th:utext="${vision?.titre}"></h3>
+        <p th:utext="${vision?.valeur}"></p>
         <a th:if="${vision?.generalInfo?.icone}" 
            th:href="@{/admin/explorer?path=/vision}">
             <img th:src="@{${vision.generalInfo.icone}}" alt="Icône" width="50">
@@ -79,8 +79,8 @@
     </section>
     
     <section>
-        <h3 th:text="${attributions?.titre}"></h3>
-        <p th:text="${attributions?.valeur}"></p>
+        <h3 th:utext="${attributions?.titre}"></h3>
+        <p th:utext="${attributions?.valeur}"></p>
         <a th:if="${attributions?.generalInfo?.icone}" 
            th:href="@{/admin/explorer?path=/attributions}">
             <img th:src="@{${attributions.generalInfo.icone}}" alt="Icône" width="50">
@@ -95,8 +95,8 @@
     </section>
 
     <section>
-        <h3 th:text="${legislation?.titre}"></h3>
-        <p th:text="${legislation?.valeur}"></p>
+        <h3 th:utext="${legislation?.titre}"></h3>
+        <p th:utext="${legislation?.valeur}"></p>
         <a th:if="${legislation?.generalInfo?.icone}" 
            th:href="@{/admin/explorer?path=/legislation}">
             <img th:src="@{${legislation.generalInfo.icone}}" alt="Icône" width="50">
@@ -111,8 +111,8 @@
     </section>
     
     <section>
-        <h3 th:text="${ressources?.titre}"></h3>
-        <p th:text="${ressources?.valeur}"></p>
+        <h3 th:utext="${ressources?.titre}"></h3>
+        <p th:utext="${ressources?.valeur}"></p>
         <a th:if="${ressources?.generalInfo?.icone}" 
            th:href="@{/admin/explorer?path=/ressources}">
             <img th:src="@{${ressources.generalInfo.icone}}" alt="Icône" width="50">
@@ -127,8 +127,8 @@
     </section>
     
     <section>
-        <h3 th:text="${analytiques_fiscales?.titre}"></h3>
-        <p th:text="${analytiques_fiscales?.valeur}"></p>
+        <h3 th:utext="${analytiques_fiscales?.titre}"></h3>
+        <p th:utext="${analytiques_fiscales?.valeur}"></p>
         <a th:if="${analytiques_fiscales?.generalInfo?.icone}" 
            th:href="@{/admin/explorer?path=/analytiques_fiscales}">
             <img th:src="@{${analytiques_fiscales.generalInfo.icone}}" alt="Icône" width="50">
@@ -141,7 +141,98 @@
             <a th:href="@{/admin/general_info_static/{cle}(cle='analytiques_fiscales')}">Modifier</a>
         </button>
     </section>
+
+    <!-- Section pour e_service -->
+    <section>
+        <h3 th:utext="${e_service?.titre}"></h3>
+        <p th:utext="${e_service?.valeur}"></p>
+        <a th:if="${e_service?.generalInfo?.icone}" 
+        th:href="@{/admin/explorer?path=/e_service}">
+            <img th:src="@{${e_service.generalInfo.icone}}" alt="Icône e_service" width="50">
+        </a>
+        <a th:if="${e_service?.generalInfo?.icone == null}" 
+        th:href="@{/admin/explorer?path=/e_service}">
+            <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+        </a>
+        <button>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='e_service')}">Modifier</a>
+        </button>
+    </section>
+
+    <!-- Section pour e_service -->
+<section>
+    <h3 th:utext="${e_service?.titre}"></h3>
+    <p th:utext="${e_service?.valeur}"></p>
+    <h4 th:utext="${e_service?.entete}"></h4>
+    <a th:if="${e_service?.generalInfo?.icone}" 
+       th:href="@{/admin/explorer?path=/e_service}">
+        <img th:src="@{${e_service.generalInfo.icone}}" alt="Icône" width="50">
+    </a>
+    <a th:if="${e_service?.generalInfo?.icone == null}" 
+       th:href="@{/admin/explorer?path=/e_service}">
+        <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+    </a>
+    <button>
+        <a th:href="@{${e_service.generalInfo.lien}}">[[${e_service?.bouton}]]</a>
+    </button>
+    <button>
+        <a th:href="@{/admin/general_info_static/{cle}(cle='e_service')}">Modifier</a>
+    </button>
+</section>
+
+    <!-- Section pour votre_avis -->
+    <section>
+        <h3 th:utext="${votre_avis?.titre}"></h3>
+        <p th:utext="${votre_avis?.valeur}"></p>
+        <h4 th:utext="${votre_avis?.entete}"></h4>
+        <a th:if="${votre_avis?.generalInfo?.icone}" 
+        th:href="@{/admin/explorer?path=/votre_avis}">
+            <img th:src="@{${votre_avis.generalInfo.icone}}" alt="Icône" width="50">
+        </a>
+        <a th:if="${votre_avis?.generalInfo?.icone == null}" 
+        th:href="@{/admin/explorer?path=/votre_avis}">
+            <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+        </a>
+        <button>
+            <a th:href="@{${votre_avis.generalInfo.lien}}">[[${votre_avis?.bouton}]]</a>
+        </button>
+        <button>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='votre_avis')}">Modifier</a>
+        </button>
+    </section>
+
+    <!-- Section pour centre_contact -->
+    <section>
+        <h3 th:utext="${centre_contact?.titre}"></h3>
+        <p th:utext="${centre_contact?.valeur}"></p>
+        <h4 th:utext="${centre_contact?.entete}"></h4>
+        <a th:if="${centre_contact?.generalInfo?.icone}" 
+        th:href="@{/admin/explorer?path=/centre_contact}">
+            <img th:src="@{${centre_contact.generalInfo.icone}}" alt="Icône" width="50">
+        </a>
+        <a th:if="${centre_contact?.generalInfo?.icone == null}" 
+        th:href="@{/admin/explorer?path=/centre_contact}">
+            <img src="/images/default_icon.png" alt="Icône par défaut" width="50">
+        </a>
+        <button>
+            <a th:href="@{${centre_contact.generalInfo.lien}}">[[${centre_contact?.bouton}]]</a>
+        </button>
+        <button>
+            <a th:href="@{/admin/general_info_static/{cle}(cle='centre_contact')}">Modifier</a>
+        </button>
+    </section>
     
+     <!-- Affichage des sections de l'accueil avec icônes et boutons de modification -->
+     <section>
+        <h3>Actualités</h3>
+        <ul>
+            <li th:each="actualite : ${allActualites}">
+                <h4 th:utext="${actualite.titre}"></h4>
+                <p th:utext="${actualite.description}"></p>
+                <a th:href="@{/admin/actualite/{id}(id=${actualite.id})}">Lire plus</a>
+            </li>
+        </ul>
+    </section>
 
 </body>
 </html>

@@ -9,11 +9,13 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +29,7 @@ import project.back.dgi.service.PieceJointeService;
 import project.back.dgi.service.UserService;
 
 @Controller
-@RequestMapping("/admin/actualites")
+@RequestMapping("/admin")
 public class ActualiteController {
 
     @Autowired
@@ -43,14 +45,14 @@ public class ActualiteController {
     private String storagePath;
 
     // Afficher le formulaire d'ajout d'une actualité
-    @GetMapping("/add")
+    @GetMapping("/actualites/add")
     public String showAddForm(Model model) {
         model.addAttribute("actualite", new Actualite());
         return "actualite-form"; // Nom du template Thymeleaf
     }
 
 
-    @PostMapping("/save")
+    @PostMapping("/actualites/save")
     public String saveActualite(
             @RequestParam String title,
             @RequestParam String content,
@@ -99,6 +101,7 @@ public class ActualiteController {
                         PieceJointe pieceJointe = new PieceJointe();
                         pieceJointe.setUrlFichier(filePath.toString());
                         pieceJointe.setActualite(actualite);
+                        pieceJointe.setNomFichier(file.getOriginalFilename());
 
                         // Enregistrer la pièce jointe
                         pieceJointeService.savePieceJointe(pieceJointe);
@@ -110,6 +113,21 @@ public class ActualiteController {
             }
         }
 
-        return "redirect:/actualites/add"; // Rediriger vers le formulaire
+        return "redirect:/admin/actualites/add"; // Rediriger vers le formulaire
+    }
+
+    @GetMapping("/actualite/{idActu}")    
+    public String getActuDetails (@PathVariable long idActu, Model model) {
+        Actualite actualite = actualiteService.getActualiteById(idActu).orElse(null);
+        List<PieceJointe> pieceJointes = pieceJointeService.getPiecesJointesByActualiteId(idActu);
+
+        if (actualite != null) {
+            model.addAttribute("actualite", actualite);
+            model.addAttribute("pieceJointes", pieceJointes);
+            
+            return "detail_actu";
+        }
+
+        return "redirect:/admin/accueil";
     }
 }
