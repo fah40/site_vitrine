@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
+import project.back.dgi.entity.Langue;
 import project.back.dgi.repository.GeneralInfoRepository;
 import project.back.dgi.repository.GeneralInfoValeurRepository;
 
@@ -19,6 +20,11 @@ public class GeneralInfoService {
     private GeneralInfoRepository generalInfoRepository;
     @Autowired
     private GeneralInfoValeurRepository generalInfoValeurRepository;
+
+    public GeneralInfoValeur getGeneralInfoValeurByKeyAndLanguage(GeneralInfo gi, Langue langue) {
+        // Supposons que GeneralInfoValeurRepository a une méthode pour trouver par clé et langue
+        return generalInfoValeurRepository.findByGeneralInfoAndLangue(gi, langue).orElse(null);
+    }
 
     public Optional<GeneralInfo> findById (Long id){
         return generalInfoRepository.findById(id);

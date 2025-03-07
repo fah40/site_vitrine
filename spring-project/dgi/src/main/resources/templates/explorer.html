@@ -6,6 +6,8 @@
 <body>
     <h1>Explorateur de fichiers</h1>
     <p>Chemin actuel : <span th:text="${currentPath}"></span></p>
+    <p th:utext="${descri}"></p>
+
 
     <!-- Afficher les erreurs -->
     <div th:if="${error}" style="color: red;">
@@ -20,10 +22,12 @@
             <th:block th:if="${mapFolders.get(folder) == null}">
                 <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:text="${folder}"></a>
             </th:block>
+            
             <th:block th:if="${mapFolders.get(folder) != null}">
                 <!-- Utilisez le lien de l'objet GeneralInfo -->
-                <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:text="${folder}"></a>
+                <a th:attr="href=${mapFolders.get(folder).lien}" rel="noopener noreferrer" th:text="${folder}"></a>
             </th:block>
+
         </li>
     </ul>
 
