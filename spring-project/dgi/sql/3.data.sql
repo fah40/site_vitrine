@@ -31,15 +31,15 @@ VALUES
 
 INSERT INTO general_info (id, cle, lien, id_general_info)
 VALUES
-(1, 'a_propos', NULL, NULL),
-(2, 'dgi', NULL, NULL),
-(3, 'mot_du_dgi', NULL, NULL),
-(4, 'legislation', NULL, NULL),
-(5, 'ressources', NULL, NULL),
-(6, 'analytiques_fiscales', NULL, NULL),
-(7, 'historique', NULL, NULL),
-(8, 'vision', NULL, NULL),
-(9, 'attributions', NULL, NULL);
+(DEFAULT, 'a_propos', NULL, NULL),
+(DEFAULT, 'dgi', NULL, NULL),
+(DEFAULT, 'mot_du_dgi', NULL, NULL),
+(DEFAULT, 'legislation', NULL, NULL),
+(DEFAULT, 'ressources', NULL, NULL),
+(DEFAULT, 'analytiques_fiscales', NULL, NULL),
+(DEFAULT, 'historique', NULL, NULL),
+(DEFAULT, 'vision', NULL, NULL),
+(DEFAULT, 'attributions', NULL, NULL);
 
 INSERT INTO general_info_valeur (titre, valeur, id_langue, id_general_info)
 VALUES
@@ -73,9 +73,9 @@ VALUES
 
 INSERT INTO general_info (id, cle, lien, id_general_info)
 VALUES
-(10, 'e_service', NULL, NULL),
-(11, 'votre_avis', NULL, NULL),
-(12, 'centre_contact', NULL, NULL);
+(DEFAULT, 'e_service', NULL, NULL),
+(DEFAULT, 'votre_avis', NULL, NULL),
+(DEFAULT, 'centre_contact', NULL, NULL);
 
 INSERT INTO general_info_valeur (titre, valeur, entete, bouton, id_langue, id_general_info)
 VALUES

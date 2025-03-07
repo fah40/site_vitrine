@@ -13,11 +13,30 @@
     </div>
 
     <!-- Liste des fichiers et dossiers -->
+    <!-- Section des dossiers -->
+    <h3>Dossiers</h3>
     <ul>
-        <li th:each="file : ${files}">
-            <a th:href="@{/admin/explorer(path=${currentPath + '/' + file})}" th:text="${file}"></a>
+        <li th:each="folder : ${mapFolders.keySet()}">
+            <th:block th:if="${mapFolders.get(folder) == null}">
+                <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:text="${folder}"></a>
+            </th:block>
+            <th:block th:if="${mapFolders.get(folder) != null}">
+                <!-- Utilisez le lien de l'objet GeneralInfo -->
+                <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:text="${folder}"></a>
+            </th:block>
         </li>
     </ul>
+
+    <!-- Section des fichiers -->
+    <h3>Fichiers</h3>
+    <ul>
+        <li th:each="file : ${mapFiles.keySet()}">
+            <th:block th:if="${mapFiles.get(file) == null}">
+                <a th:href="@{/admin/explorer(path=${currentPath + '/' + file})}" th:text="${file}"></a>
+            </th:block>
+        </li>
+    </ul>
+
 
     <!-- Formulaire pour créer un dossier -->
     <h2>Créer un dossier</h2>
