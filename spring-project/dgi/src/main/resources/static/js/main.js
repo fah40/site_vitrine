@@ -1111,18 +1111,6 @@ setInterval(() => {
     nextSlide();
 }, 10000);
 
-document.getElementById("histo").addEventListener("click", function() {
-    // Remplacez par le chemin réel ou une URL publique vers votre fichier PDF
-    var pdfUrl = './documents/maintenance.jpg'; // Exemple de fichier dans le même répertoire que votre page HTML
-
-    // Vérifiez que l'URL est accessible
-    if (pdfUrl) {
-        // Ouvrez le fichier dans un nouvel onglet ou une nouvelle fenêtre
-        window.open(pdfUrl, '_blank');
-    } else {
-        console.error("Le chemin du fichier PDF est incorrect ou non défini.");
-    }
-});
 //============================================
 
 function animateCounter(counter) {
@@ -1203,19 +1191,6 @@ window.addEventListener('pageshow', (event) => {
         }
     }
 });
-
-function maintenance() {
-    // Remplacez par le chemin réel ou une URL publique vers votre fichier PDF ou image
-    var fileUrl = './documents/maintenance.jpg'; // Exemple de fichier dans le même répertoire que votre page HTML
-
-    // Vérifiez que l'URL est accessible
-    if (fileUrl) {
-        // Ouvrez le fichier dans un nouvel onglet ou une nouvelle fenêtre
-        window.open(fileUrl, '_blank');
-    } else {
-        console.error("Le chemin du fichier est incorrect ou non défini.");
-    }
-}
 
 // Show the popup when the page loads
 window.onload = function () {

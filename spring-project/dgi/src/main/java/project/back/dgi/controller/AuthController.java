@@ -192,6 +192,6 @@ public class AuthController {
 
         model.addAttribute("email", email);
         session.setAttribute("user", user);
-        return "redirect:/accueil"; // Redirige vers la page d'accueil
+        return "redirect:/admin/accueil"; // Redirige vers la page d'accueil
     }
 }

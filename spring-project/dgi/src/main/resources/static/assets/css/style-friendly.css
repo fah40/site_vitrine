@@ -1173,6 +1173,80 @@ breadcrumbs
 }
 
 /* -------------------------------------------
+/* -------------------------------------------
+/* Upload */
+
+.upload-container {
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.file-upload-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 20px;
+  background-color: #f5f5f5;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-label:hover {
+  background-color: #e9ecef;
+  border-color: #999;
+}
+
+.file-preview {
+  margin-top: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.file-item:last-child {
+  border-bottom: none;
+}
+
+.remove-btn {
+  cursor: pointer;
+  color: #dc3545;
+  margin-left: auto;
+}
+
+.remove-btn:hover {
+  color: #bd2130;
+}
+
+.btn-inverse {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-inverse:hover {
+  background-color: #555;
+}
+
+/* -------------------------------------------
+
 
 buttons
 

@@ -275,7 +275,7 @@
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${ressources?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a href="ressource.html" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/admin/explorer?path=/ressources}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-cube"></i>
                                                     <span th:utext="${ressources?.bouton}">voir plus</span>
                                                 </a>
@@ -288,7 +288,7 @@
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${analytiques_fiscales?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up voirPlus" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a href="analytique.php" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/admin/explorer?path=/analytiques_fiscales}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-chart-line"></i>
                                                     <span th:utext="${analytiques_fiscales?.bouton}">voir plus</span>
                                                 </a>
@@ -301,7 +301,7 @@
                                         <div class="col-md-4 col-lg-12">
                                             <div class="fah-counter-item fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                 <h4 class="fah-offset-number fah-up counter" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-size: 40px;" data-target="153">0<span class="fah-a2"></span></h4>
-                                                    <h1 onclick="maintenance()" class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> Bureaux opérationnels </h5>
+                                                    <h1 class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> Bureaux opérationnels </h5>
                                                 <div class="fah-counter-text">
                                                 </div>
                                             </div>
@@ -309,7 +309,7 @@
                                         <div class="col-md-4 col-lg-12">
                                             <div class="fah-counter-item fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                 <h4 class="fah-offset-number fah-up counter" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-size: 40px;" data-target="1585274">0<span class="fah-a2"></span></h4>
-                                                    <h1 onclick="maintenance()" class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> contribuables enregistrés</h5>
+                                                    <h1 class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> contribuables enregistrés</h5>
                                                 <div class="fah-counter-text">
                                                 </div>
                                             </div>
@@ -317,7 +317,7 @@
                                         <div class="col-md-4 col-lg-12">
                                             <div class="fah-counter-item fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                 <h4 class="fah-offset-number fah-up counter" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-size: 40px;" data-target="4754124452922">0<span class="fah-a2"></span></h4>
-                                                    <h1 onclick="maintenance()" class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> recettes collectées</h5>
+                                                    <h1 class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> recettes collectées</h5>
                                                 <div class="fah-counter-text">
                                                 </div>
                                             </div>
@@ -406,8 +406,8 @@
                     <!-- Safi end -->
 
                     <!-- actualite -->
-                    <div class="fah-p-160-160" id="actualites" >
-                        <div class="container" style="height: 400px;margin-bottom: 390px;">
+                    <div class="fah-p-160-160" id="actualites">
+                        <div class="container">
                             <div class="row fah-aie fah-mb30">
                                 <div class="col-md-6">
                                     <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">ACTUALITés</span></h2>
@@ -416,14 +416,38 @@
                                     <p class="fah-stylized fah-m1 fah-tar fah-768-tal fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a href="" class="fah-arrow-link fah-c-gone"></a></p>
                                 </div>
                             </div>
-                            <div class="swiper-container fah-blog-slider swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight swiper-watch-progress swiper-backface-hidden">
+
+                            <div th:each="actualite : ${allActualites}" class="swiper-container fah-blog-slider swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight swiper-watch-progress swiper-backface-hidden">
                                 <div class="swiper-wrapper fah-c-swipe fah-c-light" style="height: 562px; transform: translate3d(0px, 0px, 0px);" id="swiper-wrapper-e4b71099297d2a71a" aria-live="polite">
-                                    
-                                    
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 605px; margin-right: 30px;" role="group" aria-label="1 / 4">
+                                        <div class="fah-blog-card">
+                                            <div class="fah-cover fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
+                                                <div class="fah-hover-frame">
+                                                    <img src="./assets/img/news/new1.jpg" alt="cover" class="fah-scale-img" data-value-1="1.15" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);">
+                                                </div>
+                                                <div class="fah-badges">
+                                                   <!--  <div class="fah-category">design</div>
+                                                    <div class="fah-date">29.08.24</div> -->
+                                                </div>
+                                            </div>
+                                            <a th:href="@{/admin/actualite/{id}(id=${actualite.id})}" class="fah-descr fah-c-gone">
+                                                <div class="fah-text-frame">
+                                                    <h4 class="fah-head4 fah-max-2row-text fah-mb20 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualite.titre}">SAFI - INITIATIVE D'ACCÉLÉRATION NUMÉRIQUE POUR LA FISCALITÉ À MADAGASCAR</h4>
+                                                    <div class="fah-text-md fah-max-2row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualite.description}">Antananarivo, ce 8 novembre 2024 - La Direction Générale des Impôts de Madagascar a franchi une étape décisive dans sa transformation numérique après le lancement officiel du Système d’Administration Fiscale Intégré ou projet SAFI...</div>
+                                                </div>
+                                                <div class="fah-up fah-768-gone" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
+                                                    <div class="fah-stylized-btn">
+                                                        <i class="fa fa-book-open"></i>
+                                                        <span>voir plus</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
                         </div>
-                    </div><br><br>
+                    </div>
                     <!-- actualite end -->
 
                     <!-- Torohy -->
@@ -459,10 +483,6 @@
                                         <h6 class="fah-footer-link fah-rubber fah-m1" th:utext="${centre_contact?.titre}"></h6>
                                     </a>
 
-                                    <!--<a href="contact.html" class="fah-footer-contact fah-mb90">
-                                        
-                                        <h6 class="fah-footer-link fah-rubber fah-m1"><span class="fah-word-span"><span class="fah-letter-span">C</span><span class="fah-letter-span">E</span><span class="fah-letter-span">N</span><span class="fah-letter-span">T</span><span class="fah-letter-span">R</span><span class="fah-letter-span">E</span></span> <span class="fah-letter-span"><span class="fah-letter-span">d</span><span class="fah-letter-span">e</span></span> <span class="fah-word-span"><span class="fah-letter-span">c</span><span class="fah-letter-span">o</span><span class="fah-letter-span">n</span><span class="fah-letter-span">t</span><span class="fah-letter-span">a</span><span class="fah-letter-span">c</span><span class="fah-letter-span">t</span></span></h6>
-                                    </a><br><br><br><br>-->
                                     <div th:utext="${centre_contact?.valeur}">.</div>
                                     <div class="row">
                                         <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;margin-top: 10px;">
