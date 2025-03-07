@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -18,16 +19,16 @@ public class GeneralInfoValeur {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "titre", nullable = false)
+    @Column(name = "titre", nullable = false, columnDefinition = "TEXT")
     private String titre;
 
-    @Column(name = "valeur", nullable = false)
+    @Column(name = "valeur", nullable = false, columnDefinition = "TEXT")
     private String valeur;
 
-    @Column(name = "entete")
+    @Column(name = "entete", columnDefinition = "TEXT")
     private String entete;
 
-    @Column(name = "bouton")
+    @Column(name = "bouton", columnDefinition = "TEXT")
     private String bouton;
 
     @ManyToOne(fetch = FetchType.EAGER)

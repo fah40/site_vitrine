@@ -18,10 +18,10 @@ public class PieceJointe {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "nom_fichier", nullable = false)
+    @Column(name = "nom_fichier", nullable = false, columnDefinition = "TEXT")
     private String nomFichier;
     
-    @Column(name = "url_fichier", nullable = false)
+    @Column(name = "url_fichier", nullable = false, columnDefinition = "TEXT")
     private String urlFichier;
 
     @ManyToOne(fetch = FetchType.EAGER)

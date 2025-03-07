@@ -20,10 +20,10 @@ public class Actualite {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "titre", nullable = false)
+    @Column(name = "titre", nullable = false, columnDefinition = "TEXT")
     private String titre;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "date_ajout", nullable = false)

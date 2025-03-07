@@ -18,13 +18,13 @@ public class GeneralInfo {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "cle", nullable = false)
+    @Column(name = "cle", nullable = false, columnDefinition = "TEXT")
     private String cle;
 
-    @Column(name = "icone")
+    @Column(name = "icone", columnDefinition = "TEXT")
     private String icone;
 
-    @Column(name = "lien")
+    @Column(name = "lien", columnDefinition = "TEXT")
     private String lien;
 
     @ManyToOne(fetch = FetchType.EAGER)
