@@ -54,7 +54,7 @@ public class GetController {
 
         model.addAttribute("allActualites", actualiteService.getAllActualites());
 
-        return "index";
+        return "accueil";
     }
 
     @GetMapping("/general_info_static/{cle}")

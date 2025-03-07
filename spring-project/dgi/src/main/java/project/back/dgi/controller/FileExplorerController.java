@@ -128,7 +128,15 @@ public class FileExplorerController {
             generalInfo.setLien(lien);
         }
 
-        generalInfoService.save(generalInfo);
+        // pour initialiser les dossiers en base
+        // GeneralInfo inBase = generalInfoService.getByCle(folderName).orElse(null);
+        // if (inBase != null) {
+        //     inBase.setLien(lien);
+        //     generalInfoService.save(inBase);
+        // }else{
+            generalInfoService.save(generalInfo);
+        // }
+
 
         return "redirect:/admin/explorer?path=" + path;
     }
