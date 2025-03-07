@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletResponse;
 import project.back.dgi.entity.GeneralInfo;
+import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.service.GeneralInfoService;
+import project.back.dgi.service.LangueService;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,6 +35,9 @@ public class FileExplorerController {
     private ServletContext servletContext;
     @Autowired
     private GeneralInfoService generalInfoService;
+    @Autowired
+    private LangueService langueService;
+
 
     @Value("${app.storage.location}") // Injection du chemin défini dans application.properties
     private String storagePath;
@@ -41,7 +46,7 @@ public class FileExplorerController {
     private String uploadPath;
 
     @GetMapping("/explorer")
-    public String listFiles(@RequestParam(required = false, defaultValue = "") String path, Model model, HttpServletResponse response) throws IOException {
+    public String listFiles(@RequestParam(required = false, defaultValue = "") String path,@RequestParam(required = false, defaultValue = "2") String langue , Model model, HttpServletResponse response) throws IOException {
         File fileOrDirectory = new File(storagePath + File.separator + path);
         System.out.println("Chemin utilisé : " + fileOrDirectory.getAbsolutePath());
 
@@ -70,14 +75,28 @@ public class FileExplorerController {
 
         HashMap<String, GeneralInfo> generalInfoMap = new HashMap<>();
         HashMap<String, GeneralInfo> generalInfoFolderMap = new HashMap<>();
+        String descri = path.startsWith("/") ? path : "/" + path;
+        System.out.println("ooooooo "+descri);
+        GeneralInfoValeur giv = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfoService.getByCle(descri).orElse(null), langueService.findById(Long.parseLong(langue)));
+        descri = giv == null ? "" : giv.getValeur();
+        System.out.println("oooo "+descri);
+        String tempPath = new String(path);
 
         for (String file : files) {
             File relatedFile = new File(storagePath + File.separator + file);
-            GeneralInfo generalInfo = generalInfoService.getByCle(file).orElse(null);
+            
+            String key = '/' + file;
+            GeneralInfo generalInfo = generalInfoService.getByCle('/' + file).orElse(null);
+            if (!tempPath.isEmpty()) {
+                generalInfo = generalInfoService.getByCle(tempPath + '/' + file).orElse(null);
+                key = tempPath + file;
+            }
 
-            System.out.println("file : " + file);
+            System.out.println("Clé : " + key);
 
             if (generalInfo != null) {
+                System.out.println("file : " + file);
+
                 generalInfoFolderMap.put(file, generalInfo);
             } else {
                 if (!relatedFile.isDirectory()) {
@@ -96,6 +115,7 @@ public class FileExplorerController {
         model.addAttribute("files", files);
         model.addAttribute("mapFiles", generalInfoMap);
         model.addAttribute("mapFolders", generalInfoFolderMap);
+        model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
         return "explorer"; // Retourne la vue Thymeleaf
     }
@@ -121,9 +141,9 @@ public class FileExplorerController {
 
         GeneralInfo generalInfo = new GeneralInfo();
 
-        generalInfo.setCle(folderName);
+        generalInfo.setCle(path + '/' + folderName);
         if (lien.isEmpty()) {
-            generalInfo.setLien("/admin/explorer?path=" + path + File.separator + folderName);
+            generalInfo.setLien("/admin/explorer?path=" + path + '/' + folderName);
         } else {
             generalInfo.setLien(lien);
         }
@@ -190,7 +210,7 @@ public class FileExplorerController {
             }
 
             // Nom du fichier avec timestamp pour éviter les conflits
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            String fileName = file.getOriginalFilename();
 
             // Emplacement final du fichier
             Path filePath = Paths.get(destinationFolder.getAbsolutePath(), fileName);
