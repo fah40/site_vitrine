@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletResponse;
+import project.back.dgi.entity.GeneralInfo;
+import project.back.dgi.service.GeneralInfoService;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,6 +31,8 @@ public class FileExplorerController {
 
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    private GeneralInfoService generalInfoService;
 
     @Value("${app.storage.location}") // Injection du chemin défini dans application.properties
     private String storagePath;
@@ -63,12 +68,34 @@ public class FileExplorerController {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
-        // au cas ou vide
-        if (files.isEmpty()) {
-            return "dossier-vide";
+        HashMap<String, GeneralInfo> generalInfoMap = new HashMap<>();
+        HashMap<String, GeneralInfo> generalInfoFolderMap = new HashMap<>();
+
+        for (String file : files) {
+            File relatedFile = new File(storagePath + File.separator + file);
+            GeneralInfo generalInfo = generalInfoService.getByCle(file).orElse(null);
+
+            System.out.println("file : " + file);
+
+            if (generalInfo != null) {
+                generalInfoFolderMap.put(file, generalInfo);
+            } else {
+                if (!relatedFile.isDirectory()) {
+                    System.out.println("Is actually a file : " + file);
+
+                    generalInfoMap.put(file, generalInfo);
+                }
+            }
         }
 
+        // au cas ou vide
+        // if (files.isEmpty()) {
+        //     return "dossier-vide";
+        // }
+
         model.addAttribute("files", files);
+        model.addAttribute("mapFiles", generalInfoMap);
+        model.addAttribute("mapFolders", generalInfoFolderMap);
         model.addAttribute("currentPath", path);
         return "explorer"; // Retourne la vue Thymeleaf
     }
@@ -76,7 +103,7 @@ public class FileExplorerController {
 
 
     @PostMapping("/create-folder")
-    public String createFolder(@RequestParam String path, @RequestParam String folderName) {
+    public String createFolder(@RequestParam String path, @RequestParam String folderName, @RequestParam(required = false, defaultValue = "") String lien) {
         // Construire le chemin absolu du dossier parent
         File parentDir = new File(storagePath + File.separator + path);
         if (!parentDir.exists()) {
@@ -91,6 +118,17 @@ public class FileExplorerController {
                 throw new RuntimeException("Impossible de créer le dossier : " + newFolder.getAbsolutePath());
             }
         }
+
+        GeneralInfo generalInfo = new GeneralInfo();
+
+        generalInfo.setCle(folderName);
+        if (lien.isEmpty()) {
+            generalInfo.setLien("/admin/explorer?path=" + path + File.separator + folderName);
+        } else {
+            generalInfo.setLien(lien);
+        }
+
+        generalInfoService.save(generalInfo);
 
         return "redirect:/admin/explorer?path=" + path;
     }
