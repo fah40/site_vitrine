@@ -9,7 +9,7 @@ import project.back.dgi.entity.PieceJointe;
 
 @Repository
 public interface PieceJointeRepository extends JpaRepository<PieceJointe, Long> {
-    // Méthodes personnalisées (si nécessaire)
-    // Exemple : Rechercher des pièces jointes par actualité
     List<PieceJointe> findByActualiteId(Long actualiteId);
+    List<PieceJointe> findByActualiteIdAndIsImageFalse(Long actualiteId);
+    List<PieceJointe> findByActualiteIdAndIsImageTrue(Long actualiteId);
 }

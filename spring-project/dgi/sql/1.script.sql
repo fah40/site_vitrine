@@ -73,6 +73,7 @@ CREATE TABLE actualite(
 
 CREATE TABLE piece_jointe(
    id SERIAL,
+   isImage bool,
    nom_fichier TEXT NOT NULL,
    url_fichier TEXT NOT NULL,
    id_actualite INTEGER NOT NULL,

@@ -40,6 +40,8 @@ public class PieceJointeService {
         PieceJointe pieceJointe = pieceJointeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pièce jointe non trouvée pour cet ID :: " + id));
 
+        pieceJointe.setImage(pieceJointeDetails.isImage());
+        pieceJointe.setNomFichier(pieceJointeDetails.getNomFichier());
         pieceJointe.setUrlFichier(pieceJointeDetails.getUrlFichier());
         pieceJointe.setActualite(pieceJointeDetails.getActualite());
 
@@ -49,5 +51,13 @@ public class PieceJointeService {
     // Récupérer les pièces jointes d'une actualité spécifique
     public List<PieceJointe> getPiecesJointesByActualiteId(Long actualiteId) {
         return pieceJointeRepository.findByActualiteId(actualiteId);
+    }
+    // Récupérer les pièces jointes d'une actualité spécifique qui ne sont pas des images 
+    public List<PieceJointe> getPiecesJointesNotImageByActualiteId(Long actualiteId) {
+        return pieceJointeRepository.findByActualiteIdAndIsImageFalse(actualiteId);
+    }
+
+    public List<PieceJointe> getPiecesJointesImageByActualiteId(Long actualiteId) {
+        return pieceJointeRepository.findByActualiteIdAndIsImageTrue(actualiteId);
     }
 }

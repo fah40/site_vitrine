@@ -18,6 +18,9 @@ public class PieceJointe {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "is_image", nullable = false, columnDefinition = "TEXT")
+    private boolean isImage;
+
     @Column(name = "nom_fichier", nullable = false, columnDefinition = "TEXT")
     private String nomFichier;
     
@@ -32,10 +35,16 @@ public class PieceJointe {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public boolean isImage() { return isImage; }
+    public void setImage(boolean isImage) { this.isImage = isImage; }
+
     public String getNomFichier() { return nomFichier; }
     public void setNomFichier(String nomFichier) { this.nomFichier = nomFichier; }
+
     public String getUrlFichier() { return urlFichier; }
     public void setUrlFichier(String urlFichier) { this.urlFichier = urlFichier; }
+
     public Actualite getActualite() { return actualite; }
     public void setActualite(Actualite actualite) { this.actualite = actualite; }
 }
