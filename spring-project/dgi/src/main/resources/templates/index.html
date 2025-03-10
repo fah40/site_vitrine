@@ -190,7 +190,7 @@
                         <div class="container">
                             <div class="row fah-jcb">
                                 <div class="col-12">
-                                    <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='dgi')}">Modifier</a><br><br>
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='dgi')}">Modifier</a><br><br>
                                     <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${dgi?.entete}"></p>
                                 </div>
                                 <div class="col-lg-4">
@@ -200,7 +200,7 @@
                                     <!-- <p class="fah-text-md fah-deco-text fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-weight: bold;">Bienvenue à la Direction Générale des Impôts</p> -->
                                 </div>
                                 <div class="col-lg-7">
-                                    <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='mot_du_dgi')}">Modifier</a><br><br>
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='mot_du_dgi')}">Modifier</a><br><br>
                                     <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-a2" th:utext="${mot_du_dgi?.titre}"></h2>
                                     <div class="fah-text-md fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${mot_du_dgi?.valeur}"><div>
                                 </div>
@@ -215,7 +215,7 @@
                             <div class="row fah-jcc">
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
-                                        <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='historique')}">Modifier</a><br><br>
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='historique')}">Modifier</a><br><br>
                                         <a th:href="@{/admin/explorer?path=/historique}" id="histo"><i alt="icon" class="fah-mb30 fah-up fa fa-history icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
                                         <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${historique?.titre}"></h4>
                                     </div>
@@ -223,7 +223,7 @@
 
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-mb60">
-                                        <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='vision')}">Modifier</a><br><br>
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='vision')}">Modifier</a><br><br>
                                         <a th:href="@{/admin/explorer?path=/vision}">
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-globe icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i>
                                         </a>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
-                                        <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='attributions')}">Modifier</a><br><br>
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='attributions')}">Modifier</a><br><br>
                                         <a id="attribution" th:href="@{/admin/explorer?path=/attributions}"> 
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-code-branch icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
                                         <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${attributions?.titre}">Attributions</h4>
@@ -257,7 +257,7 @@
                                     <ul class="fah-services-list fah-mb160">
                                         <li class="fah-service-item fah-768-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                             <div class="fah-item-text fah-mb30">
-                                                <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='legislation')}">Modifier</a><br><br>
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='legislation')}">Modifier</a><br><br>
                                                 <h3 class="fah-head3 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${legislation?.titre}"></h3>
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${legislation?.valeur}"></div>
                                             </div>
@@ -270,7 +270,7 @@
                                         </li>
                                         <li class="fah-service-item fah-768-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                             <div class="fah-item-text fah-mb30">
-                                                <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='ressources')}">Modifier</a><br><br>
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='ressources')}">Modifier</a><br><br>
                                                 <h3 class="fah-head3 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${ressources?.titre}"></h3>
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${ressources?.valeur}"></div>
                                             </div>
@@ -283,7 +283,7 @@
                                         </li>
                                         <li class="fah-service-item fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                             <div class="fah-item-text fah-mb30">
-                                                <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='analytiques_fiscales')}">Modifier</a><br><br>
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='analytiques_fiscales')}">Modifier</a><br><br>
                                                 <h3 class="fah-head3 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${analytiques_fiscales?.titre}"></h3>
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${analytiques_fiscales?.valeur}"></div>
                                             </div>
@@ -334,7 +334,7 @@
                         <div class="fah-half-container fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                             <div class="fah-text-box fah-g-m1 fah-p-160-160" style="background: #0c0c0c !important;">
                                 
-                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color: white;" > <span th:utext="${e_service?.entete}"></span> <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='e_service')}">Modifier</a></p>
+                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color: white;" > <span th:utext="${e_service?.entete}"></span> <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='e_service')}">Modifier</a></p>
                                 <h2 class="fah-display3 fah-mb60 fah-m4 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-head1 fah-a1" th:utext="${e_service?.titre}"></span></h2>
                                 <div class="fah-text-md fah-deco-text fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: solid 4px #a9d9de ! important;color: white;" th:utext="${e_service?.valeur}"></div>
 
@@ -455,7 +455,7 @@
                         <div class="fah-half-container fah-reverse fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0; ">
                             <div class="fah-text-box fah-g-m3 fah-p-160-160">
                                 
-                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span th:utext="${votre_avis?.entete}"></span> <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='votre_avis')}">Modifier</a></p>
+                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span th:utext="${votre_avis?.entete}"></span> <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='votre_avis')}">Modifier</a></p>
                                 <h2 class="fah-display3 fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-footer-link" th:utext="${votre_avis?.titre}">VOTRE AVIS</span></h2>
                                 <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}">Exprimez votre avis sur nos services et contribuez à la lutte contre la fraude fiscale à travers notre plateforme sécurisée de signalement.</div>
                                 <div class="fah-stylized fah-m2 fah-mb60 fah-up">
@@ -478,7 +478,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                    <a class="btn-modif" th:href="@{/admin/general_info_static/{cle}(cle='centre_contact')}">Modifier</a><br><br>
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='centre_contact')}">Modifier</a><br><br>
                                     <a th:href="@{/admin/explorer?path=/centre_contact}" class="fah-footer-contact fah-mb90">
                                         <h6 class="fah-footer-link fah-rubber fah-m1" th:utext="${centre_contact?.titre}"></h6>
                                     </a>

@@ -39,6 +39,12 @@ public class GeneralInfoValeur {
     @JoinColumn(name = "id_general_info", nullable = false)
     private GeneralInfo generalInfo;
 
+    @Override
+    public String toString() {
+        return "GeneralInfoValeur [id=" + id + ", titre=" + titre + ", valeur=" + valeur + ", entete=" + entete
+                + ", bouton=" + bouton + ", langue=" + langue + "]";
+    }
+
     public GeneralInfoValeur() {}
 
     public Long getId() { return id; }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!-- saved from url=(0050)https://miller.bslthemes.com/pixy-demo/home-1.html -->
 <html lang="zxx" class="swup-enabled">
@@ -127,6 +126,7 @@
 
                                 <h2 style="margin-top:400px;">Créer un dossier</h2>
                                 <form class="row" th:action="@{/admin/create-folder}" method="post">
+                                    <inputtype="hidden" name="path" th:value="${currentPath}">
                                     <input type="hidden" name="path" th:value="${currentPath}">
                                     <input class="form-control form fah-up" type="text" name="folderName" placeholder="Nom du dossier" required><br>
                                     <input class="form-control form fah-up" type="text" name="lien"><br>
@@ -186,6 +186,7 @@
                             <div class="row fah-jcc">
                                 <div class="col-sm-6 col-lg-6" th:each="folder : ${mapFolders.keySet()}">
                                     <div class="fah-iconbox fah-tac fah-mb60">
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle=${mapFolders.get(folder).getCle()})}">Modifier</a><br><br>
                                         <i class="fa fa-folder fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></i>
                                         <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
                                             
@@ -194,7 +195,8 @@
                                             </th:block>
                                             <th:block th:if="${mapFolders.get(folder) != null}">
                                                 <!-- Utilisez le lien de l'objet GeneralInfo -->
-                                                <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:text="${folder}"></a>
+                                                {% comment %} <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:text="${mapFolders.get(folder).getBouton()}"></a> {% endcomment %}
+                                                <p th:text="${mapFolders.get(folder).getBouton()}"></p>
                                             </th:block>
                                         
                                         </h4>
