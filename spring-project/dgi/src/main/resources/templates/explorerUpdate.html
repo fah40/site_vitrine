@@ -127,7 +127,7 @@
 
                                 <h2 style="margin-top:400px;">Créer un dossier</h2>
                                 <form class="row" th:action="@{/admin/create-folder}" method="post">
-                                    <inputtype="hidden" name="path" th:value="${currentPath}">
+                                    <input type="hidden" name="path" th:value="${currentPath}">
                                     <input class="form-control form fah-up" type="text" name="folderName" placeholder="Nom du dossier" required><br>
                                     <input class="form-control form fah-up" type="text" name="lien"><br>
                                     <button class="btn-modif" type="submit">Créer un dossier</button>

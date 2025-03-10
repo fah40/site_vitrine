@@ -99,7 +99,7 @@
                             <div class="fah-hero-text fah-scale-img" data-value-1="1.3" data-value-2="0.95" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9864, 0.9864);">
                                 <div class="fah-text-pad"></div>
                                 <div class="fah-word-frame">
-                                    <h1 class="fah-head1 fah-mb60 fah-rubber"><span class="fah-a2" th:text="${currentPath}"></span></h1>                                    
+                                    <h1 class="fah-head1 fah-mb60 fah-rubber"><span class="fah-a2" th:utext="${mainGeneralInfo.getTitre()}"></span></h1>                                    
                                 </div>
                             </div>
                             <div class="fah-shapes fah-scale-img" data-value-1=".7" data-value-2="1.11" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(1.0694, 1.0694);">
@@ -118,7 +118,7 @@
                                     <div class="fah-iconbox fah-tac fah-mb60">
                                         <i class="fa fa-book fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></i>
                                         <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></h4>
-                                        <p class="fah-text-md fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1; text-align:right;">Retrouvez tous nos guides et brochures d'information pour vous accompagner dans la compréhension et l'accomplissement de vos obligations fiscales.</p>
+                                        <p class="fah-text-md fah-up" th:utext="${mainGeneralInfo.getTitre()}" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1; text-align:right;"></p>
                                     </div>
                                 </div>
                                 
@@ -127,7 +127,7 @@
                                         <ul>
                                             <li th:each="file : ${mapFiles.keySet()}">
                                                 <th:block th:if="${mapFiles.get(file) == null}">
-                                                    <a class="fah-up" th:href="@{/admin/explorer(path=${currentPath + '/' + file})}" th:text="${file}"></a>
+                                                    <a class="fah-up" th:href="@{/admin/explorer(path=${currentPath + '/' + file})}" th:utext="${file}"></a>
                                                 </th:block>
                                             </li>
                                         </ul>
@@ -157,13 +157,9 @@
                             <div class="fah-hero-text fah-scale-img" data-value-1="1.3" data-value-2="0.95" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9864, 0.9864);">
                                 <div class="fah-text-pad"></div>
                                 <div class="fah-word-frame">
-                                    <h1 class="fah-head1 fah-mb60 fah-rubber"><span class="fah-letter-span" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);" th:text="${currentPath}"></span></h1>
+                                    <h1 class="fah-head1 fah-mb60 fah-rubber"><span class="fah-letter-span" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);" th:utext="${mainGeneralInfo.getTitre()}"></span></h1>
                                 </div>
-                                <p class="fah-text-md fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Retrouvez ici l'ensemble des textes et réglementations en vigueur <br> régissant la fiscalité malgache, régulièrement actualisés <br> pour vous permettre de mieux comprendre <br> vos droits et obligations fiscales.</p><br>
-
-                                
-
-
+                                <p class="fah-text-md fah-up" th:utext="${mainGeneralInfo.getTitre()}" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></p><br>
                             </div>
                             <div class="fah-shapes fah-scale-img" data-value-1=".7" data-value-2="1.11" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(1.0694, 1.0694);">
                                 <div class="fah-s-2"><img src="./assets/img/conex1.png" alt="shape"></div>
@@ -183,11 +179,11 @@
                                         <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
                                             
                                             <th:block th:if="${mapFolders.get(folder) == null}">
-                                                <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:text="${folder}"></a>
+                                                <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:utext="${folder}"></a>
                                             </th:block>
                                             <th:block th:if="${mapFolders.get(folder) != null}">
                                                 <!-- Utilisez le lien de l'objet GeneralInfo -->
-                                                <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:text="${folder}"></a>
+                                                <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:utext="${folder}"></a>
                                             </th:block>
                                         
                                         </h4>
