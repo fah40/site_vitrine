@@ -49,11 +49,11 @@ public class FileExplorerController {
     public String listFiles(@RequestParam(required = false, defaultValue = "") String path,@RequestParam(required = false, defaultValue = "2") String langue , Model model, HttpServletResponse response) throws IOException {
         File fileOrDirectory = new File(storagePath + File.separator + path);
         System.out.println("Chemin utilisé : " + fileOrDirectory.getAbsolutePath());
-
+        
         if (!fileOrDirectory.exists()) {
             throw new RuntimeException("Le chemin spécifié n'existe pas.");
         }
-
+        
         // Si c'est un fichier, on déclenche le téléchargement
         if (fileOrDirectory.isFile()) {
             response.setContentType("application/octet-stream");
@@ -62,7 +62,7 @@ public class FileExplorerController {
             response.getOutputStream().flush();
             return null; // Empêche Thymeleaf de traiter une vue
         }
-
+        
         // Si c'est un dossier, on affiche la liste des fichiers
         File[] filesArray = fileOrDirectory.listFiles();
         if (filesArray == null) {
@@ -70,9 +70,9 @@ public class FileExplorerController {
         }
 
         List<String> files = Arrays.stream(filesArray)
-                .map(File::getName)
-                .collect(Collectors.toList());
-
+        .map(File::getName)
+        .collect(Collectors.toList());
+        
         HashMap<String, GeneralInfo> generalInfoMap = new HashMap<>();
         HashMap<String, GeneralInfo> generalInfoFolderMap = new HashMap<>();
         String descri = path.startsWith("/") ? path : "/" + path;
@@ -81,7 +81,7 @@ public class FileExplorerController {
         descri = giv == null ? "" : giv.getValeur();
         System.out.println("oooo "+descri);
         String tempPath = new String(path);
-
+        
         for (String file : files) {
             File relatedFile = new File(storagePath + File.separator + file);
             
@@ -93,23 +93,23 @@ public class FileExplorerController {
             }
 
             System.out.println("Clé : " + key);
-
+            
             if (generalInfo != null) {
                 System.out.println("file : " + file);
-
+                
                 generalInfoFolderMap.put(file, generalInfo);
             } else {
                 if (!relatedFile.isDirectory()) {
                     System.out.println("Is actually a file : " + file);
-
+                    
                     generalInfoMap.put(file, generalInfo);
                 }
             }
         }
-
+        
         // au cas ou vide
         // if (files.isEmpty()) {
-        //     return "dossier-vide";
+            //     return "dossier-vide";
         // }
 
         model.addAttribute("files", files);
@@ -117,6 +117,9 @@ public class FileExplorerController {
         model.addAttribute("mapFolders", generalInfoFolderMap);
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
+        
+        System.out.println("SIZEEEEEEEEEEEEEEEEEEEEE : " + generalInfoFolderMap.size());
+        
         return "explorerUpdate"; // Retourne la vue Thymeleaf
     }
 

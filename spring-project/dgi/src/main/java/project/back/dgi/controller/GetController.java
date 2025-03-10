@@ -57,8 +57,8 @@ public class GetController {
         return "index";
     }
 
-    @GetMapping("/general_info_static/{cle}")
-    public String generalInfoStatic (@PathVariable String cle, Model model) {
+    @GetMapping("/general_info_static")
+    public String generalInfoStatic (@RequestParam String cle, Model model) {
         GeneralInfo generalInfo = generalInfoService.getByCle(cle).orElse(null);
         List<Langue> langues = langueService.findAll();
         Map<Long, GeneralInfoValeur> valeurs = generalInfoService.getGeneralInfoValeursByGeneralInfoId(generalInfo.getId());
@@ -102,20 +102,25 @@ public class GetController {
                 valeur.setGeneralInfo(generalInfo);
                 valeur.setLangue(langueService.findById(idLangue));
 
+                System.out.println(field);
                 switch (field) {
                     case "titre":
-                        valeur.setTitre(params.get(key));
+                    System.out.println("TITRE");
+                    valeur.setTitre(params.getOrDefault(key,""));
+                    System.out.println(valeur.getTitre());
                         break;
                     case "entete":
-                        valeur.setEntete(params.get(key));
+                        valeur.setEntete(params.getOrDefault(key,""));
                         break;
                     case "bouton":
-                        valeur.setBouton(params.get(key));
+                        valeur.setBouton(params.getOrDefault(key,""));
                         break;
                     case "valeur":
-                        valeur.setValeur(params.get(key));
+                        valeur.setValeur(params.getOrDefault(key,""));
                         break;
                 }
+
+                System.out.println(valeur.toString());
 
                 valeursToUpdate.add(valeur);
             }
