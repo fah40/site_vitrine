@@ -99,9 +99,21 @@ public class ActualiteController {
 
                         // Créer une nouvelle pièce jointe
                         PieceJointe pieceJointe = new PieceJointe();
+
+                        // Définir l'URL du fichier et le nom du fichier
                         pieceJointe.setUrlFichier(filePath.toString());
-                        pieceJointe.setActualite(actualite);
                         pieceJointe.setNomFichier(file.getOriginalFilename());
+
+                        // Définir l'actualité associée
+                        pieceJointe.setActualite(actualite);
+
+                        // Vérifier si le fichier est une image
+                        boolean isImage = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
+                                        fileName.endsWith(".png") || fileName.endsWith(".gif") ||
+                                        fileName.endsWith(".bmp") || fileName.endsWith(".webp");
+
+                        // Définir isImage en fonction du type de fichier
+                        pieceJointe.setImage(isImage);
 
                         // Enregistrer la pièce jointe
                         pieceJointeService.savePieceJointe(pieceJointe);
@@ -119,7 +131,7 @@ public class ActualiteController {
     @GetMapping("/actualite/{idActu}")    
     public String getActuDetails (@PathVariable long idActu, Model model) {
         Actualite actualite = actualiteService.getActualiteById(idActu).orElse(null);
-        List<PieceJointe> pieceJointes = pieceJointeService.getPiecesJointesByActualiteId(idActu);
+        List<PieceJointe> pieceJointes = pieceJointeService.getPiecesJointesNotImageByActualiteId(idActu);
 
         if (actualite != null) {
             model.addAttribute("actualite", actualite);
