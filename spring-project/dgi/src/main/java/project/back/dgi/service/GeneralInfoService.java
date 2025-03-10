@@ -59,8 +59,6 @@ public class GeneralInfoService {
         return generalInfoRepository.save(generalInfo);
     }
 
- 
-
     public void saveGeneralInfoValeurs(Map<Long, GeneralInfoValeur> valeurs) {
         generalInfoValeurRepository.saveAll(valeurs.values());
     }
@@ -70,5 +68,9 @@ public class GeneralInfoService {
             throw new IllegalArgumentException("Le GeneralInfo parent ne peut pas être null.");
         }
         return generalInfoRepository.findByParentGeneralInfo(parentGeneralInfo);
+    }
+
+    public void deleteById (Long id) {
+        generalInfoRepository.deleteById(id);
     }
 }

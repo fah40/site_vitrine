@@ -75,11 +75,11 @@ public class FileExplorerController {
         
         HashMap<String, GeneralInfo> generalInfoMap = new HashMap<>();
         HashMap<String, GeneralInfo> generalInfoFolderMap = new HashMap<>();
+        HashMap<String, GeneralInfoValeur> generalInfoValueMap = new HashMap<>();
+
         String descri = path.startsWith("/") ? path : "/" + path;
-        System.out.println("ooooooo "+descri);
         GeneralInfoValeur giv = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfoService.getByCle(descri).orElse(null), langueService.findById(Long.parseLong(langue)));
         descri = giv == null ? "" : giv.getValeur();
-        System.out.println("oooo "+descri);
         String tempPath = new String(path);
         
         for (String file : files) {
@@ -87,6 +87,7 @@ public class FileExplorerController {
             
             String key = '/' + file;
             GeneralInfo generalInfo = generalInfoService.getByCle('/' + file).orElse(null);
+
             if (!tempPath.isEmpty()) {
                 generalInfo = generalInfoService.getByCle(tempPath + '/' + file).orElse(null);
                 key = tempPath + file;
@@ -96,8 +97,14 @@ public class FileExplorerController {
             
             if (generalInfo != null) {
                 System.out.println("file : " + file);
-                
+
+                GeneralInfoValeur generalInfoValeur = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfo, langueService.findById(Long.parseLong(langue)));
+                if (generalInfoValeur.getTitre().isEmpty()) {
+                    generalInfoValeur.setTitre(file);
+                }
+                generalInfoValueMap.put(file, generalInfoValeur);    
                 generalInfoFolderMap.put(file, generalInfo);
+            
             } else {
                 if (!relatedFile.isDirectory()) {
                     System.out.println("Is actually a file : " + file);
@@ -115,6 +122,7 @@ public class FileExplorerController {
         model.addAttribute("files", files);
         model.addAttribute("mapFiles", generalInfoMap);
         model.addAttribute("mapFolders", generalInfoFolderMap);
+        model.addAttribute("mapValueFolders", generalInfoValueMap);
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
         
