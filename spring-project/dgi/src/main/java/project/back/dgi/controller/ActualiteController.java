@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.Instant;
-
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -89,7 +89,7 @@ public class ActualiteController {
                         }
 
                         // Générer un nom de fichier unique
-                        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                        String fileName = file.getOriginalFilename();
 
                         // Chemin complet du fichier
                         Path filePath = Paths.get(uploadDir.getAbsolutePath(), fileName);

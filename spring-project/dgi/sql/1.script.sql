@@ -73,7 +73,7 @@ CREATE TABLE actualite(
 
 CREATE TABLE piece_jointe(
    id SERIAL,
-   isImage bool,
+   is_image BOOL,
    nom_fichier TEXT NOT NULL,
    url_fichier TEXT NOT NULL,
    id_actualite INTEGER NOT NULL,
@@ -102,6 +102,6 @@ CREATE TABLE general_info_valeur(
    id_general_info INTEGER NOT NULL,
    PRIMARY KEY(id),
    FOREIGN KEY(id_langue) REFERENCES langue(id),
-   FOREIGN KEY(id_general_info) REFERENCES general_info(id),
+   FOREIGN KEY(id_general_info) REFERENCES general_info(id) ON DELETE CASCADE,
    UNIQUE(id_langue, id_general_info)
 );
