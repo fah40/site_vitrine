@@ -99,6 +99,9 @@ public class FileExplorerController {
                 System.out.println("file : " + file);
 
                 GeneralInfoValeur generalInfoValeur = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfo, langueService.findById(Long.parseLong(langue)));
+                if (generalInfoValeur.getTitre().isEmpty()) {
+                    generalInfoValeur.setTitre(file);
+                }
                 generalInfoValueMap.put(file, generalInfoValeur);    
                 generalInfoFolderMap.put(file, generalInfo);
             
@@ -119,7 +122,7 @@ public class FileExplorerController {
         model.addAttribute("files", files);
         model.addAttribute("mapFiles", generalInfoMap);
         model.addAttribute("mapFolders", generalInfoFolderMap);
-        model.addAttribute("mapValueFolders", generalInfoFolderMap);
+        model.addAttribute("mapValueFolders", generalInfoValueMap);
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
         
