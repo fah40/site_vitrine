@@ -117,7 +117,7 @@ public class FileExplorerController {
         model.addAttribute("mapFolders", generalInfoFolderMap);
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
-        return "explorer"; // Retourne la vue Thymeleaf
+        return "explorerUpdate"; // Retourne la vue Thymeleaf
     }
 
 
@@ -194,14 +194,14 @@ public class FileExplorerController {
     }
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam String path, @RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
-            throw new RuntimeException("Le fichier est vide !");
+    public String uploadFiles(@RequestParam String path, @RequestParam("file") MultipartFile[] files) {
+        if (files == null || files.length == 0) {
+            throw new RuntimeException("Aucun fichier n'a été sélectionné !");
         }
 
         try {
             // Emplacement où stocker les fichiers
-            String uploadDir = storagePath ;
+            String uploadDir = storagePath;
 
             // Création du chemin du dossier si `path` est fourni
             File destinationFolder = new File(uploadDir + File.separator + path);
@@ -209,17 +209,24 @@ public class FileExplorerController {
                 destinationFolder.mkdirs(); // Crée tous les dossiers nécessaires
             }
 
-            // Nom du fichier avec timestamp pour éviter les conflits
-            String fileName = file.getOriginalFilename();
+            // Parcourir chaque fichier et le sauvegarder
+            for (MultipartFile file : files) {
+                if (file.isEmpty()) {
+                    continue; // Ignorer les fichiers vides
+                }
 
-            // Emplacement final du fichier
-            Path filePath = Paths.get(destinationFolder.getAbsolutePath(), fileName);
+                // Nom du fichier avec timestamp pour éviter les conflits
+                String fileName = file.getOriginalFilename();
 
-            // Sauvegarde du fichier
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                // Emplacement final du fichier
+                Path filePath = Paths.get(destinationFolder.getAbsolutePath(), fileName);
+
+                // Sauvegarde du fichier
+                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            }
 
         } catch (IOException e) {
-            throw new RuntimeException("Erreur lors de l'enregistrement du fichier : " + e.getMessage());
+            throw new RuntimeException("Erreur lors de l'enregistrement des fichiers : " + e.getMessage());
         }
 
         return "redirect:/admin/explorer?path=" + path;
