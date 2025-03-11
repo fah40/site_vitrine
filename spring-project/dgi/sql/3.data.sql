@@ -47,7 +47,12 @@ VALUES
 (DEFAULT, 'nav_e_service', '#safi', 13),
 (DEFAULT, 'nav_actualites', '#actualites', 13),
 (DEFAULT, 'nav_espace', '#torohy', 13),
-(DEFAULT, 'nav_contact', '#contact', 13);
+(DEFAULT, 'nav_contact', '#contact', 13),
+(DEFAULT, 'actualites', NULL, NULL),
+(DEFAULT, 'partenaire', NULL, NULL),
+(DEFAULT, 'bureau', NULL, NULL),
+(DEFAULT, 'contribuable', NULL, NULL),
+(DEFAULT, 'recette', NULL, NULL);
 
 INSERT INTO general_info (id, cle, lien, id_general_info) VALUES
 (DEFAULT, 'appeler', '#appeler', NULL),       -- Section "Appeler"
@@ -61,7 +66,12 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 (DEFAULT, 'E-Service', 'E-Service', '', '', 1, 17),              -- E-Services
 (DEFAULT, 'Vaovao', 'Vaovao', '', '', 1, 18),                    -- Actualités
 (DEFAULT, 'Espace citoyen', 'Espace citoyen', '', '', 1, 19),    -- Espace citoyen
-(DEFAULT, 'Ivontoerana fifandraisana', 'Ivontoerana fifandraisana', '', '', 1, 20); -- Centre de contact
+(DEFAULT, 'Ivontoerana fifandraisana', 'Ivontoerana fifandraisana', '', '', 1, 20), -- Centre de contact
+(DEFAULT, 'Vaovao', '', '', '', 1, 21), -- actualite
+(DEFAULT, 'Mpiara-miasa', '', '', '', 1, 22), -- partenaire
+(DEFAULT, 'Bureaux opérationnels', '', '153', '', 1, 23), -- bureau
+(DEFAULT, 'contribuables enregistrés', '', '1585274', '', 1, 24), -- contribuable
+(DEFAULT, 'recettes collectées', '', '4754124452922', '', 1, 25); -- recettes
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Accueil', 'Accueil', '', '', 2, 14),
@@ -70,7 +80,12 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 (DEFAULT, 'E-Services', 'E-Services', '', '', 2, 17),
 (DEFAULT, 'Actualités', 'Actualités', '', '', 2, 18),
 (DEFAULT, 'Espace citoyen', 'Espace citoyen', '', '', 2, 19),
-(DEFAULT, 'Centre de contact', 'Centre de contact', '', '', 2, 20);
+(DEFAULT, 'Centre de contact', 'Centre de contact', '', '', 2, 20),
+(DEFAULT, 'actualités', '', '', '', 2, 21), -- Centre de contact
+(DEFAULT, 'partenaires', '', '', '', 2, 22), -- Centre de contact
+(DEFAULT, 'Bureaux opérationnels', '', '153', '', 2, 23), -- bureau
+(DEFAULT, 'contribuables enregistrés', '', '1585274', '', 2, 24), -- contribuable
+(DEFAULT, 'recettes collectées', '', '4754124452922', '', 2, 25); -- recettes
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Home', 'Home', '', '', 3, 14),          -- Accueil
@@ -79,7 +94,13 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 (DEFAULT, 'E-Services', 'E-Services', '', '', 3, 17), -- E-Services
 (DEFAULT, 'News', 'News', '', '', 3, 18),           -- Actualités
 (DEFAULT, 'Citizen Space', 'Citizen Space', '', '', 3, 19), -- Espace citoyen
-(DEFAULT, 'Contact Center', 'Contact Center', '', '', 3, 20); -- Centre de contact
+(DEFAULT, 'Contact Center', 'Contact Center', '', '', 3, 20), -- Centre de contact
+(DEFAULT, 'news', '', '', '', 3, 21), -- Centre de contact
+(DEFAULT, 'partners', '', '', '', 3, 22), -- Centre de contact
+(DEFAULT, 'Bureaux opérationnels', '', '153', '', 3, 23), -- bureau
+(DEFAULT, 'contribuables enregistrés', '', '1585274', '', 3, 24), -- contribuable
+(DEFAULT, 'recettes collectées', '', '4754124452922', '', 3, 25); -- recettes
+
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Mikasika', 'Mikasika', '', '', 1, 1),
@@ -121,7 +142,7 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 -- Section "Appeler"
-(DEFAULT, 'Appeler', 'Secrétariat DGI : +261 20 85 287 08<br>Cellule Communication DGI : +261 32 12 015 03<br>Cellule eHetra : +261 32 12 015 04<br>Hotline SSIF : +261 32 12 011 74 / +261 34 49 431 52', '', '', 2, (SELECT id FROM general_info WHERE cle = 'appeler')),
+(DEFAULT, 'Appeler', 'Secrétariat DGI : +261 20 85 287 08<br>Cellule Communication DGI : +261 32 12 015 03<br>Cellule eHetra : +261 32 12 015 04<br>Hotline SSIF : +261 32 12 011 74 / +261 34 49 431 52', 'NOUS CONTACTER', '', 2, (SELECT id FROM general_info WHERE cle = 'appeler')),
 
 -- Section "Ecrire"
 (DEFAULT, 'Ecrire', 'Secrétariat DGI : dgimpots@moov.mg<br>Cellule Communication DGI : communication.dgimpots@gmail.com<br>Hotline SSIF : impot.ssif.hotline@gmail.com', '', '', 2, (SELECT id FROM general_info WHERE cle = 'ecrire')),
@@ -131,7 +152,7 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 -- Section "Appeler"
-(DEFAULT, 'Call', 'DGI Secretariat: +261 20 85 287 08<br>DGI Communication Unit: +261 32 12 015 03<br>eHetra Unit: +261 32 12 015 04<br>SSIF Hotline: +261 32 12 011 74 / +261 34 49 431 52', '', '', 3, (SELECT id FROM general_info WHERE cle = 'appeler')),
+(DEFAULT, 'Call', 'DGI Secretariat: +261 20 85 287 08<br>DGI Communication Unit: +261 32 12 015 03<br>eHetra Unit: +261 32 12 015 04<br>SSIF Hotline: +261 32 12 011 74 / +261 34 49 431 52', 'CONTACT US', '', 3, (SELECT id FROM general_info WHERE cle = 'appeler')),
 
 -- Section "Ecrire"
 (DEFAULT, 'Write', 'DGI Secretariat: dgimpots@moov.mg<br>DGI Communication Unit: communication.dgimpots@gmail.com<br>SSIF Hotline: impot.ssif.hotline@gmail.com', '', '', 3, (SELECT id FROM general_info WHERE cle = 'ecrire')),
@@ -141,7 +162,7 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 -- Section "Appeler"
-(DEFAULT, 'Antsoy', 'Sekreterian''ny DGI : +261 20 85 287 08<br>Sampan''asa Fampandraharahana DGI : +261 32 12 015 03<br>Sampan''asa eHetra : +261 32 12 015 04<br>Hotline SSIF : +261 32 12 011 74 / +261 34 49 431 52', '', '', 1, (SELECT id FROM general_info WHERE cle = 'appeler')),
+(DEFAULT, 'Antsoy', 'Sekreterian''ny DGI : +261 20 85 287 08<br>Sampan''asa Fampandraharahana DGI : +261 32 12 015 03<br>Sampan''asa eHetra : +261 32 12 015 04<br>Hotline SSIF : +261 32 12 011 74 / +261 34 49 431 52', 'Hifandray aminay', '', 1, (SELECT id FROM general_info WHERE cle = 'appeler')),
 
 -- Section "Ecrire"
 (DEFAULT, 'Hanoratra', 'Sekreterian''ny DGI : dgimpots@moov.mg<br>Sampan''asa Fampandraharahana DGI : communication.dgimpots@gmail.com<br>Hotline SSIF : impot.ssif.hotline@gmail.com', '', '', 1, (SELECT id FROM general_info WHERE cle = 'ecrire')),
