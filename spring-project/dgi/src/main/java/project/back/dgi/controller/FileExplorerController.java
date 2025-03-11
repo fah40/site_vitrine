@@ -200,7 +200,9 @@ public class FileExplorerController {
         }
 
         GeneralInfo gi = generalInfoService.getByCle(key).orElse(null);
-        generalInfoService.deleteById(gi.getId());
+        if (gi != null) {
+            generalInfoService.deleteById(gi.getId());
+        }
 
         return "redirect:/admin/explorer?path=" + path;
     }

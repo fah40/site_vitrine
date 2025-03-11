@@ -473,7 +473,7 @@
                                     <div th:utext="${centre_contact?.valeur}">.</div>
                                     <div class="row">
                                         <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;margin-top: 10px;">
-                                            <a th:href="@{/admin/general_info_static/{cle}(cle='centre_contact')}" class="fah-btn fah-btn-border fah-c-gone" style="background: #a9d9de !important;" th:utext="${centre_contact?.bouton}">Nous contacter</a></span>
+                                            <a th:href="@{/contact(langue=${langueSelectionnee})}" class="fah-btn fah-btn-border fah-c-gone" style="background: #a9d9de !important;" th:utext="${centre_contact?.bouton}">Nous contacter</a></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 fah-up" >
