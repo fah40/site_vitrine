@@ -431,7 +431,7 @@
                                                 </div>
                                                 <div class="fah-badges">
                                                    <!--  <div class="fah-category">design</div>-->
-                                                   <a th:href="@{/admin/actualite/delete/{id}(id=${actualite.id})}" class="btn-supp">Supprimer</a>
+                                                   <a th:href="@{/admin/actualite/delete/{id}(id=${actualite.id})}" class="btn btn-supp">Supprimer</a>
                                                     <div class="fah-date" th:utext="${actualite.dateAjout}"></div> 
                                                 </div>
                                             </div>
@@ -633,13 +633,9 @@
                             <div class="col-lg-12">
                                 <div class="fah-footer-menu-frame fah-mb90 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                     <ul class="fah-footer-menu">
-                                        <li><a class="fah-c-gone" href="#top">Accueil</a></li>
-                                        <li><a class="fah-c-gone" href="#apropos">à Propos</a></li>
-                                        <li><a class="fah-c-gone" href="#documentations">Documentations</a></li>
-                                        <li><a class="fah-c-gone" href="#safi">E-Services</a></li>
-                                        <li><a class="fah-c-gone" href="#actualites">Actualités</a></li>
-                                        <li><a class="fah-c-gone" href="#torohy">ESPACE CITOYEN</a></li>
-                                        <li><a class="fah-c-gone" href="#contact">Contact</a></li>
+                                        <li th:each="nav : ${allNavs}">
+                                            <a class="fah-c-gone" th:href="${nav.getGeneralInfo().lien}" th:text="${nav.titre}"></a>
+                                        </li>
                                     </ul>
                                     <ul class="fah-social fah-c-gone">
                                         <ul class="fah-social fah-c-gone">
