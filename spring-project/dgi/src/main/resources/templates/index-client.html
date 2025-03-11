@@ -207,14 +207,14 @@
                             <div class="row fah-jcc">
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
-                                        <a th:href="@{/explorer?path=/historique}" id="histo"><i alt="icon" class="fah-mb30 fah-up fa fa-history icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
+                                        <a th:href="@{/explorer(path='/historique', langue=${langueSelectionnee})}" id="histo"><i alt="icon" class="fah-mb30 fah-up fa fa-history icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
                                         <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${historique?.titre}"></h4>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-mb60">
-                                        <a th:href="@{/explorer?path=/vision}">
+                                        <a th:href="@{/explorer(path='/vision', langue=${langueSelectionnee})}">
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-globe icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i>
                                         </a>
 
@@ -224,7 +224,7 @@
                                 </div>
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
-                                        <a id="attribution" th:href="@{/explorer?path=/attributions}"> 
+                                        <a id="attribution" th:href="@{/explorer(path='/attributions', langue=${langueSelectionnee})}"> 
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-code-branch icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
                                         <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${attributions?.titre}">Attributions</h4>
                                         <p class="fah-text-md fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"></p>
@@ -250,7 +250,7 @@
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${legislation?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a th:href="@{/explorer?path=/legislation}" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/explorer(path='/legislation', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-balance-scale"></i>
                                                     <span th:utext="${legislation?.bouton}"></span>
                                                 </a>
@@ -262,7 +262,7 @@
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${ressources?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a th:href="@{/explorer?path=/ressources}" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/explorer(path='/ressources', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-cube"></i>
                                                     <span th:utext="${ressources?.bouton}">voir plus</span>
                                                 </a>
@@ -274,7 +274,7 @@
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${analytiques_fiscales?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up voirPlus" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a th:href="@{/explorer?path=/analytiques_fiscales}" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/explorer(path='/analytiques_fiscales', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-chart-line"></i>
                                                     <span th:utext="${analytiques_fiscales?.bouton}">voir plus</span>
                                                 </a>
@@ -337,7 +337,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="fah-button-pad fah-a2">
-                                    <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a th:href="@{/explorer?path=/e_service}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${e_service?.bouton}">Se connecter</a></span>
+                                    <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a th:href="@{/explorer(path='/e_service', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${e_service?.bouton}">Se connecter</a></span>
                                 </div>
                             </div>
                         </div>
@@ -448,7 +448,7 @@
                                 <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}">Exprimez votre avis sur nos services et contribuez à la lutte contre la fraude fiscale à travers notre plateforme sécurisée de signalement.</div>
                                 <div class="fah-stylized fah-m2 fah-mb60 fah-up">
                                     <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                        <a th:href="@{/explorer?path=/votre_avis}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${votre_avis?.bouton}">Accéder à la plateforme</a></span>
+                                        <a th:href="@{/explorer(path='/votre_avis', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${votre_avis?.bouton}">Accéder à la plateforme</a></span>
                                 </div>
                             </div>
                             <div class="fah-image-box">
@@ -466,7 +466,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                    <a th:href="@{/explorer?path=/centre_contact}" class="fah-footer-contact fah-mb90">
+                                    <a th:href="@{/explorer(path='/centre_contact', langue=${langueSelectionnee})}" class="fah-footer-contact fah-mb90">
                                         <h6 class="fah-footer-link fah-rubber fah-m1" th:utext="${centre_contact?.titre}"></h6>
                                     </a>
 
