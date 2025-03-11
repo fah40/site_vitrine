@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +53,15 @@ public class GetController {
         model.addAttribute("centre_contact", generalInfoValeurService.getGeneralInfoByKey("centre_contact", id_langue));
 
         model.addAttribute("allActualites", actualiteService.getAllActualites());
+
+        List<GeneralInfo> list = generalInfoService.findChildrenByParent(generalInfoService.getByCle("navigation").orElse(null));
+        List<GeneralInfoValeur> values = new ArrayList<>();
+
+        for (GeneralInfo item : list) {
+            values.add(generalInfoValeurService.getGeneralInfoByKey(item.getCle(), id_langue));
+        }
+
+        model.addAttribute("allNavs", values);
 
         return "index";
     }
