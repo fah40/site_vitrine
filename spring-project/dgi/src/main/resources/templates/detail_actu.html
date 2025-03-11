@@ -1,92 +1,206 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="zxx" class="swup-enabled">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- grid css -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-grid.css">
+
+    <!-- font awesome css -->
+    <link rel="stylesheet" href="/assets/icons/css/all.css">
+    <link rel="stylesheet" href="/assets/icons/css/all.min.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="/assets/css/swiper.min.css">
+
+    <!-- okai css -->
+    <link rel="stylesheet" href="/assets/css/style-friendly.css">
+
+    <!-- page title -->
     <title th:text="${actualite.titre}"></title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            text-align: center;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 2em;
-        }
-        p {
-            font-size: 1.2em;
-            text-align: justify;
-        }
-        .date {
-            font-style: italic;
-            color: gray;
-        }
-        .attachments {
-            margin-top: 20px;
-            text-align: left;
-        }
-        .attachments ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .attachments li {
-            margin: 5px 0;
-        }
-        .attachments a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-        .attachments a:hover {
-            text-decoration: underline;
-        }
-    </style>
+
+    <!-- Icon -->
+    <link rel="icon" type="icon" href="/assets/img/logo/LOGO_DGI_OK.png">
+
+    <!-- Montserrat font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 </head>
-<body>
-    <div class="container">
-        <h1 th:utext="${actualite.titre}"></h1>
-        <p class="date" th:text="${#dates.format(actualite.dateAjout, 'dd MMMM yyyy HH:mm')}"></p>
-        <p th:utext="${actualite.description}"></p>
-        
-        <div class="attachments" th:if="${not #lists.isEmpty(pieceJointes)}">
-            <h2>Fichiers joints :</h2>
-            <ul>
-                <li th:each="piece : ${pieceJointes}">
-                    <a th:id="${'download-link-' + piece.id}" 
-                       th:data-id="${piece.id}" 
-                       th:text="${piece.nomFichier}" 
-                       th:href="@{/admin/download(id=${piece.id})}" 
-                       class="download-link"></a>
-                </li>
-            </ul>
+<style>
+
+    @media (max-width: 700px) {
+    .fah-text-md {
+        font-size: 16px;
+        text-align: left;
+    }
+    .fah-rubber {
+        width: 90% !important;
+        white-space: pre-wrap;
+        text-align: left;
+    }
+    }
+</style>
+
+<body style="height: 8850px; overscroll-behavior: none;">
+    <i id="swupMenu"></i>
+
+    <div id="smooth-wrapper" class="fah-page-wrapper"
+        style="inset: 0px; width: 100%; height: auto; position: fixed; overflow: hidden;">
+
+        <div id="swup-opm"></div>
+
+        <!-- cursor -->
+        <div class="fah-cursor-follower" style="top: 89px; left: 451px;"></div>
+        <!-- cursor end -->
+
+        <!-- preloader -->
+        <div class="fah-preloader fah-hidden" style="opacity: 0;">
+            <div class="fah-preloader-animation" style="opacity: 1;">
+                <div class="fah-pos-abs fah-animation-1">
+                    <p class="fah-head1 fah-m1"
+                        style="translate: none; rotate: none; scale: none; opacity: 0; transform: translate(0px, -30px); filter: blur(0px);">
+                        Direction</p>
+                    <p class="fah-head1 fah-a2"
+                        style="translate: none; rotate: none; scale: none; opacity: 0; transform: translate(0px, -30px); filter: blur(0px);">
+                        Generale</p>
+                    <p class="fah-head1 fah-m1"
+                        style="translate: none; rotate: none; scale: none; opacity: 0; transform: translate(0px, -30px); filter: blur(0px);">
+                        des Impots</p>
+                </div>
+                <div class="fah-pos-abs fah-animation-2">
+                    <div class="fah-reveal-frame">
+                        <p class="fah-reveal-box"
+                            style="translate: none; rotate: none; scale: none; transform: translate(0px, -30px); width: 0%; right: 0px; opacity: 0;">
+                        </p>
+                        <p class="fah-head1 fah-m1"
+                            style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate(0px, -30px);">
+                            pour vous</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- preloader end -->
+
+        <!-- scroll progress -->
+        <div class="fah-progress-track">
+            <div class="fah-progress" style="height: 0%;"></div>
+        </div>
+        <!-- scroll progress end -->
+
+        <!-- fixed elements -->
+        <div class="fah-fixed">
+            <div class="fah-top-panel">
+                <div class="fah-left-side">
+                    <a href="#" class="fah-logo fah-scroll-to " data-no-swup="">
+                        <img src="/assets/img/logo/LOGO_monochrome_MEF_DGI.png" class="logo">
+                    </a>
+                </div>
+                <div class="fah-buttons-tp-frame fah-c-gone">
+                    <p class="fah-stylized fah-m1 fah-phone"><span class="fah-m2"></span></p>
+                    <div class="fah-buttons">
+                        <a href="/accueil" class="fah-tp-btn"><i class="fa fa-home"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fixed elements end -->
+
+        <div class="fah-transition-fade" id="swup">
+            <div class="fah-transition-frame">
+
+                <!-- content -->
+                <div id="smooth-content" class="fah-content"
+                style="width: 100%;height: auto !important; overflow: visible; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
+                    <!-- actualite -->
+                    <div class="container">
+                        <div class="fah-half-container fah-reverse fah-up">
+                            <div class="fah-text-box fah-g-m3 fah-p-160-160" style="height: auto;">
+                                    <h6 class="fah-rubber fah-mb60 fah-up" style="font-size: 25px; font-weight: bold;">
+                                        <span th:text="${actualite.titre}"></span>
+                                    </h6>
+                                    <div class="fah-text-md fah-up" style="margin-top: -3vw;" th:utext="${actualite.description}"></div>
+
+                                    <div class="attachments" th:if="${not #lists.isEmpty(pieceJointes)}">
+                                        <h2>Fichiers joints :</h2>
+                                        <ul>
+                                            <li th:each="piece : ${pieceJointes}">
+                                                <a th:id="${'download-link-' + piece.id}" 
+                                                   th:data-id="${piece.id}" 
+                                                   th:text="${piece.nomFichier}" 
+                                                   th:href="@{/admin/download(id=${piece.id})}" 
+                                                   class="download-link"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                            
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Sélectionner tous les liens de téléchargement
+                                            const downloadLinks = document.querySelectorAll('.download-link');
+                                    
+                                            // Ajouter un écouteur d'événement à chaque lien
+                                            downloadLinks.forEach(link => {
+                                                link.addEventListener('click', function (event) {
+                                                    event.preventDefault(); // Empêcher le comportement par défaut du lien
+                                    
+                                                    // Récupérer l'ID de la pièce jointe à partir de l'attribut data-id
+                                                    const pieceId = this.getAttribute('data-id');
+                                    
+                                                    // Rediriger vers l'endpoint de téléchargement avec l'ID en paramètre
+                                                    window.location.href = `/admin/download?id=${pieceId}`;
+                                                });
+                                            });
+                                        });
+                                    </script>
+                            </div>
+                            <div class="fah-image-box">
+                                <div class="fah-image-frame">
+                                    <img th:src="${images.get(0).getDisplayUrl()}" alt="" class="">
+                                    <div class="fah-overlay"></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- actualite end -->
+
+                </div>
+
+            </div>
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Sélectionner tous les liens de téléchargement
-                const downloadLinks = document.querySelectorAll('.download-link');
-        
-                // Ajouter un écouteur d'événement à chaque lien
-                downloadLinks.forEach(link => {
-                    link.addEventListener('click', function (event) {
-                        event.preventDefault(); // Empêcher le comportement par défaut du lien
-        
-                        // Récupérer l'ID de la pièce jointe à partir de l'attribut data-id
-                        const pieceId = this.getAttribute('data-id');
-        
-                        // Rediriger vers l'endpoint de téléchargement avec l'ID en paramètre
-                        window.location.href = `/admin/download?id=${pieceId}`;
-                    });
-                });
-            });
-        </script>
     </div>
+
+
+
+    <!-- swup js -->
+    <script src="/js/swup@4"></script>
+
+    <!-- gsap js -->
+    <script src="/js/gsap.min.js"></script>
+
+    <!-- scroll smoother -->
+    <script src="/js/ScrollSmoother.min.js"></script>
+
+    <!-- scroll trigger js -->
+    <script src="/js/ScrollTrigger.min.js"></script>
+
+    <!-- scroll to js -->
+    <script src="/js/ScrollTo.min.js"></script>
+
+    <!-- swiper js -->
+    <script src="/js/swiper.min.js"></script>
+
+    <!-- parallax js -->
+    <script src="/js/parallax.js"></script>
+
+    <!-- pixy js -->
+    <script src="/js/autre.js"></script>
+
+
 </body>
+
 </html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${actualite.titre}"></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+        }
+        p {
+            font-size: 1.2em;
+            text-align: justify;
+        }
+        .date {
+            font-style: italic;
+            color: gray;
+        }
+        .attachments {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .attachments ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .attachments li {
+            margin: 5px 0;
+        }
+        .attachments a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .attachments a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:utext="${actualite.titre}"></h1>
+        <p class="date" th:text="${#dates.format(actualite.dateAjout, 'dd MMMM yyyy HH:mm')}"></p>
+        <p th:utext="${actualite.description}"></p>
+        
+        <div class="attachments" th:if="${not #lists.isEmpty(pieceJointes)}">
+            <h2>Fichiers joints :</h2>
+            <ul>
+                <li th:each="piece : ${pieceJointes}">
+                    <a th:id="${'download-link-' + piece.id}" 
+                       th:data-id="${piece.id}" 
+                       th:text="${piece.nomFichier}" 
+                       th:href="@{/admin/download(id=${piece.id})}" 
+                       class="download-link"></a>
+                </li>
+            </ul>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Sélectionner tous les liens de téléchargement
+                const downloadLinks = document.querySelectorAll('.download-link');
+        
+                // Ajouter un écouteur d'événement à chaque lien
+                downloadLinks.forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault(); // Empêcher le comportement par défaut du lien
+        
+                        // Récupérer l'ID de la pièce jointe à partir de l'attribut data-id
+                        const pieceId = this.getAttribute('data-id');
+        
+                        // Rediriger vers l'endpoint de téléchargement avec l'ID en paramètre
+                        window.location.href = `/admin/download?id=${pieceId}`;
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
