@@ -16,7 +16,7 @@ public class ActualiteService {
     private ActualiteRepository actualiteRepository;
 
     public List<Actualite> getAllActualites() {
-        return actualiteRepository.findAll();
+        return actualiteRepository.findAllByOrderByDateAjoutDesc();
     }
 
     public Optional<Actualite> getActualiteById(Long id) {

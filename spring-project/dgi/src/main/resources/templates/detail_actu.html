@@ -160,7 +160,7 @@
                             </div>
                             <div class="fah-image-box">
                                 <div class="fah-image-frame">
-                                    <img th:src="${images.get(0).getDisplayUrl()}" alt="" class="">
+                                    <img th:if="${not images.isEmpty()}" th:src="${images.get(0).getDisplayUrl()}" alt="" class="">
                                     <div class="fah-overlay"></div>
                                 </div>
                             </div>
