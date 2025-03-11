@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import project.back.dgi.entity.Actualite;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
@@ -37,6 +36,11 @@ public class GetController {
     public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
         List<Langue> langues = langueService.findAll();
         long id_langue = Long.parseLong(langue);
+
+        if (id_langue > 3) {
+            id_langue = 2;
+        }
+
         model.addAttribute("langues", langues);
         model.addAttribute("langueSelectionnee", id_langue);
         model.addAttribute("a_propos", generalInfoValeurService.getGeneralInfoByKey("a_propos", id_langue));
