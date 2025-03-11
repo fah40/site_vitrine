@@ -49,6 +49,11 @@ VALUES
 (DEFAULT, 'nav_espace', '#torohy', 13),
 (DEFAULT, 'nav_contact', '#contact', 13);
 
+INSERT INTO general_info (id, cle, lien, id_general_info) VALUES
+(DEFAULT, 'appeler', '#appeler', NULL),       -- Section "Appeler"
+(DEFAULT, 'ecrire', '#ecrire', NULL),         -- Section "Ecrire"
+(DEFAULT, 'visiter', '#visiter', NULL);       -- Section "Visiter"
+
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Fandraisana', 'Fandraisana', '', '', 1, 14),          -- Accueil
 (DEFAULT, 'Momba ny', 'Momba ny', '', '', 1, 15),                -- A propos
@@ -113,3 +118,33 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 (DEFAULT, '<p>Analytiques fiscales</p>', '<p>Consultez dans cette rubrique les documents d''analyse approfondis retraçant ses performances en matière de mobilisation des recettes fiscales, statistiques périodiques des réalisations, études sectorielles, publications économiques, rapports détaillés d''activités, etc.</p>', '', 'voir plus', 2, 6),
 (DEFAULT, '<p>Fiscal analytics</p>', '<p>Consult in this section the in-depth analysis documents tracing its performance in terms of mobilizing tax revenues, periodic statistics of achievements, sector studies, economic publications, detailed activity reports, etc.</p>', '', 'show more', 3, 6),
 (DEFAULT, '<p>Word of the DGI</p>', '<p>Engaged in a major digital transformation through its new Integrated Fiscal Administration System (SAFI), the DGI welcomes you on its online portal, embodying its vision of an <strong>innovative, transparent fiscal administration and pillar of emergence</strong>. Discover our modern services, designed to guarantee your satisfaction and preserve a climate of trust, in accordance with the image of a government <strong>"close to the people"</strong>.</p>', 'DGI', '', 3, 3);
+
+INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
+-- Section "Appeler"
+(DEFAULT, 'Appeler', 'Secrétariat DGI : +261 20 85 287 08<br>Cellule Communication DGI : +261 32 12 015 03<br>Cellule eHetra : +261 32 12 015 04<br>Hotline SSIF : +261 32 12 011 74 / +261 34 49 431 52', '', '', 2, (SELECT id FROM general_info WHERE cle = 'appeler')),
+
+-- Section "Ecrire"
+(DEFAULT, 'Ecrire', 'Secrétariat DGI : dgimpots@moov.mg<br>Cellule Communication DGI : communication.dgimpots@gmail.com<br>Hotline SSIF : impot.ssif.hotline@gmail.com', '', '', 2, (SELECT id FROM general_info WHERE cle = 'ecrire')),
+
+-- Section "Visiter"
+(DEFAULT, 'Visiter', 'Immeuble de l''économie et des Finances<br>4ème étage - porte 420<br>Antaninarenina Antananarivo', '', '', 2, (SELECT id FROM general_info WHERE cle = 'visiter'));
+
+INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
+-- Section "Appeler"
+(DEFAULT, 'Call', 'DGI Secretariat: +261 20 85 287 08<br>DGI Communication Unit: +261 32 12 015 03<br>eHetra Unit: +261 32 12 015 04<br>SSIF Hotline: +261 32 12 011 74 / +261 34 49 431 52', '', '', 3, (SELECT id FROM general_info WHERE cle = 'appeler')),
+
+-- Section "Ecrire"
+(DEFAULT, 'Write', 'DGI Secretariat: dgimpots@moov.mg<br>DGI Communication Unit: communication.dgimpots@gmail.com<br>SSIF Hotline: impot.ssif.hotline@gmail.com', '', '', 3, (SELECT id FROM general_info WHERE cle = 'ecrire')),
+
+-- Section "Visiter"
+(DEFAULT, 'Visit', 'Ministry of Economy and Finance Building<br>4th floor - door 420<br>Antaninarenina Antananarivo', '', '', 3, (SELECT id FROM general_info WHERE cle = 'visiter'));
+
+INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
+-- Section "Appeler"
+(DEFAULT, 'Antsoy', 'Sekreterian''ny DGI : +261 20 85 287 08<br>Sampan''asa Fampandraharahana DGI : +261 32 12 015 03<br>Sampan''asa eHetra : +261 32 12 015 04<br>Hotline SSIF : +261 32 12 011 74 / +261 34 49 431 52', '', '', 1, (SELECT id FROM general_info WHERE cle = 'appeler')),
+
+-- Section "Ecrire"
+(DEFAULT, 'Hanoratra', 'Sekreterian''ny DGI : dgimpots@moov.mg<br>Sampan''asa Fampandraharahana DGI : communication.dgimpots@gmail.com<br>Hotline SSIF : impot.ssif.hotline@gmail.com', '', '', 1, (SELECT id FROM general_info WHERE cle = 'ecrire')),
+
+-- Section "Visiter"
+(DEFAULT, 'Hitsidika', 'Tranon''ny Toekarena sy ny Finansa<br>4ème étage - varavarana 420<br>Antaninarenina Antananarivo', '', '', 1, (SELECT id FROM general_info WHERE cle = 'visiter'));
