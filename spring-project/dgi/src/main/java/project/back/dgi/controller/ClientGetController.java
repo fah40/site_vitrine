@@ -52,6 +52,11 @@ public class ClientGetController {
         model.addAttribute("analytiques_fiscales", generalInfoValeurService.getGeneralInfoByKey("/analytiques_fiscales", id_langue));
         model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("/historique", id_langue));
         model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("/vision", id_langue));
+        model.addAttribute("actualites", generalInfoValeurService.getGeneralInfoByKey("actualites", id_langue));
+        model.addAttribute("partenaires", generalInfoValeurService.getGeneralInfoByKey("partenaire", id_langue));
+        model.addAttribute("bureau", generalInfoValeurService.getGeneralInfoByKey("bureau", id_langue));
+        model.addAttribute("contribuable", generalInfoValeurService.getGeneralInfoByKey("contribuable", id_langue));
+        model.addAttribute("recette", generalInfoValeurService.getGeneralInfoByKey("recette", id_langue));
         model.addAttribute("attributions", generalInfoValeurService.getGeneralInfoByKey("/attributions", id_langue));
         model.addAttribute("e_service", generalInfoValeurService.getGeneralInfoByKey("/e_service", id_langue));
         model.addAttribute("votre_avis", generalInfoValeurService.getGeneralInfoByKey("/votre_avis", id_langue));

@@ -29,9 +29,9 @@ public class ClientContactController {
 
         model.addAttribute("appeler", generalInfoValeurService.getGeneralInfoByKey("appeler", id_langue));
         model.addAttribute("ecrire", generalInfoValeurService.getGeneralInfoByKey("ecrire", id_langue));
-        model.addAttribute("visiter", generalInfoValeurService.getGeneralInfoByKey("ecrire", id_langue));
+        model.addAttribute("visiter", generalInfoValeurService.getGeneralInfoByKey("visiter", id_langue));
 
-        return "contact";
+        return "contact-client";
     }
     
 }
