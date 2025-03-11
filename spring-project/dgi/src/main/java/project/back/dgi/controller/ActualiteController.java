@@ -62,7 +62,7 @@ public class ActualiteController {
         Actualite actualite = new Actualite();
 
         // Récupérer l'utilisateur (simulé ici, à remplacer par votre logique)
-        User user = userService.findByEmail("j.irina.m.andrianjamanantena@gmail.com").orElse(null);
+        User user = userService.findByEmail("fanasinamanantsoa30@gmail.com").orElse(null);
 
         // Définir la date d'ajout
         actualite.setDateAjout(Timestamp.from(Instant.now()));
@@ -90,6 +90,7 @@ public class ActualiteController {
 
                         // Générer un nom de fichier unique
                         String fileName = file.getOriginalFilename();
+
 
                         // Chemin complet du fichier
                         Path filePath = Paths.get(uploadDir.getAbsolutePath(), fileName);
@@ -132,11 +133,17 @@ public class ActualiteController {
     public String getActuDetails (@PathVariable long idActu, Model model) {
         Actualite actualite = actualiteService.getActualiteById(idActu).orElse(null);
         List<PieceJointe> pieceJointes = pieceJointeService.getPiecesJointesNotImageByActualiteId(idActu);
+        String uploads = "/uploads/";
 
+        List<PieceJointe> images = pieceJointeService.getPiecesJointesImageByActualiteId(idActu);
         if (actualite != null) {
             model.addAttribute("actualite", actualite);
             model.addAttribute("pieceJointes", pieceJointes);
+            for (PieceJointe pieceJointe : images) {
+                pieceJointe.setDisplayUrl(uploads + pieceJointe.getNomFichier());
+            }
             
+            model.addAttribute("images", images);
             return "detail_actu";
         }
 

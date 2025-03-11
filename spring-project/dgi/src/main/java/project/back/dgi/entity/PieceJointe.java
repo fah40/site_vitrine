@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "piece_jointe")
@@ -18,7 +19,7 @@ public class PieceJointe {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "is_image", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "is_image", nullable = false)
     private boolean isImage;
 
     @Column(name = "nom_fichier", nullable = false, columnDefinition = "TEXT")
@@ -30,6 +31,18 @@ public class PieceJointe {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actualite", nullable = false)
     private Actualite actualite;
+    
+    @Transient
+    private String displayUrl;
+    
+
+    public String getDisplayUrl() {
+        return displayUrl;
+    }
+
+    public void setDisplayUrl(String displayUrl) {
+        this.displayUrl = displayUrl;
+    }
 
     public PieceJointe() {}
 
