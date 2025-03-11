@@ -50,6 +50,15 @@ VALUES
 (DEFAULT, 'nav_contact', '#contact', 13);
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
+(DEFAULT, 'Fandraisana', 'Fandraisana', '', '', 1, 14),          -- Accueil
+(DEFAULT, 'Momba ny', 'Momba ny', '', '', 1, 15),                -- A propos
+(DEFAULT, 'Tahirin-kevitra', 'Tahirin-kevitra', '', '', 1, 16),  -- Documentations
+(DEFAULT, 'E-Service', 'E-Service', '', '', 1, 17),              -- E-Services
+(DEFAULT, 'Vaovao', 'Vaovao', '', '', 1, 18),                    -- Actualités
+(DEFAULT, 'Espace citoyen', 'Espace citoyen', '', '', 1, 19),    -- Espace citoyen
+(DEFAULT, 'Ivontoerana fifandraisana', 'Ivontoerana fifandraisana', '', '', 1, 20); -- Centre de contact
+
+INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Accueil', 'Accueil', '', '', 2, 14),
 (DEFAULT, 'A propos', 'A propos', '', '', 2, 15),
 (DEFAULT, 'Documentations', 'Documentations', '', '', 2, 16),
@@ -57,6 +66,15 @@ INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, i
 (DEFAULT, 'Actualités', 'Actualités', '', '', 2, 18),
 (DEFAULT, 'Espace citoyen', 'Espace citoyen', '', '', 2, 19),
 (DEFAULT, 'Centre de contact', 'Centre de contact', '', '', 2, 20);
+
+INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
+(DEFAULT, 'Home', 'Home', '', '', 3, 14),          -- Accueil
+(DEFAULT, 'About', 'About', '', '', 3, 15),         -- A propos
+(DEFAULT, 'Documentations', 'Documentations', '', '', 3, 16), -- Documentations
+(DEFAULT, 'E-Services', 'E-Services', '', '', 3, 17), -- E-Services
+(DEFAULT, 'News', 'News', '', '', 3, 18),           -- Actualités
+(DEFAULT, 'Citizen Space', 'Citizen Space', '', '', 3, 19), -- Espace citoyen
+(DEFAULT, 'Contact Center', 'Contact Center', '', '', 3, 20); -- Centre de contact
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Mikasika', 'Mikasika', '', '', 1, 1),

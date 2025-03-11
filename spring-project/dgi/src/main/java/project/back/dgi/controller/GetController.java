@@ -42,20 +42,22 @@ public class GetController {
         model.addAttribute("a_propos", generalInfoValeurService.getGeneralInfoByKey("a_propos", id_langue));
         model.addAttribute("dgi", generalInfoValeurService.getGeneralInfoByKey("dgi", id_langue));
         model.addAttribute("mot_du_dgi", generalInfoValeurService.getGeneralInfoByKey("mot_du_dgi", id_langue));
-        model.addAttribute("legislation", generalInfoValeurService.getGeneralInfoByKey("legislation", id_langue));
-        model.addAttribute("ressources", generalInfoValeurService.getGeneralInfoByKey("ressources", id_langue));
-        model.addAttribute("analytiques_fiscales", generalInfoValeurService.getGeneralInfoByKey("analytiques_fiscales", id_langue));
-        model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("historique", id_langue));
-        model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("vision", id_langue));
-        model.addAttribute("attributions", generalInfoValeurService.getGeneralInfoByKey("attributions", id_langue));
-        model.addAttribute("e_service", generalInfoValeurService.getGeneralInfoByKey("e_service", id_langue));
-        model.addAttribute("votre_avis", generalInfoValeurService.getGeneralInfoByKey("votre_avis", id_langue));
+        model.addAttribute("legislation", generalInfoValeurService.getGeneralInfoByKey("/legislation", id_langue));
+        model.addAttribute("ressources", generalInfoValeurService.getGeneralInfoByKey("/ressources", id_langue));
+        model.addAttribute("analytiques_fiscales", generalInfoValeurService.getGeneralInfoByKey("/analytiques_fiscales", id_langue));
+        model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("/historique", id_langue));
+        model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("/vision", id_langue));
+        model.addAttribute("attributions", generalInfoValeurService.getGeneralInfoByKey("/attributions", id_langue));
+        model.addAttribute("e_service", generalInfoValeurService.getGeneralInfoByKey("/e_service", id_langue));
+        model.addAttribute("votre_avis", generalInfoValeurService.getGeneralInfoByKey("/votre_avis", id_langue));
         model.addAttribute("centre_contact", generalInfoValeurService.getGeneralInfoByKey("centre_contact", id_langue));
 
         model.addAttribute("allActualites", actualiteService.getAllActualites());
 
         List<GeneralInfo> list = generalInfoService.findChildrenByParent(generalInfoService.getByCle("navigation").orElse(null));
         List<GeneralInfoValeur> values = new ArrayList<>();
+
+        System.out.println("taille : " + list.size());
 
         for (GeneralInfo item : list) {
             values.add(generalInfoValeurService.getGeneralInfoByKey(item.getCle(), id_langue));

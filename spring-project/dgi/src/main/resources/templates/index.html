@@ -94,15 +94,9 @@
                 <div class="fah-menu-window">
                     <div class="margin_left fah-inner-scroll" id="swupMenu">
                         <ul class="fah-main-menu fah-c-gone">
-                            
-                            <li class="fah-has-children"><a href="#top">Accueil</a></li>
-                            <li class="fah-has-children"><a href="#apropos"> à propos</a></li>
-                            <li class="fah-has-children"><a href="#documentations">Documentations</a></li>
-                            <li class="fah-has-children"><a href="#safi">E-SERVICES</a></li>
-                            <li class="fah-has-children"><a href="#actualites">Actualités</a></li>
-                            <li class="fah-has-children"><a href="#torohy">ESPACE CITOYEN</a></li>
-                            <li class="fah-has-children"><a href="#contact">Centre de contact</a></li>
-                            
+                            <li th:each="nav : ${allNavs}" class="fah-has-children">
+                                <a th:href="${nav.getGeneralInfo().lien}" th:text="${nav.titre}"></a>
+                            </li>                            
                         </ul>
                     </div>
                     <div class="fah-bottom blue">
