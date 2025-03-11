@@ -106,6 +106,10 @@ public class ClientFileExplorerController {
                     generalInfoValeur.setBouton(file);
                 }
 
+                if (generalInfo.getLien() == null) {
+                    generalInfo.setLien("/admin/explorer?path=" + path + '/' + file);
+                }
+
                 generalInfoValueMap.put(file, generalInfoValeur);    
                 generalInfoFolderMap.put(file, generalInfo);
             } else {

@@ -109,6 +109,11 @@ public class FileExplorerController {
                 if (generalInfoValeur.getBouton().isEmpty()) {
                     generalInfoValeur.setBouton(file);
                 }
+
+                if (generalInfo.getLien() == null) {
+                    generalInfo.setLien("/admin/explorer?path=" + path + '/' + file);
+                }
+
                 generalInfoValueMap.put(file, generalInfoValeur);    
                 generalInfoFolderMap.put(file, generalInfo);
             
