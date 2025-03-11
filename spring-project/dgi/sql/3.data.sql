@@ -25,17 +25,17 @@ VALUES
 (DEFAULT, 'a_propos', NULL, NULL),
 (DEFAULT, 'dgi', NULL, NULL),
 (DEFAULT, 'mot_du_dgi', NULL, NULL),
-(DEFAULT, 'legislation', NULL, NULL),
-(DEFAULT, 'ressources', NULL, NULL),
-(DEFAULT, 'analytiques_fiscales', NULL, NULL),
-(DEFAULT, 'historique', NULL, NULL),
-(DEFAULT, 'vision', NULL, NULL),
-(DEFAULT, 'attributions', NULL, NULL);
+(DEFAULT, '/legislation', NULL, NULL),
+(DEFAULT, '/ressources', NULL, NULL),
+(DEFAULT, '/analytiques_fiscales', NULL, NULL),
+(DEFAULT, '/historique', NULL, NULL),
+(DEFAULT, '/vision', NULL, NULL),
+(DEFAULT, '/attributions', NULL, NULL);
 
 INSERT INTO general_info (id, cle, lien, id_general_info)
 VALUES
-(DEFAULT, 'e_service', NULL, NULL),
-(DEFAULT, 'votre_avis', NULL, NULL),
+(DEFAULT, '/e_service', NULL, NULL),
+(DEFAULT, '/votre_avis', NULL, NULL),
 (DEFAULT, 'centre_contact', NULL, NULL),
 (DEFAULT, 'navigation', NULL, NULL);
 

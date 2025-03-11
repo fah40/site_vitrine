@@ -121,20 +121,22 @@
                                     <h6 class="fah-rubber fah-mb60 fah-up" style="font-size: 25px; font-weight: bold;">
                                         <span th:text="${actualite.titre}"></span>
                                     </h6>
-                                    <div class="fah-text-md fah-up" style="margin-top: -3vw;" th:utext="${actualite.description}"></div>
-
-                                    <div class="attachments" th:if="${not #lists.isEmpty(pieceJointes)}">
-                                        <h2>Fichiers joints :</h2>
-                                        <ul>
-                                            <li th:each="piece : ${pieceJointes}">
-                                                <a th:id="${'download-link-' + piece.id}" 
-                                                   th:data-id="${piece.id}" 
-                                                   th:text="${piece.nomFichier}" 
-                                                   th:href="@{/admin/download(id=${piece.id})}" 
-                                                   class="download-link"></a>
-                                            </li>
-                                        </ul>
+                                    <div class="fah-text-md fah-up" style="margin-top: -3vw;">
+                                        <span th:utext="${actualite.description}"></span><br><br><br>
+                                        <div class="" th:if="${not #lists.isEmpty(pieceJointes)}">
+                                            <h2 style="font-size: 25px; font-weight: bold;">Fichiers joints :</h2>
+                                            <ul>
+                                                <li th:each="piece : ${pieceJointes}">
+                                                    <a th:id="${'download-link-' + piece.id}" 
+                                                       th:data-id="${piece.id}" 
+                                                       th:text="${piece.nomFichier}" 
+                                                       th:href="@{/admin/download(id=${piece.id})}" 
+                                                       class="download-link"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
+
                             
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function () {

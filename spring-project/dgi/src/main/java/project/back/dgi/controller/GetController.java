@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import project.back.dgi.entity.Actualite;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
@@ -112,12 +113,11 @@ public class GetController {
                 valeur.setGeneralInfo(generalInfo);
                 valeur.setLangue(langueService.findById(idLangue));
 
-                System.out.println(field);
                 switch (field) {
                     case "titre":
-                    System.out.println("TITRE");
+
                     valeur.setTitre(params.getOrDefault(key,""));
-                    System.out.println(valeur.getTitre());
+
                         break;
                     case "entete":
                         valeur.setEntete(params.getOrDefault(key,""));
@@ -129,8 +129,6 @@ public class GetController {
                         valeur.setValeur(params.getOrDefault(key,""));
                         break;
                 }
-
-                System.out.println(valeur.toString());
 
                 valeursToUpdate.add(valeur);
             }

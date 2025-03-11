@@ -48,7 +48,6 @@ public class FileExplorerController {
     @GetMapping("/explorer")
     public String listFiles(@RequestParam(required = false, defaultValue = "") String path,@RequestParam(required = false, defaultValue = "2") String langue , Model model, HttpServletResponse response) throws IOException {
         File fileOrDirectory = new File(storagePath + File.separator + path);
-        System.out.println("Chemin utilisé : " + fileOrDirectory.getAbsolutePath());
         
         if (!fileOrDirectory.exists()) {
             throw new RuntimeException("Le chemin spécifié n'existe pas.");
@@ -92,11 +91,8 @@ public class FileExplorerController {
                 generalInfo = generalInfoService.getByCle(tempPath + '/' + file).orElse(null);
                 key = tempPath + file;
             }
-
-            System.out.println("Clé : " + key);
             
             if (generalInfo != null) {
-                System.out.println("file : " + file);
 
                 GeneralInfoValeur generalInfoValeur = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfo, langueService.findById(Long.parseLong(langue)));
                 if (generalInfoValeur.getBouton().isEmpty()) {
@@ -107,8 +103,6 @@ public class FileExplorerController {
             
             } else {
                 if (!relatedFile.isDirectory()) {
-                    System.out.println("Is actually a file : " + file);
-                    
                     generalInfoMap.put(file, generalInfo);
                 }
             }
@@ -160,7 +154,6 @@ public class FileExplorerController {
         }
 
         if (mother != null) {
-            System.out.println("Mother id = " + mother.getId());
             generalInfo.setParentGeneralInfo(mother);
         }
 
@@ -189,8 +182,6 @@ public class FileExplorerController {
                 throw new RuntimeException("Impossible de supprimer le fichier.");
             }
         }
-
-        System.out.println("Key to delete : " + key);
 
         GeneralInfo gi = generalInfoService.getByCle(key).orElse(null);
         generalInfoService.deleteById(gi.getId());
