@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
 import project.back.dgi.entity.Actualite;
 import project.back.dgi.entity.PieceJointe;
 import project.back.dgi.entity.User;
@@ -56,13 +57,14 @@ public class ActualiteController {
     public String saveActualite(
             @RequestParam String title,
             @RequestParam String content,
-            @RequestParam("files") MultipartFile[] files) {
+            @RequestParam("files") MultipartFile[] files, HttpSession session) {
 
         // Créer une nouvelle actualité
         Actualite actualite = new Actualite();
 
         // Récupérer l'utilisateur (simulé ici, à remplacer par votre logique)
-        User user = userService.findByEmail("fanasinamanantsoa30@gmail.com").orElse(null);
+        // User user = userService.findByEmail("fanasinamanantsoa30@gmail.com").orElse(null);
+        User user = (User)session.getAttribute("user") ;
 
         // Définir la date d'ajout
         actualite.setDateAjout(Timestamp.from(Instant.now()));
@@ -133,13 +135,13 @@ public class ActualiteController {
     public String getActuDetails (@PathVariable long idActu, Model model) {
         Actualite actualite = actualiteService.getActualiteById(idActu).orElse(null);
         List<PieceJointe> pieceJointes = pieceJointeService.getPiecesJointesNotImageByActualiteId(idActu);
-        String uploads = "/uploads/";
-
+        
         List<PieceJointe> images = pieceJointeService.getPiecesJointesImageByActualiteId(idActu);
         if (actualite != null) {
             model.addAttribute("actualite", actualite);
             model.addAttribute("pieceJointes", pieceJointes);
             for (PieceJointe pieceJointe : images) {
+                String uploads = "/uploads/";
                 pieceJointe.setDisplayUrl(uploads + pieceJointe.getNomFichier());
             }
             
