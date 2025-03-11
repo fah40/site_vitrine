@@ -14,7 +14,7 @@ public class EmailUtil {
     @Value("${spring.mail.username}")
     private String emailSender; // Récupération depuis application.properties
 
-    private static final String DISPLAY_NAME = "CommunITDev";
+    private static final String DISPLAY_NAME = "Pimaso Madagasikara";
 
     private final JavaMailSender emailSenderService;
 
