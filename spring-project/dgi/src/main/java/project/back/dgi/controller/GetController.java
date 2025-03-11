@@ -111,12 +111,11 @@ public class GetController {
                 valeur.setGeneralInfo(generalInfo);
                 valeur.setLangue(langueService.findById(idLangue));
 
-                System.out.println(field);
                 switch (field) {
                     case "titre":
-                    System.out.println("TITRE");
+
                     valeur.setTitre(params.getOrDefault(key,""));
-                    System.out.println(valeur.getTitre());
+
                         break;
                     case "entete":
                         valeur.setEntete(params.getOrDefault(key,""));
@@ -128,8 +127,6 @@ public class GetController {
                         valeur.setValeur(params.getOrDefault(key,""));
                         break;
                 }
-
-                System.out.println(valeur.toString());
 
                 valeursToUpdate.add(valeur);
             }

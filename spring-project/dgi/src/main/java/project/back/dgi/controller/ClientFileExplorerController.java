@@ -41,7 +41,6 @@ public class ClientFileExplorerController {
     @GetMapping("/explorer")
     public String listFiles(@RequestParam(required = false, defaultValue = "") String path,@RequestParam(required = false, defaultValue = "2") String langue , Model model, HttpServletResponse response) throws IOException {
         File fileOrDirectory = new File(storagePath + File.separator + path);
-        System.out.println("Chemin utilisé : " + fileOrDirectory.getAbsolutePath());
 
         if (!fileOrDirectory.exists()) {
             throw new RuntimeException("Le chemin spécifié n'existe pas.");
@@ -85,10 +84,7 @@ public class ClientFileExplorerController {
                 key = tempPath + '/' + file;
             }
 
-            System.out.println("Clé : " + key);
-
             if (generalInfo != null) {
-                System.out.println("file : " + file);
 
                 GeneralInfoValeur generalInfoValeur = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfo, langueService.findById(Long.parseLong(langue)));
                 if (generalInfo.getLien().startsWith("/admin/")) {
@@ -103,8 +99,6 @@ public class ClientFileExplorerController {
                 generalInfoFolderMap.put(file, generalInfo);
             } else {
                 if (!relatedFile.isDirectory()) {
-                    System.out.println("Is actually a file : " + file);
-
                     generalInfoMap.put(file, generalInfo);
                 }
             }
@@ -122,11 +116,6 @@ public class ClientFileExplorerController {
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
         model.addAttribute("mainGeneralInfo", giv);
-
-        System.out.println("Titre : " + "'" + giv.getTitre() + "'");
-
-        System.out.println("current path : " + path);
-
         return "explorer-client"; // Retourne la vue Thymeleaf
     }
 }
