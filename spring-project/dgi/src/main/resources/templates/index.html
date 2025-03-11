@@ -415,6 +415,7 @@
                                 <div class="swiper-wrapper fah-c-swipe fah-c-light" style="height: 562px; transform: translate3d(0px, 0px, 0px);" id="swiper-wrapper-e4b71099297d2a71a" aria-live="polite">
                                     <div th:each="actualite : ${allActualites}" class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 605px; margin-right: 30px;" role="group" aria-label="1 / 4">
                                         <div class="fah-blog-card">
+                                            <a th:href="@{/admin/actualite/delete/{id}(id=${actualite.id})}" class="btn btn-danger">Supprimer</a>
                                             <div class="fah-cover fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                 <div class="fah-hover-frame">
                                                     <img th:if="${not actualite.getPiecesJointesImages().isEmpty()}" 

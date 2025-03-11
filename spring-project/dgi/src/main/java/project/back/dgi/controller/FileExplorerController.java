@@ -48,7 +48,18 @@ public class FileExplorerController {
     @GetMapping("/explorer")
     public String listFiles(@RequestParam(required = false, defaultValue = "") String path,@RequestParam(required = false, defaultValue = "2") String langue , Model model, HttpServletResponse response) throws IOException {
         File fileOrDirectory = new File(storagePath + File.separator + path);
-        
+        long id_langue = 2;
+
+        try {
+            id_langue = Long.parseLong(langue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (id_langue > 3 || id_langue < 1) {
+            id_langue = 2;
+        }
+
         if (!fileOrDirectory.exists()) {
             throw new RuntimeException("Le chemin spécifié n'existe pas.");
         }
@@ -77,7 +88,7 @@ public class FileExplorerController {
         HashMap<String, GeneralInfoValeur> generalInfoValueMap = new HashMap<>();
 
         String descri = path.startsWith("/") ? path : "/" + path;
-        GeneralInfoValeur giv = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfoService.getByCle(descri).orElse(null), langueService.findById(Long.parseLong(langue)));
+        GeneralInfoValeur giv = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfoService.getByCle(descri).orElse(null), langueService.findById(id_langue));
         descri = giv == null ? "" : giv.getValeur();
         String tempPath = new String(path);
         

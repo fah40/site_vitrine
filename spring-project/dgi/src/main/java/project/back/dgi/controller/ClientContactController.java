@@ -16,9 +16,14 @@ public class ClientContactController {
 
     @GetMapping("/contact")
     public String contact (@RequestParam(required = false, defaultValue="2") String langue, Model model) {
-        long id_langue = Long.parseLong(langue);
+        try {
+      long id_langue = 
+      Long.parseLong(langue);
+} catch (Exception e) {
+      e.printStackTrace();
+}
 
-        if (id_langue > 3) {
+        if (id_langue > 3 || id_langue < 1) {
             id_langue = 2;
         }
 

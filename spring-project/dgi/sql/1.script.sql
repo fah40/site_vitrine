@@ -78,7 +78,7 @@ CREATE TABLE piece_jointe(
    url_fichier TEXT NOT NULL,
    id_actualite INTEGER NOT NULL,
    PRIMARY KEY(id),
-   FOREIGN KEY(id_actualite) REFERENCES actualite(id)
+   FOREIGN KEY(id_actualite) REFERENCES actualite(id) ON DELETE CASCADE
 );
 
 CREATE TABLE general_info(
