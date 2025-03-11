@@ -24,7 +24,7 @@ public class DownloadController {
         this.pieceJointeService = pieceJointeService;
     }
 
-    @GetMapping("/admin/download")
+    @GetMapping("/download")
     public ResponseEntity<InputStreamResource> download(@RequestParam long id) throws FileNotFoundException {
         // Récupérer la pièce jointe par son ID
         PieceJointe pieceJointe = pieceJointeService.getPieceJointeById(id).orElse(null);

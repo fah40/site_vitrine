@@ -127,7 +127,7 @@
                                         <ul>
                                             <li th:each="file : ${mapFiles.keySet()}">
                                                 <th:block th:if="${mapFiles.get(file) == null}">
-                                                    <a class="fah-up" th:href="@{/admin/explorer(path=${currentPath + '/' + file})}" th:utext="${file}"></a>
+                                                    <a class="fah-up" th:href="@{/explorer(path=${currentPath + '/' + file})}" th:utext="${file}"></a>
                                                 </th:block>
                                             </li>
                                         </ul>
@@ -179,7 +179,7 @@
                                         <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
                                             
                                             <th:block th:if="${mapValueFolders.get(folder) == null}">
-                                                <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:text="${folder}"></a>
+                                                <a th:href="@{/explorer(path=${currentPath + '/' + folder})}" th:text="${folder}"></a>
                                             </th:block>
                                             <th:block th:if="${mapValueFolders.get(folder) != null}">
                                                 <!-- Utilisez le lien de l'objet GeneralInfo -->

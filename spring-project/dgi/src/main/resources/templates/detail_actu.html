@@ -130,7 +130,7 @@
                                                     <a th:id="${'download-link-' + piece.id}" 
                                                        th:data-id="${piece.id}" 
                                                        th:text="${piece.nomFichier}" 
-                                                       th:href="@{/admin/download(id=${piece.id})}" 
+                                                       th:href="@{/download(id=${piece.id})}" 
                                                        class="download-link"></a>
                                                 </li>
                                             </ul>
@@ -152,7 +152,7 @@
                                                     const pieceId = this.getAttribute('data-id');
                                     
                                                     // Rediriger vers l'endpoint de téléchargement avec l'ID en paramètre
-                                                    window.location.href = `/admin/download?id=${pieceId}`;
+                                                    window.location.href = `/download?id=${pieceId}`;
                                                 });
                                             });
                                         });

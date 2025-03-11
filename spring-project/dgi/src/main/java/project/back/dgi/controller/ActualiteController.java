@@ -151,4 +151,16 @@ public class ActualiteController {
 
         return "redirect:/admin/accueil";
     }
+
+    @GetMapping("/actualite/delete/{idActu}")
+    public String getMethodName(@PathVariable long idActu) {
+        Actualite actualite = actualiteService.getActualiteById(idActu).orElse(null);
+        
+        if (actualite != null) {
+            actualiteService.deleteActualite(idActu);
+        }
+
+        return "redirect:/admin/accueil";
+    }
+    
 }
