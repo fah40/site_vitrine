@@ -88,7 +88,7 @@ CREATE TABLE general_info(
    lien TEXT,
    id_general_info INTEGER,
    PRIMARY KEY(id),
-   FOREIGN KEY(id_general_info) REFERENCES general_info(id),
+   FOREIGN KEY(id_general_info) REFERENCES general_info(id) ON DELETE CASCADE,
    UNIQUE(cle)
 );
 

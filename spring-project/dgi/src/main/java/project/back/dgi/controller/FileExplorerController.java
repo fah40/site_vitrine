@@ -99,8 +99,8 @@ public class FileExplorerController {
                 System.out.println("file : " + file);
 
                 GeneralInfoValeur generalInfoValeur = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfo, langueService.findById(Long.parseLong(langue)));
-                if (generalInfoValeur.getTitre().isEmpty()) {
-                    generalInfoValeur.setTitre(file);
+                if (generalInfoValeur.getBouton().isEmpty()) {
+                    generalInfoValeur.setBouton(file);
                 }
                 generalInfoValueMap.put(file, generalInfoValeur);    
                 generalInfoFolderMap.put(file, generalInfo);
@@ -125,8 +125,7 @@ public class FileExplorerController {
         model.addAttribute("mapValueFolders", generalInfoValueMap);
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
-        
-        System.out.println("SIZEEEEEEEEEEEEEEEEEEEEE : " + generalInfoFolderMap.size());
+        model.addAttribute("mainGeneralInfo", giv);
         
         return "explorerUpdate"; // Retourne la vue Thymeleaf
     }
@@ -151,6 +150,7 @@ public class FileExplorerController {
         }
 
         GeneralInfo generalInfo = new GeneralInfo();
+        GeneralInfo mother = generalInfoService.getByCle(path).orElse(null);
 
         generalInfo.setCle(path + '/' + folderName);
         if (lien.isEmpty()) {
@@ -159,15 +159,12 @@ public class FileExplorerController {
             generalInfo.setLien(lien);
         }
 
-        // pour initialiser les dossiers en base
-        // GeneralInfo inBase = generalInfoService.getByCle(folderName).orElse(null);
-        // if (inBase != null) {
-        //     inBase.setLien(lien);
-        //     generalInfoService.save(inBase);
-        // }else{
-            generalInfoService.save(generalInfo);
-        // }
+        if (mother != null) {
+            System.out.println("Mother id = " + mother.getId());
+            generalInfo.setParentGeneralInfo(mother);
+        }
 
+        generalInfoService.save(generalInfo);
 
         return "redirect:/admin/explorer?path=" + path;
     }
@@ -176,6 +173,8 @@ public class FileExplorerController {
     public String deleteFile(@RequestParam String path, @RequestParam String fileName) {
         // Construire le chemin absolu
         File fileToDelete = new File(storagePath + File.separator + path, fileName);
+
+        String key = path + '/' + fileName;
 
         if (!fileToDelete.exists()) {
             throw new RuntimeException("Le fichier/dossier n'existe pas : " + fileToDelete.getAbsolutePath());
@@ -190,6 +189,11 @@ public class FileExplorerController {
                 throw new RuntimeException("Impossible de supprimer le fichier.");
             }
         }
+
+        System.out.println("Key to delete : " + key);
+
+        GeneralInfo gi = generalInfoService.getByCle(key).orElse(null);
+        generalInfoService.deleteById(gi.getId());
 
         return "redirect:/admin/explorer?path=" + path;
     }

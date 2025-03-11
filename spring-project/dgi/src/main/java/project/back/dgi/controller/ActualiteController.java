@@ -62,7 +62,7 @@ public class ActualiteController {
         Actualite actualite = new Actualite();
 
         // Récupérer l'utilisateur (simulé ici, à remplacer par votre logique)
-        User user = userService.findByEmail("j.irina.m.andrianjamanantena@gmail.com").orElse(null);
+        User user = userService.findByEmail("fanasinamanantsoa30@gmail.com").orElse(null);
 
         // Définir la date d'ajout
         actualite.setDateAjout(Timestamp.from(Instant.now()));

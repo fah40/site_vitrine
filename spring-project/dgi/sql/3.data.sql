@@ -36,7 +36,27 @@ INSERT INTO general_info (id, cle, lien, id_general_info)
 VALUES
 (DEFAULT, 'e_service', NULL, NULL),
 (DEFAULT, 'votre_avis', NULL, NULL),
-(DEFAULT, 'centre_contact', NULL, NULL);
+(DEFAULT, 'centre_contact', NULL, NULL),
+(DEFAULT, 'navigation', NULL, NULL);
+
+INSERT INTO general_info (id, cle, lien, id_general_info)
+VALUES
+(DEFAULT, 'nav_accueil', '#top', 13),
+(DEFAULT, 'nav_a_propos', '#apropos', 13),
+(DEFAULT, 'nav_documentations', '#documentations', 13),
+(DEFAULT, 'nav_e_service', '#safi', 13),
+(DEFAULT, 'nav_actualites', '#actualites', 13),
+(DEFAULT, 'nav_espace', '#torohy', 13),
+(DEFAULT, 'nav_contact', '#contact', 13);
+
+INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
+(DEFAULT, 'Accueil', 'Accueil', '', '', 2, 14),
+(DEFAULT, 'A propos', 'A propos', '', '', 2, 15),
+(DEFAULT, 'Documentations', 'Documentations', '', '', 2, 16),
+(DEFAULT, 'E-Services', 'E-Services', '', '', 2, 17),
+(DEFAULT, 'Actualités', 'Actualités', '', '', 2, 18),
+(DEFAULT, 'Espace citoyen', 'Espace citoyen', '', '', 2, 19),
+(DEFAULT, 'Centre de contact', 'Centre de contact', '', '', 2, 20);
 
 INSERT INTO general_info_valeur (id, titre, valeur, entete, bouton, id_langue, id_general_info) VALUES
 (DEFAULT, 'Mikasika', 'Mikasika', '', '', 1, 1),

@@ -68,6 +68,8 @@ public class ClientFileExplorerController {
 
         HashMap<String, GeneralInfo> generalInfoMap = new HashMap<>();
         HashMap<String, GeneralInfo> generalInfoFolderMap = new HashMap<>();
+        HashMap<String, GeneralInfoValeur> generalInfoValueMap = new HashMap<>();
+        
         String descri = path.startsWith("/") ? path : "/" + path;
         GeneralInfoValeur giv = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfoService.getByCle(descri).orElse(null), langueService.findById(Long.parseLong(langue)));
         descri = giv == null ? "" : giv.getValeur();
@@ -88,10 +90,16 @@ public class ClientFileExplorerController {
             if (generalInfo != null) {
                 System.out.println("file : " + file);
 
+                GeneralInfoValeur generalInfoValeur = generalInfoService.getGeneralInfoValeurByKeyAndLanguage(generalInfo, langueService.findById(Long.parseLong(langue)));
                 if (generalInfo.getLien().startsWith("/admin/")) {
                     generalInfo.setLien(generalInfo.getLien().substring(generalInfo.getLien().indexOf("/explorer")));
                 }
 
+                if (generalInfoValeur.getBouton().isEmpty()) {
+                    generalInfoValeur.setBouton(file);
+                }
+
+                generalInfoValueMap.put(file, generalInfoValeur);    
                 generalInfoFolderMap.put(file, generalInfo);
             } else {
                 if (!relatedFile.isDirectory()) {
@@ -110,9 +118,9 @@ public class ClientFileExplorerController {
         model.addAttribute("files", files);
         model.addAttribute("mapFiles", generalInfoMap);
         model.addAttribute("mapFolders", generalInfoFolderMap);
+        model.addAttribute("mapValueFolders", generalInfoValueMap);
         model.addAttribute("descri", descri);
         model.addAttribute("currentPath", path);
-        model.addAttribute("displayPath", path);
         model.addAttribute("mainGeneralInfo", giv);
 
         System.out.println("Titre : " + "'" + giv.getTitre() + "'");

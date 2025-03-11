@@ -170,20 +170,20 @@
                     <!-- hero end -->
 
                     <!-- contact info -->
-                    <div class="fah-p-0-100">
+                    <div class="fah-p-0-100" style="margin-top:400px;">
                         <div class="container">
                             <div class="row fah-jcc">
-                                <div class="col-sm-6 col-lg-6" th:each="folder : ${mapFolders.keySet()}">
+                                <div class="col-sm-6 col-lg-6" th:each="folder : ${mapValueFolders.keySet()}">
                                     <div class="fah-iconbox fah-tac fah-mb60">
                                         <i class="fa fa-folder fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></i>
                                         <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
                                             
-                                            <th:block th:if="${mapFolders.get(folder) == null}">
-                                                <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:utext="${folder}"></a>
+                                            <th:block th:if="${mapValueFolders.get(folder) == null}">
+                                                <a th:href="@{/admin/explorer(path=${currentPath + '/' + folder})}" th:text="${folder}"></a>
                                             </th:block>
-                                            <th:block th:if="${mapFolders.get(folder) != null}">
+                                            <th:block th:if="${mapValueFolders.get(folder) != null}">
                                                 <!-- Utilisez le lien de l'objet GeneralInfo -->
-                                                <a th:attr="href=${mapFolders.get(folder).lien}" target="_blank" rel="noopener noreferrer" th:utext="${folder}"></a>
+                                                <a th:attr="href=${mapValueFolders.get(folder).getGeneralInfo().lien}" target="_blank" rel="noopener noreferrer" th:utext="${mapValueFolders.get(folder).getBouton()}"></a>
                                             </th:block>
                                         
                                         </h4>
