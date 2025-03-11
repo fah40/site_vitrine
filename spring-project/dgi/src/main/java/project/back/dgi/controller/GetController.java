@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import project.back.dgi.entity.Actualite;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;

@@ -47,4 +47,11 @@ public class ClientGetController {
 
         return "index-client";
     }
+
+    @GetMapping({"/",""})
+    public String index() {
+        return "redirect:/accueil";
+    }
+
+
 }

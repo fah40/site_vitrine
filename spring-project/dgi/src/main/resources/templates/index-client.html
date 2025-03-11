@@ -413,17 +413,23 @@
                                         <div class="fah-blog-card">
                                             <div class="fah-cover fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                 <div class="fah-hover-frame">
-                                                    <img src="./assets/img/news/new1.jpg" alt="cover" class="fah-scale-img" data-value-1="1.15" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);">
+                                                    <img th:if="${not actualite.getPiecesJointesImages().isEmpty()}" 
+                                                        th:src="${actualite.getPiecesJointesImages().get(0).getDisplayUrl()}" 
+                                                        alt="cover" 
+                                                        class="fah-scale-img" 
+                                                        data-value-1="1.15" 
+                                                        data-value-2="1" 
+                                                        style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);">
                                                 </div>
                                                 <div class="fah-badges">
-                                                   <!--  <div class="fah-category">design</div>
-                                                    <div class="fah-date">29.08.24</div> -->
+                                                   <!--  <div class="fah-category">design</div>-->
+                                                    <div class="fah-date" th:utext="${actualite.dateAjout}"></div>
                                                 </div>
                                             </div>
                                             <a th:href="@{/admin/actualite/{id}(id=${actualite.id})}" class="fah-descr fah-c-gone">
                                                 <div class="fah-text-frame">
-                                                    <h4 class="fah-head4 fah-max-2row-text fah-mb20 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualite.titre}">SAFI - INITIATIVE D'ACCÉLÉRATION NUMÉRIQUE POUR LA FISCALITÉ À MADAGASCAR</h4>
-                                                    <div class="fah-text-md fah-max-2row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualite.description}">Antananarivo, ce 8 novembre 2024 - La Direction Générale des Impôts de Madagascar a franchi une étape décisive dans sa transformation numérique après le lancement officiel du Système d’Administration Fiscale Intégré ou projet SAFI...</div>
+                                                    <h4 class="fah-head4 fah-max-2row-text fah-mb20 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualite.titre}"></h4>
+                                                    <div class="fah-text-md fah-max-2row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualite.description}"></div>
                                                 </div>
                                                 <div class="fah-up fah-768-gone" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                     <div class="fah-stylized-btn">
