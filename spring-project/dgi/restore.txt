@@ -1,0 +1,2 @@
+chcp 65001
+psql -U postgres -h localhost -d dgi -f "D:\Users\Tsiry\Projet Professionnel\DGI\site_vitrine\spring-project\dgi\sql\dump.sql"
