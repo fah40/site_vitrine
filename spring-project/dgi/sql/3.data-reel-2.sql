@@ -5,10 +5,6 @@ SET client_encoding = 'WIN-1252';
 INSERT INTO public.user_ (id, email, name, firstname, validation_date, password, id_admin) VALUES
 ('b49f1f09-6798-421d-9546-f1792d952f39', 'fanasinamanantsoa30@gmail.com', '', 'Admin', '2025-03-12 00:00:00', '$2a$06$pCXEF8jtguYwXZEk3qy8vuWqt8ZgsTIfGp2ZajYvSp2qakZ1Kt9Qq', true);
 
--- Insertion dans la table attempts
-INSERT INTO public.attempts (id, date_next_attempt, count_attempt, id_user) VALUES
-(DEFAULT, NULL, 0, 'b49f1f09-6798-421d-9546-f1792d952f39');
-
 -- Insertion dans la table configuration
 INSERT INTO public.configuration (id, keys, valeurs) VALUES
 (DEFAULT, 'pin_expiration_minute', '10'),
