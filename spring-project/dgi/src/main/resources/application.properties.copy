@@ -1,9 +1,9 @@
 spring.application.name=dgi
 
 # URL de connexion à PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/dgi
-spring.datasource.username=postgres
-spring.datasource.password=azerty
+spring.datasource.url=jdbc:postgresql://10.2.249.216:5432/dgi_officiel
+spring.datasource.username=pimaso
+spring.datasource.password=N6wBlMp57@5vmD/2oZ1
 
 # Driver et dialecte pour PostgreSQL
 spring.datasource.driver-class-name=org.postgresql.Driver
