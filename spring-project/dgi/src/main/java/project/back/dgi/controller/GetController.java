@@ -18,6 +18,7 @@ import project.back.dgi.service.ActualiteService;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
+import project.back.dgi.service.TotalVisitesService;
 import project.back.dgi.util.PasswordUtil;
 
 @Controller
@@ -31,6 +32,8 @@ public class GetController {
     private GeneralInfoService generalInfoService;
     @Autowired
     private ActualiteService actualiteService;
+    @Autowired
+    private TotalVisitesService totalVisitesService;
 
     @GetMapping("/accueil")
     public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
@@ -79,6 +82,8 @@ public class GetController {
         }
 
         model.addAttribute("allNavs", values);
+
+        model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
 
         return "index";
     }
