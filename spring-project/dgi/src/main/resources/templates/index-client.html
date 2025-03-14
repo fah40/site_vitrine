@@ -96,7 +96,8 @@
                         <ul class="fah-main-menu fah-c-gone">
                             <li th:each="nav : ${allNavs}" class="fah-has-children">
                                 <a th:href="${nav.getGeneralInfo().lien}" th:utext="${nav.titre}"></a>
-                            </li>  
+                            </li> 
+                            <li><i style="color: black !important;" class="fa fa-eye"></i> <span th:utext="${totalVisites}"></span></li>
                         </ul>
                     </div>
                     <div class="fah-bottom blue">
@@ -446,6 +447,7 @@
                     <div class="container" id="torohy">
                         <div class="fah-half-container fah-reverse fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0; ">
                             <div class="fah-text-box fah-g-m3 fah-p-160-160">
+                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span th:utext="${votre_avis?.entete}"></span></p>
                                 <h2 class="fah-display3 fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-footer-link" th:utext="${votre_avis?.titre}">VOTRE AVIS</span></h2>
                                 <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}">Exprimez votre avis sur nos services et contribuez à la lutte contre la fraude fiscale à travers notre plateforme sécurisée de signalement.</div>
                                 <div class="fah-stylized fah-m2 fah-mb60 fah-up">
@@ -464,7 +466,7 @@
                     <!-- Torohy end -->
                 </div>
                 <!-- content -->
-                 
+
                      <!-- partenaire -->
                      <div class="fah-p-160-130" id="contact">
                         <div class="container">
@@ -623,6 +625,7 @@
                                         <li th:each="nav : ${allNavs}">
                                             <a class="fah-c-gone" th:href="${nav.getGeneralInfo().lien}" th:utext="${nav.titre}"></a>
                                         </li>
+                                        <li><i style="color: black !important;" class="fa fa-eye"></i> <span th:utext="${totalVisites}"></span></li>
                                     </ul>
                                     <ul class="fah-social fah-c-gone">
                                         <ul class="fah-social fah-c-gone">
