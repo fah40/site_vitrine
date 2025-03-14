@@ -1,5 +1,5 @@
 -- Activation du bon encodage
-SET client_encoding = 'WIN-1252';
+-- SET client_encoding = 'WIN-1252';
 
 -- Insertion dans la table user_
 INSERT INTO public.user_ (id, email, name, firstname, validation_date, password, id_admin) VALUES
@@ -221,9 +221,3 @@ INSERT INTO public.general_info_valeur (id, titre, valeur, entete, bouton, id_la
 (DEFAULT, '', '', '', '', 1, 50),
 (DEFAULT, '', '', '', '', 2, 50),
 (DEFAULT, '', '', '', '', 3, 50);
-
--- Insertion dans la table user_pin
-INSERT INTO public.user_pin (id, pin, creation_date, expiration_date, id_user) VALUES
-(DEFAULT, '922655', '2025-03-12 02:52:15.586787', '2025-03-12 03:02:15.586787', 'b49f1f09-6798-421d-9546-f1792d952f39'),
-(DEFAULT, '471457', '2025-03-12 08:53:21.965224', '2025-03-12 09:03:21.965224', 'b49f1f09-6798-421d-9546-f1792d952f39'),
-(DEFAULT, '376341', '2025-03-12 09:15:01.27241', '2025-03-12 09:25:01.27241', 'b49f1f09-6798-421d-9546-f1792d952f39');
