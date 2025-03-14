@@ -1,4 +1,5 @@
 package project.back.dgi.controller;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +9,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
+import project.back.dgi.entity.Visite;
 import project.back.dgi.service.ActualiteService;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
+import project.back.dgi.service.TotalVisitesService;
+import project.back.dgi.service.VisiteService;
 
 @Controller
 public class ClientGetController {
@@ -26,9 +31,13 @@ public class ClientGetController {
     private GeneralInfoService generalInfoService;
     @Autowired
     private ActualiteService actualiteService;
+    @Autowired
+    private VisiteService visiteService;
+    @Autowired
+    private TotalVisitesService totalVisitesService;
 
     @GetMapping("/accueil")
-    public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
+    public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model, HttpSession session) {
         List<Langue> langues = langueService.findAll();
         long id_langue = 2;
 
@@ -74,6 +83,26 @@ public class ClientGetController {
         }
 
         model.addAttribute("allNavs", values);
+
+        // comptage du nombre de visite 
+        if (session.getAttribute("lastVisitDate") == null) {
+            LocalDate now = LocalDate.now();
+            session.setAttribute("lastVisitDate", now);
+            Visite visite = new Visite(now);
+            visiteService.insertVisite(visite);
+            
+        } else {
+            // Vérification de la date de la dernière visite
+            LocalDate lastVisitDate = (LocalDate) session.getAttribute("lastVisitDate");
+            if (lastVisitDate != null && lastVisitDate.isBefore(LocalDate.now().minusDays(1))) {
+                LocalDate now = LocalDate.now();
+                session.setAttribute("lastVisitDate", now);
+                Visite visite = new Visite(now);
+                visiteService.insertVisite(visite);
+            }
+        }
+
+        model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
 
         return "index-client";
     }
