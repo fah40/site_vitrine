@@ -106,3 +106,12 @@ CREATE TABLE general_info_valeur(
    FOREIGN KEY(id_general_info) REFERENCES general_info(id) ON DELETE CASCADE,
    UNIQUE(id_langue, id_general_info)
 );
+
+CREATE TABLE visite (
+   id SERIAL,
+   date_visite DATE NOT NULL DEFAULT CURRENT_DATE,
+   PRIMARY KEY(id)
+);
+
+CREATE VIEW total_visites AS
+SELECT COUNT(*) AS total FROM visite;
