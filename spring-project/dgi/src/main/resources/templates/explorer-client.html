@@ -117,8 +117,8 @@
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
                                         <i class="fa fa-book fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></i>
-                                        <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"></h4>
-                                        <p class="fah-text-md fah-up" th:utext="${mainGeneralInfo.getValeur()}" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1; text-align:right;"></p>
+                                        <h4 class="fah-head4 fah-mb30 fah-up lienContact" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;text-align:right; !important"></h4>
+                                        <div class="fah-text-md fah-up" th:utext="${mainGeneralInfo.getValeur()}" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1; text-align:right; !important"></div>
                                     </div>
                                 </div>
                                 
@@ -170,7 +170,7 @@
                     <!-- hero end -->
 
                     <!-- contact info -->
-                    <div class="fah-p-0-100" style="margin-top:400px;">
+                    <div class="fah-p-0-100">
                         <div class="container">
                             <div class="row fah-jcc">
                                 <div class="col-sm-6 col-lg-6" th:each="folder : ${mapValueFolders.keySet()}">

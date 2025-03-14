@@ -95,8 +95,8 @@
                     <div class="margin_left fah-inner-scroll" id="swupMenu">
                         <ul class="fah-main-menu fah-c-gone">
                             <li th:each="nav : ${allNavs}" class="fah-has-children">
-                                <a th:href="${nav.getGeneralInfo().lien}" th:text="${nav.titre}"></a>
-                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/ressources')}">Modifier</a>
+                                <a th:href="${nav.getGeneralInfo().lien}" th:utext="${nav.titre}"></a>
+                                <a class="btn-modif" th:href="@{/admin/general_info_static(cle=${nav.generalInfo.cle})}">Modifier</a>
                             </li>                            
                         </ul>
                     </div>
@@ -212,7 +212,7 @@
                                     <div class="fah-iconbox fah-tac fah-mb60">
                                         <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/historique')}">Modifier</a><br><br>
                                         <a th:href="@{/admin/explorer(path='/historique', langue=${langueSelectionnee})}" id="histo"><i alt="icon" class="fah-mb30 fah-up fa fa-history icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
-                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${historique?.titre}"></h4>
+                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${historique?.entete}"></h4>
                                     </div>
                                 </div>
 
@@ -223,7 +223,7 @@
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-globe icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i>
                                         </a>
 
-                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${vision?.titre}">Vision </h4>
+                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${vision?.entete}"></h4>
                                         <p class="fah-text-md fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"></p>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@
                                         <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/attributions')}">Modifier</a><br><br>
                                         <a id="attribution" th:href="@{/admin/explorer(path='/attributions', langue=${langueSelectionnee})}"> 
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-code-branch icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
-                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${attributions?.titre}">Attributions</h4>
+                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${attributions?.entete}"></h4>
                                         <p class="fah-text-md fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"></p>
                                     </div>
                                 </div>
@@ -408,7 +408,7 @@
                         <div class="container">
                             <div class="row fah-aie fah-mb30">
                                 <div class="col-md-6"><a class="btn-modif" href="/admin/actualites/add"><i class="fa fa-plus"></i>  ajouter</a><br><br><br>
-                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" >ACTUALITés</span></h2>
+                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualites.titre}"></h2>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="fah-stylized fah-m1 fah-tar fah-768-tal fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a href="" class="fah-arrow-link fah-c-gone"></a></p>
@@ -477,6 +477,8 @@
                         </div>
                     </div>
                     <!-- Torohy end -->
+                </div>
+                <!-- content -->
 
                      <!-- partenaire -->
                      <div class="fah-p-160-130" id="contact">
@@ -503,7 +505,7 @@
 
                             <div class="row fah-aie fah-mb30" style="margin-top: 100px;">
                                 <div class="col-lg-6">
-                                    <h2 class="fah-footer-link fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px) scale(1.04, 1.04); opacity: 0;margin-top: 60px">Partenaires</h2>
+                                    <h2 class="fah-footer-link fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px) scale(1.04, 1.04); opacity: 0;margin-top: 60px" th:utext="${partenaires.titre}">\</h2>
                                 </div>
                                 <div class="col-lg-6">
                                     <p class="fah-stylized fah-m1 fah-tar fah-768-tal fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a href="" class="fah-arrow-link fah-c-gone"></a></p>
@@ -628,13 +630,13 @@
                     <!-- partenaire end -->
 
                     <!-- footer -->
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row fah-no-g">
                             <div class="col-lg-12">
                                 <div class="fah-footer-menu-frame fah-mb90 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                     <ul class="fah-footer-menu">
                                         <li th:each="nav : ${allNavs}">
-                                            <a class="fah-c-gone" th:href="${nav.getGeneralInfo().lien}" th:text="${nav.titre}"></a>
+                                            <a class="fah-c-gone" th:href="${nav.getGeneralInfo().lien}" th:utext="${nav.titre}"></a>
                                         </li>
                                     </ul>
                                     <ul class="fah-social fah-c-gone">
@@ -651,9 +653,6 @@
 
                     </div>
                     <!-- footer end -->
-
-                </div>
-                <!-- content -->
 
             </div>
         </div>
