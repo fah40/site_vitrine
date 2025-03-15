@@ -1,5 +1,7 @@
 package project.back.dgi.interceptor;
 
+import java.sql.Timestamp;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +21,18 @@ public class AdminInterceptor implements HandlerInterceptor {
             response.sendRedirect("/"); // Redirige vers la page de connexion
             return false;
         }
+
+        Timestamp sessionExpiration = (Timestamp) request.getSession().getAttribute("expiration");
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+
+        if (currentTimestamp.after(sessionExpiration)) {
+            request.getSession().removeAttribute("user");
+            request.getSession().removeAttribute("expiration");
+            response.sendRedirect("/");
+
+            return false;
+        }
+
         return true; // Continue l'exécution du contrôleur
     }
 

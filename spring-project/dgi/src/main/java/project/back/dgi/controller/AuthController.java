@@ -1,41 +1,34 @@
 package project.back.dgi.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import project.back.dgi.entity.Attempt;
 import project.back.dgi.entity.User;
 import project.back.dgi.entity.UserPin;
 import project.back.dgi.repository.AttemptRepository;
-import project.back.dgi.repository.ConfigurationRepository;
 import project.back.dgi.repository.UserPinRepository;
 import project.back.dgi.service.ConfigurationService;
 import project.back.dgi.service.UserService;
+import project.back.dgi.util.Constante;
 import project.back.dgi.util.EmailUtil;
 import project.back.dgi.util.HCaptchaUtil;
 import project.back.dgi.util.PasswordUtil;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
-import java.util.Optional;
-
-import java.net.URLEncoder;
 
 @Controller
 @RequestMapping("/auth")
@@ -192,6 +185,9 @@ public class AuthController {
 
         model.addAttribute("email", email);
         session.setAttribute("user", user);
+        Timestamp expiration = new Timestamp(System.currentTimeMillis() + Constante.getSessionDuration() * 60 * 60 * 1000);
+        session.setAttribute("expiration", expiration);
+
         return "redirect:/admin/accueil"; // Redirige vers la page d'accueil
     }
 }
