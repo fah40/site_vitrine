@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,8 +125,31 @@ public class ClientFileExplorerController {
             return "dossier-vide";
         }
 
+        HashMap<String, GeneralInfo> cdiFiles = new HashMap<>();
+        HashMap<String, GeneralInfo> cpfFiles = new HashMap<>();
+
+        for (Map.Entry<String, GeneralInfo> entry : generalInfoMap.entrySet()) {
+            String key = entry.getKey();
+            GeneralInfo value = entry.getValue();
+            
+            String upperKey = key.toUpperCase();
+            
+            if (upperKey.startsWith("CDI")) {
+                cdiFiles.put(key, value);
+            }
+            else if (upperKey.startsWith("CPF")) {
+                cpfFiles.put(key, value);
+            }
+            else {
+                cdiFiles = null;
+                cpfFiles = null;
+            }
+        }
+
         model.addAttribute("files", files);
         model.addAttribute("mapFiles", generalInfoMap);
+        model.addAttribute("cdimapFiles", cdiFiles);
+        model.addAttribute("cpfmapFiles", cpfFiles);
         model.addAttribute("mapFolders", generalInfoFolderMap);
         model.addAttribute("mapValueFolders", generalInfoValueMap);
         model.addAttribute("descri", descri);

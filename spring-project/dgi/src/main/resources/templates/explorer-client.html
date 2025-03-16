@@ -123,7 +123,7 @@
                                 </div>
                                 
                                 <div class="col-sm-4 col-lg-4">
-                                    <div class="fah-iconbox fah-tac fah-mb60">
+                                    <div class="fah-iconbox fah-tac fah-mb60" th:if="${cdimapFiles == null}">
                                         <ul>
                                             <li th:each="file : ${mapFiles.keySet()}">
                                                 <th:block th:if="${mapFiles.get(file) == null}">
@@ -131,6 +131,41 @@
                                                 </th:block>
                                             </li>
                                         </ul>
+                                    </div>
+                                    <div th:if="${cdimapFiles != null && cdimapFiles.size() > 0}">
+                                        <div class="fah-iconbox fah-tac fah-mb60">
+                                            <h4 class="fah-head4 fah-a2" >CDI</h4>
+                                            <table class="fah-up">
+                                                <tr>
+                                                    <td>
+                                                        <ul>
+                                                            <li th:each="file : ${cdimapFiles.keySet()}">
+                                                                <th:block th:if="${cdimapFiles.get(file) == null}">
+                                                                    <a th:href="@{/explorer(path=${currentPath + '/' + file})}" th:utext="${file}"></a>
+                                                                </th:block>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+    
+                                        <div class="fah-iconbox fah-tac fah-mb60">
+                                            <h4 class="fah-head4 fah-a2" >CPF</h4>
+                                            <table class="fah-up">
+                                                <tr>
+                                                    <td>
+                                                        <ul>
+                                                            <li th:each="file : ${cpfmapFiles.keySet()}">
+                                                                <th:block th:if="${cpfmapFiles.get(file) == null}">
+                                                                    <a th:href="@{/explorer(path=${currentPath + '/' + file})}" th:utext="${file}"></a>
+                                                                </th:block>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

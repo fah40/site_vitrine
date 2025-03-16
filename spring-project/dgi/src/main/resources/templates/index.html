@@ -196,7 +196,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='mot_du_dgi')}">Modifier</a><br><br>
-                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-a2" th:utext="${mot_du_dgi?.titre}"></h2>
+                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"><span class="fah-a2" th:text="${mot_du_dgi?.bouton}"></span> <span th:text="${mot_du_dgi?.entete}"></span></h2>
                                     <div class="fah-text-md fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${mot_du_dgi?.valeur}"><div>
                                 </div>
                             </div>

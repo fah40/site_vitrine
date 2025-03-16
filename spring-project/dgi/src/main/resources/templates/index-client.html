@@ -194,7 +194,7 @@
                                     <!-- <p class="fah-text-md fah-deco-text fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-weight: bold;">Bienvenue à la Direction Générale des Impôts</p> -->
                                 </div>
                                 <div class="col-lg-7">
-                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-a2" th:utext="${mot_du_dgi?.titre}"></h2>
+                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-a2" th:text="${mot_du_dgi?.bouton}"></span> <span th:text="${mot_du_dgi?.entete}"></span></h2>
                                     <div class="fah-text-md fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${mot_du_dgi?.valeur}"><div>
                                 </div>
                             </div>
@@ -472,7 +472,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                    <a th:href="@{/explorer(path='/centre_contact', langue=${langueSelectionnee})}" class="fah-footer-contact fah-mb90">
+                                    <a class="fah-footer-contact fah-mb90">
                                         <h6 class="fah-footer-link fah-rubber fah-m1" th:utext="${centre_contact?.titre}"></h6>
                                     </a>
 
