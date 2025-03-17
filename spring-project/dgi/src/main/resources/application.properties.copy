@@ -38,3 +38,6 @@ spring.servlet.multipart.max-request-size=1000MB
 app.storage.location=src/main/resources/static/folders
 
 file.upload-dir=src/main/resources/static/uploads
+
+# durée de vie des sessions, 24h ici
+server.servlet.session.timeout=1440m
