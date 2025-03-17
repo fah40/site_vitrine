@@ -105,6 +105,7 @@ public class AuthController {
         // verifier qu'il a franchi la premiere etape 
         if (((String) session.getAttribute("from")).compareTo("1") != 0) {
             model.addAttribute("error", "passez par notre captcha!");
+            return "redirect:/auth/login"; // au cas ou c'est un bot
         }
         // Recherche de l'utilisateur par email
         User user = userService.findByEmail(email).orElse(null);
@@ -157,8 +158,9 @@ public class AuthController {
                             Model model,
                             HttpSession session) throws IOException {
         // verifier qu'il a franchi la 2 eme etape 
-        if (((String) session.getAttribute("from")).compareTo("1") != 0) {
+        if (((String) session.getAttribute("from")).compareTo("2") != 0) {
             model.addAttribute("error", "passez par notre pin!");
+            return "/auth/login"; // oui , toujours au cas ou c'est un bot
         }
         // Recherche de l'utilisateur par email
         User user = userService.findByEmail(email).orElse(null);
