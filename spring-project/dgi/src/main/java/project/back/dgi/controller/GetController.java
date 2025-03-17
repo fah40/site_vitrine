@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
@@ -34,6 +35,13 @@ public class GetController {
     private ActualiteService actualiteService;
     @Autowired
     private TotalVisitesService totalVisitesService;
+
+
+    @GetMapping("/go_back_home")
+    public String deconnection (HttpSession session) {
+        session.invalidate();
+        return "redirect:/accueil";
+    }
 
     @GetMapping("/accueil")
     public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
