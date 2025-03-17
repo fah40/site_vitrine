@@ -63,7 +63,8 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestParam String email, 
                         @RequestParam(name =  "h-captcha-response", required = false) String hCaptchaResponse,
-                        Model model) {
+                        Model model,
+                        HttpSession session) {
         if ( (hCaptchaResponse==null || hCaptchaResponse.isEmpty()) || (!HCaptchaUtil.verifyHCaptcha(hCaptchaResponse))) {
             model.addAttribute("error", "Vérification hCaptcha échouée !");
             return "pagLogin/login";
@@ -88,6 +89,8 @@ public class AuthController {
         emailUtil.sendHtmlEmail(user.getEmail(),configurationService.getValueByKey("sending_email_pin_content"),pinGenerated);
 
         model.addAttribute("email", email);
+        // savoir qu'il a franchi la premiere etape 
+        session.setAttribute("from", "1");
         return "pagLogin/login2";
     }
 
@@ -97,7 +100,12 @@ public class AuthController {
     @PostMapping("/authenticate2")
     public String authenticate2(@RequestParam String email, 
                                 @RequestParam String pin, 
-                                Model model) {
+                                Model model,
+                                HttpSession session) {
+        // verifier qu'il a franchi la premiere etape 
+        if (((String) session.getAttribute("from")).compareTo("1") != 0) {
+            model.addAttribute("error", "passez par notre captcha!");
+        }
         // Recherche de l'utilisateur par email
         User user = userService.findByEmail(email).orElse(null);
 
@@ -128,7 +136,14 @@ public class AuthController {
 
         // Si le PIN est correct, redirige vers la page suivante
         model.addAttribute("email", email);
+        // savoir qu'il a franchi la 2 etape 
+        session.setAttribute("from", "2");
         return "pagLogin/login3"; // Redirige vers la page de saisie du mot de passe
+    }
+
+    @GetMapping("/authenticate2")
+    public String authenticate2_get (){
+        return "redirect:/auth/login";
     }
 
 
@@ -141,6 +156,10 @@ public class AuthController {
                             HttpServletResponse response,
                             Model model,
                             HttpSession session) throws IOException {
+        // verifier qu'il a franchi la 2 eme etape 
+        if (((String) session.getAttribute("from")).compareTo("1") != 0) {
+            model.addAttribute("error", "passez par notre pin!");
+        }
         // Recherche de l'utilisateur par email
         User user = userService.findByEmail(email).orElse(null);
         // Récupère les tentatives de l'utilisateur
@@ -188,6 +207,13 @@ public class AuthController {
         Timestamp expiration = new Timestamp(System.currentTimeMillis() + Constante.getSessionDuration() * 60 * 60 * 1000);
         session.setAttribute("expiration", expiration);
 
+        session.removeAttribute("from");
+
         return "redirect:/admin/accueil"; // Redirige vers la page d'accueil
+    }
+
+    @GetMapping("/authenticate3")
+    public String authenticate3_get (){
+        return "redirect:/auth/login";
     }
 }
