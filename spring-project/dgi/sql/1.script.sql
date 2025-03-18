@@ -93,6 +93,8 @@ CREATE TABLE general_info(
    UNIQUE(cle)
 );
 
+ALTER TABLE general_info ADD COLUMN url_image TEXT;
+
 CREATE TABLE general_info_valeur(
    id SERIAL,
    titre TEXT NOT NULL,

@@ -1,9 +1,11 @@
 package project.back.dgi.controller;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ import project.back.dgi.service.VisiteService;
 
 @Controller
 public class ClientGetController {
+
+    private final ActualiteController actualiteController;
     @Autowired
     private LangueService langueService;
     @Autowired
@@ -35,6 +39,12 @@ public class ClientGetController {
     private VisiteService visiteService;
     @Autowired
     private TotalVisitesService totalVisitesService;
+    @Value("${file.popup-upload-dir}")
+    private String popupUploadPath;
+
+    ClientGetController(ActualiteController actualiteController) {
+        this.actualiteController = actualiteController;
+    }
 
     @GetMapping("/accueil")
     public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model, HttpSession session) {
@@ -101,6 +111,29 @@ public class ClientGetController {
                 visiteService.insertVisite(visite);
             }
         }
+
+        // Vérifier si le dossier d'upload existe, sinon le créer
+        File uploadDir = new File(popupUploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        String popUpImage = "";
+
+        File[] existingFiles = uploadDir.listFiles();
+        if (existingFiles != null) {
+            for (File existingFile : existingFiles) {
+                popUpImage = existingFile.getPath();
+            }
+        }
+
+        if (!popUpImage.isEmpty()) {
+            if (popUpImage.contains("\\uploads")) {
+                popUpImage = popUpImage.substring(popUpImage.indexOf("\\uploads"));
+            }
+        }
+
+        model.addAttribute("popUpImage", popUpImage);
 
         model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
 

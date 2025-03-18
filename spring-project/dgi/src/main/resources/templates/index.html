@@ -36,12 +36,19 @@
 
 <body style="height: 8850px; overscroll-behavior: none;">
 
-    <!-- <div id="popup" class="popup">
+    <div id="popup" class="popup">
         <div class="popup-content">
             <span class="close-btn" onclick="closePopup()">×</span>
-            <img src="/assets/img/popup.jpg" alt="Popup Image" class="popup-image">
+            <img th:src="${ popUpImage }" alt="Popup Image" class="popup-image">
+            
+            <!-- Formulaire pour uploader une image -->
+            <form id="uploadForm" enctype="multipart/form-data" method="post" action="/admin/uploadPopupImage">
+                <label for="fileInput">Choisissez une image à uploader :</label>
+                <input type="file" id="fileInput" name="fileInput" accept="image/*">
+                <button type="submit">Upload</button>
+            </form>
         </div>
-    </div> -->
+    </div>
 
     
     <!-- wrapper -->

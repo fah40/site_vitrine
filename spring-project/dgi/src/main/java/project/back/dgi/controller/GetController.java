@@ -1,9 +1,11 @@
 package project.back.dgi.controller;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,8 @@ public class GetController {
     private ActualiteService actualiteService;
     @Autowired
     private TotalVisitesService totalVisitesService;
+    @Value("${file.popup-upload-dir}")
+    private String popupUploadPath;
 
 
     @GetMapping("/go_back_home")
@@ -92,6 +96,29 @@ public class GetController {
         model.addAttribute("allNavs", values);
 
         model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
+
+        // Vérifier si le dossier d'upload existe, sinon le créer
+        File uploadDir = new File(popupUploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        String popUpImage = "";
+
+        File[] existingFiles = uploadDir.listFiles();
+        if (existingFiles != null) {
+            for (File existingFile : existingFiles) {
+                popUpImage = existingFile.getPath();
+            }
+        }
+
+        if (!popUpImage.isEmpty()) {
+            if (popUpImage.contains("\\uploads")) {
+                popUpImage = popUpImage.substring(popUpImage.indexOf("\\uploads"));
+            }
+        }
+
+        model.addAttribute("popUpImage", popUpImage);
 
         return "index";
     }

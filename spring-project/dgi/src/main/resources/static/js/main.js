@@ -1192,15 +1192,15 @@ window.addEventListener('pageshow', (event) => {
     }
 });
 
-// // Show the popup when the page loads
-// window.onload = function () {
-//     const popup = document.getElementById('popup');
-//     popup.style.display = 'flex'; // Show the popup
-// };
+// Show the popup when the page loads
+window.onload = function () {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'flex'; // Show the popup
+};
 
-// // Close the popup
-// function closePopup() {
-//     const popup = document.getElementById('popup');
-//     popup.style.display = 'none'; // Hide the popup
-// }
+// Close the popup
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none'; // Hide the popup
+}
   
