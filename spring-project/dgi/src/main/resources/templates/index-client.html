@@ -36,7 +36,7 @@
 
 <body style="height: 8850px; overscroll-behavior: none;">
 
-    <div id="popup" class="popup">
+    <div id="popup" class="popup" th:if="${popUpImage != null and popUpImage != ''}">
         <div class="popup-content">
             <span class="close-btn" onclick="closePopup()">×</span>
             <img th:src="${popUpImage}" alt="Popup Image" class="popup-image">

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -55,4 +57,26 @@ public class PopupController {
 
         return "redirect:/admin/accueil";
     }
+
+    @GetMapping("/deletePopup")
+    public String delete () {
+        // Vérifier si le dossier d'upload existe, sinon le créer
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Supprimer tous les fichiers existants dans le répertoire
+        File[] existingFiles = uploadDir.listFiles();
+        if (existingFiles != null) {
+            for (File existingFile : existingFiles) {
+                if (existingFile.isFile()) {
+                    existingFile.delete();
+                }
+            }
+        }
+
+        return "redirect:/admin/accueil";
+    }
+    
 }
