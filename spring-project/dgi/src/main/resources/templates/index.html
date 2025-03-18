@@ -36,19 +36,92 @@
 
 <body style="height: 8850px; overscroll-behavior: none;">
 
-    <div id="popup" class="popup">
+    <div id="popup" class="popup fah-up">
         <div class="popup-content">
-            <span class="close-btn" onclick="closePopup()">×</span>
+            <span class="close-btn" onclick="closePopup()">×</span><br>
             <img th:src="${ popUpImage }" alt="Popup Image" class="popup-image">
             
+            <!-- Formulaire pour uploader un fichier -->
             <!-- Formulaire pour uploader une image -->
-            <form id="uploadForm" enctype="multipart/form-data" method="post" action="/admin/uploadPopupImage">
-                <label for="fileInput">Choisissez une image à uploader :</label>
-                <input type="file" id="fileInput" name="fileInput" accept="image/*">
-                <button type="submit">Upload</button>
-            </form>
+            <div class="upload-container">
+                <form id="uploadForm" enctype="multipart/form-data" method="post" action="/admin/uploadPopupImage">
+                    <input class="form" type="hidden" name="path" th:value="${currentPath}">
+                    <div class="file-upload-wrapper">
+                        <input class="file-input" type="file" name="fileInput" id="fileInput" accept="image/*" required style="display: none;">
+                        <label for="fileInput" class="file-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Choisir une image</span>
+                        </label>
+                        <div class="file-preview" id="filePreview"></div>
+                    </div>
+                    <button class="btn btn-inverse" type="submit">Upload</button>
+                </form>
+            </div>
+
         </div>
     </div>
+
+
+    <script>
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        const preview = document.getElementById('filePreview');
+        preview.innerHTML = '';
+        
+        if (files.length > 0) {
+            files.forEach((file, index) => {
+                // Déterminer l'icône selon le type de fichier
+                let iconClass;
+                const fileType = file.type;
+                const fileName = file.name;
+                
+                if (fileType.includes('image')) {
+                    iconClass = 'fas fa-image';
+                } else if (fileType.includes('pdf')) {
+                    iconClass = 'fas fa-file-pdf';
+                } else if (fileType.includes('text')) {
+                    iconClass = 'fas fa-file-alt';
+                } else if (fileType.includes('video')) {
+                    iconClass = 'fas fa-file-video';
+                } else if (fileType.includes('audio')) {
+                    iconClass = 'fas fa-file-audio';
+                } else {
+                    iconClass = 'fas fa-file';
+                }
+                
+                // Créer l'élément de prévisualisation
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <i class="${iconClass} fa-lg"></i>
+                    <span>${fileName}</span>
+                    <i class="fas fa-times remove-btn" data-index="${index}"></i>
+                `;
+                
+                preview.appendChild(fileItem);
+            });
+    
+            // Gestion de la suppression
+            preview.querySelectorAll('.remove-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    files.splice(index, 1);
+                    
+                    // Mettre à jour l'input file
+                    const newFileList = new DataTransfer();
+                    files.forEach(file => newFileList.items.add(file));
+                    document.getElementById('fileInput').files = newFileList.files;
+                    
+                    // Rafraîchir l'affichage
+                    this.closest('.file-item').remove();
+                    if (files.length === 0) {
+                        preview.innerHTML = '';
+                    }
+                });
+            });
+        }
+    });
+    </script>
 
     
     <!-- wrapper -->
