@@ -1,0 +1,12 @@
+[Unit]
+Description=Application Spring Boot DGI
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/wwwNG/dgi-officiel
+ExecStart=/usr/bin mvn spring-boot:run
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

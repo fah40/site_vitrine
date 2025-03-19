@@ -1259,6 +1259,14 @@ buttons
   border-radius: 5px;
 }
 
+.btn-supp{
+  padding: 10px;
+  background: rgb(177, 46, 36);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
 .fah-btn {
   position: relative;
   border: none;
