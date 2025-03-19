@@ -1,39 +1,45 @@
-
 /* Popup styles */
 .popup {
-display: none; /* Hidden by default */
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.8);
-z-index: 1000;
-justify-content: center;
-align-items: center;
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Occupe toute la hauteur de l'écran */
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    overflow-y: auto; /* Permet le défilement de l'ensemble du popup */
+    padding: 20px; /* Espace autour du contenu */
+    box-sizing: border-box; /* Inclut le padding dans la hauteur et la largeur */
 }
 
 .popup-content {
-background-color: #fff;
-padding: 20px;
-border-radius: 8px;
-text-align: center;
-position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    max-width: 90%; /* Limite la largeur du contenu */
+    max-height: 90vh; /* Limite la hauteur du contenu à 90% de la hauteur de l'écran */
+    overflow-y: auto; /* Permet le défilement à l'intérieur du contenu si nécessaire */
+    margin: 0 auto; /* Centre le contenu horizontalement */
+    box-sizing: border-box; /* Inclut le padding dans la hauteur et la largeur */
 }
 
 .popup-image {
-max-width: 100%;
-height: auto;
-border-radius: 8px;
+    max-width: 100%; /* L'image ne dépasse pas la largeur du contenu */
+    height: auto; /* Maintient le ratio de l'image */
+    border-radius: 8px;
+    display: block; /* Évite l'espace supplémentaire sous l'image */
+    margin: 0 auto; /* Centre l'image horizontalement */
 }
 
 .close-btn {
-position: absolute;
-top: 10px;
-right: 10px;
-font-size: 24px;
-font-weight: bold;
-color: #333;
-cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
 }
-  
