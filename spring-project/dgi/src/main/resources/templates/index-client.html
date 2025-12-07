@@ -188,8 +188,8 @@
                                     <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${dgi?.entete}"></p>
                                 </div>
                                 <div class="col-lg-4">
-                                    <img src="/assets/img/dg.png" style="width: 80%;height: auto;"><br>
-                                    <div class="fah-text-md fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><div style="font-weight: bold;" th:utext="${dgi?.valeur}">GERMAIN</div><div th:utext="${dgi?.titre}"></div> 
+                                    <img th:src="${dgImage}" style="width: 80%;height: auto;"><br>
+                                    <div class="fah-text-md fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><div style="font-weight: bold;" th:utext="${dgi?.valeur}"></div><div th:utext="${dgi?.titre}"></div> 
                                 </div>
                                     <!-- <p class="fah-text-md fah-deco-text fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-weight: bold;">Bienvenue à la Direction Générale des Impôts</p> -->
                                 </div>

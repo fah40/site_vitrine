@@ -266,12 +266,157 @@
                         <div class="container">
                             <div class="row fah-jcb">
                                 <div class="col-12">
-                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='dgi')}">Modifier</a><br><br>
+                                    <div class="col-2">
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='dgi')}">Modifier</a><br><br>
                                     <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${dgi?.entete}"></p>
+
+                                    <form enctype="multipart/form-data" method="post" action="/admin/uploadDgImage" class="dg-upload-form">
+                                        <input class="form" type="hidden" name="path" th:value="${currentPath}">
+
+                                        <div class="file-upload-wrapper">
+                                            <!-- note: multiple ajouté pour permettre plusieurs fichiers -->
+                                            <input class="file-input dg-image-input" type="file" name="fileInput" accept="image/*" multiple style="display: none;" required>
+                                            
+                                            <label class="file-label" tabindex="0">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Choisir une image</span>
+                                            </label>
+
+                                            <div class="file-preview"></div>
+                                        </div>
+
+                                        <button class="btn btn-inverse" type="submit">Upload</button>
+                                    </form>
+
+                                    <script>
+                                    (function () {
+                                        // selecteurs basés sur classes (aucun id)
+                                        const forms = document.querySelectorAll('.dg-upload-form');
+
+                                        forms.forEach(form => {
+                                            const fileInput = form.querySelector('.dg-image-input');       // l'input file associé au formulaire
+                                            const label = form.querySelector('.file-label');               // label cliquable
+                                            const preview = form.querySelector('.file-preview');          // zone de prévisualisation
+
+                                            // tableau interne pour stocker la sélection (évite problème d'index après suppression)
+                                            let selectedFiles = [];
+
+                                            // focus/keyboard accessibility for the label (optionnel)
+                                            if (label) {
+                                                label.addEventListener('keydown', (ev) => {
+                                                    if (ev.key === 'Enter' || ev.key === ' ') {
+                                                        ev.preventDefault();
+                                                        fileInput.click();
+                                                    }
+                                                });
+                                                label.addEventListener('click', () => fileInput.click());
+                                            }
+
+                                            // quand l'utilisateur choisit des fichiers
+                                            fileInput.addEventListener('change', (e) => {
+                                                const newFiles = Array.from(e.target.files || []);
+                                                // concat sans duplicata (optionnel) : ici on accepte doublons si l'utilisateur veut
+                                                selectedFiles = selectedFiles.concat(newFiles);
+                                                renderPreview();
+                                                syncInputFiles();
+                                            });
+
+                                            // rend la preview et attache suppression via delegation
+                                            function renderPreview() {
+                                                preview.innerHTML = '';
+
+                                                if (selectedFiles.length === 0) {
+                                                    // tu peux afficher un message d'aide ici si tu veux
+                                                    return;
+                                                }
+
+                                                selectedFiles.forEach((file, i) => {
+                                                    const type = (file && file.type) || '';
+                                                    let iconClass = 'fas fa-file';
+                                                    if (type.includes('image')) iconClass = 'fas fa-image';
+                                                    else if (type.includes('pdf')) iconClass = 'fas fa-file-pdf';
+                                                    else if (type.includes('text')) iconClass = 'fas fa-file-alt';
+                                                    else if (type.includes('video')) iconClass = 'fas fa-file-video';
+                                                    else if (type.includes('audio')) iconClass = 'fas fa-file-audio';
+
+                                                    const item = document.createElement('div');
+                                                    item.className = 'file-item';
+                                                    item.dataset.index = i;
+
+                                                    item.innerHTML = `
+                                                        <i class="${iconClass} fa-lg" aria-hidden="true"></i>
+                                                        <span class="file-name">${escapeHtml(file.name)}</span>
+                                                        <i class="fas fa-times remove-btn" role="button" tabindex="0" aria-label="Supprimer" data-index="${i}" style="cursor:pointer;"></i>
+                                                    `;
+
+                                                    preview.appendChild(item);
+                                                });
+                                            }
+
+                                            // suppression via delegation (clic ou touche entrée/espace)
+                                            preview.addEventListener('click', (e) => {
+                                                const btn = e.target.closest('.remove-btn');
+                                                if (!btn) return;
+                                                const idx = Number(btn.dataset.index);
+                                                removeFile(idx);
+                                            });
+
+                                            preview.addEventListener('keydown', (e) => {
+                                                const btn = e.target.closest('.remove-btn');
+                                                if (!btn) return;
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    const idx = Number(btn.dataset.index);
+                                                    removeFile(idx);
+                                                }
+                                            });
+
+                                            // retire le fichier du tableau puis met à jour tout
+                                            function removeFile(index) {
+                                                if (Number.isNaN(index)) return;
+                                                selectedFiles.splice(index, 1);
+                                                // ré-indexe les boutons en rerendant
+                                                renderPreview();
+                                                syncInputFiles();
+                                            }
+
+                                            // synchronise input.files avec selectedFiles (nécessaire avant submit)
+                                            function syncInputFiles() {
+                                                const dt = new DataTransfer();
+                                                selectedFiles.forEach(f => dt.items.add(f));
+                                                // update the real input
+                                                fileInput.files = dt.files;
+                                            }
+
+                                            // sécurité simple pour éviter injection HTML dans le nom de fichier
+                                            function escapeHtml(str) {
+                                                return String(str)
+                                                    .replace(/&/g, '&amp;')
+                                                    .replace(/</g, '&lt;')
+                                                    .replace(/>/g, '&gt;')
+                                                    .replace(/"/g, '&quot;')
+                                                    .replace(/'/g, '&#039;');
+                                            }
+
+                                            // optionnel : s'assurer que, si le formulaire est soumis sans fichier, on empêche l'envoi
+                                            form.addEventListener('submit', (ev) => {
+                                                // si required sur input ne suffit pas (car on manipule input.files), double-check:
+                                                if (!fileInput.files || fileInput.files.length === 0) {
+                                                    ev.preventDefault();
+                                                    alert('Veuillez sélectionner au moins une image à uploader.');
+                                                }
+                                            });
+                                        });
+                                    })();
+                                    </script>
+
+
+
+                                    </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <img src="/assets/img/dg.png" style="width: 80%;height: auto;"><br>
-                                    <div class="fah-text-md fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><div style="font-weight: bold;" th:utext="${dgi?.valeur}">GERMAIN</div><div th:utext="${dgi?.titre}"></div> 
+                                    <img th:src="${dgImage}" style="width: 80%;height: auto;"><br>
+                                    <div class="fah-text-md fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><div style="font-weight: bold;" th:utext="${dgi?.valeur}"></div><div th:utext="${dgi?.titre}"></div> 
                                 </div>
                                     <!-- <p class="fah-text-md fah-deco-text fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-weight: bold;">Bienvenue à la Direction Générale des Impôts</p> -->
                                 </div>

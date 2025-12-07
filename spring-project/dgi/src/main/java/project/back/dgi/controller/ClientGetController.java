@@ -41,6 +41,8 @@ public class ClientGetController {
     private TotalVisitesService totalVisitesService;
     @Value("${file.popup-upload-dir}")
     private String popupUploadPath;
+    @Value("${file.dg-image-dir}")
+    private String dgImagePath;
 
     ClientGetController(ActualiteController actualiteController) {
         this.actualiteController = actualiteController;
@@ -133,6 +135,29 @@ public class ClientGetController {
             }
         }
 
+// =====================================================================
+        File dgFile = new File(dgImagePath);
+        if (!dgFile.exists()) {
+            dgFile.mkdirs();
+        }
+
+        String dgImage = "";
+
+        File[] existingFiles2 = dgFile.listFiles();
+        if (existingFiles != null) {
+            for (File existingFile : existingFiles2) {
+                dgImage = existingFile.getPath();
+            }
+        }
+
+        if (!dgImage.isEmpty()) {
+            if (dgImage.contains("\\uploads")) {
+                dgImage = dgImage.substring(dgImage.indexOf("\\uploads"));
+            }
+        }
+
+        model.addAttribute("dgImage", dgImage);
+// ======================================================================
         model.addAttribute("popUpImage", popUpImage);
 
         model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());

@@ -39,6 +39,8 @@ public class GetController {
     private TotalVisitesService totalVisitesService;
     @Value("${file.popup-upload-dir}")
     private String popupUploadPath;
+    @Value("${file.dg-image-dir}")
+    private String dgImagePath;
 
 
     @GetMapping("/go_back_home")
@@ -117,6 +119,30 @@ public class GetController {
                 popUpImage = popUpImage.substring(popUpImage.indexOf("\\uploads"));
             }
         }
+
+// =====================================================================
+        File dgFile = new File(dgImagePath);
+        if (!dgFile.exists()) {
+            dgFile.mkdirs();
+        }
+
+        String dgImage = "";
+
+        File[] existingFiles2 = dgFile.listFiles();
+        if (existingFiles != null) {
+            for (File existingFile : existingFiles2) {
+                dgImage = existingFile.getPath();
+            }
+        }
+
+        if (!dgImage.isEmpty()) {
+            if (dgImage.contains("\\uploads")) {
+                dgImage = dgImage.substring(dgImage.indexOf("\\uploads"));
+            }
+        }
+
+        model.addAttribute("dgImage", dgImage);
+// ======================================================================
 
         model.addAttribute("popUpImage", popUpImage);
 
