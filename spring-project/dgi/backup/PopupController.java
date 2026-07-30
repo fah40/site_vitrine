@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import project.back.dgi.util.StaticImageUtil;
-
 
 @Controller
 @RequestMapping("/admin")
@@ -26,9 +24,6 @@ public class PopupController {
 
     @Value("${file.dg-image-dir}")
     private String dgImagePath;
-
-    @Value("${file.static-images-dir}")
-    private String staticImagesDir;
 
     @PostMapping("/uploadPopupImage")
     public String handleFileUpload(@RequestParam("fileInput") MultipartFile file) {
@@ -93,40 +88,6 @@ public class PopupController {
         try {
             String fileName = file.getOriginalFilename(); // Conserver le nom d'origine du fichier
             Path filePath = Paths.get(dgImagePath, fileName);
-            Files.write(filePath, file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "redirect:/admin/accueil";
-        }
-
-        return "redirect:/admin/accueil";
-    }
-
-    @PostMapping("/uploadStaticImage")
-    public String uploadStaticImage(@RequestParam("cle") String cle, @RequestParam("fileInput") MultipartFile file) {
-        if (file.isEmpty() || !StaticImageUtil.KEYS_TO_DIRS.containsKey(cle)) {
-            return "redirect:/admin/accueil";
-        }
-
-        File uploadDir = new File(staticImagesDir, StaticImageUtil.KEYS_TO_DIRS.get(cle));
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-
-        // Supprimer tous les fichiers existants dans le répertoire dédié à cette clé
-        File[] existingFiles = uploadDir.listFiles();
-        if (existingFiles != null) {
-            for (File existingFile : existingFiles) {
-                if (existingFile.isFile()) {
-                    existingFile.delete();
-                }
-            }
-        }
-
-        // Enregistrer le nouveau fichier avec son nom d'origine (extension libre)
-        try {
-            String fileName = file.getOriginalFilename();
-            Path filePath = Paths.get(uploadDir.getPath(), fileName);
             Files.write(filePath, file.getBytes());
         } catch (IOException e) {
             e.printStackTrace();

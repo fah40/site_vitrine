@@ -22,11 +22,6 @@ public class AdminInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        if (!user.isAdmin()) {
-            response.sendRedirect("/");
-            return false;
-        }
-
         Timestamp sessionExpiration = (Timestamp) request.getSession().getAttribute("expiration");
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 

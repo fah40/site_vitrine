@@ -23,6 +23,7 @@ import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
 import project.back.dgi.service.TotalVisitesService;
 import project.back.dgi.util.PasswordUtil;
+import project.back.dgi.util.StaticImageUtil;
 
 @Controller
 @RequestMapping("/admin")
@@ -41,6 +42,8 @@ public class GetController {
     private String popupUploadPath;
     @Value("${file.dg-image-dir}")
     private String dgImagePath;
+    @Value("${file.static-images-dir}")
+    private String staticImagesDir;
 
 
     @GetMapping("/go_back_home")
@@ -108,16 +111,9 @@ public class GetController {
         String popUpImage = "";
 
         File[] existingFiles = uploadDir.listFiles();
-        if (existingFiles != null) {
-            for (File existingFile : existingFiles) {
-                popUpImage = existingFile.getPath();
-            }
-        }
-
-        if (!popUpImage.isEmpty()) {
-            if (popUpImage.contains("\\uploads")) {
-                popUpImage = popUpImage.substring(popUpImage.indexOf("\\uploads"));
-            }
+        if (existingFiles != null && existingFiles.length > 0) {
+            String fileName = existingFiles[0].getName(); // Nom du fichier uniquement
+            popUpImage = "/uploads/popup/" + fileName; // Chemin web relatif
         }
 
 // =====================================================================
@@ -129,22 +125,17 @@ public class GetController {
         String dgImage = "";
 
         File[] existingFiles2 = dgFile.listFiles();
-        if (existingFiles != null) {
-            for (File existingFile : existingFiles2) {
-                dgImage = existingFile.getPath();
-            }
-        }
-
-        if (!dgImage.isEmpty()) {
-            if (dgImage.contains("\\uploads")) {
-                dgImage = dgImage.substring(dgImage.indexOf("\\uploads"));
-            }
+        if (existingFiles2 != null && existingFiles2.length > 0) {
+            String fileName = existingFiles2[0].getName(); // Nom du fichier uniquement
+            dgImage = "/uploads/dg/" + fileName; // Chemin web relatif
         }
 
         model.addAttribute("dgImage", dgImage);
 // ======================================================================
 
         model.addAttribute("popUpImage", popUpImage);
+
+        model.addAttribute("staticImages", StaticImageUtil.resolveAll(staticImagesDir));
 
         return "index";
     }

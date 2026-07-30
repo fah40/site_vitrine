@@ -36,12 +36,92 @@
 
 <body style="height: 8850px; overscroll-behavior: none;">
 
-    <div id="popup" class="popup" th:if="${popUpImage != null and popUpImage != ''}">
+    <div id="popup" class="popup fah-up">
         <div class="popup-content">
             <span class="close-btn" onclick="closePopup()">×</span><br>
-            <img th:src="${popUpImage}" alt="Popup Image" class="popup-image">
+            <a href="/admin/deletePopup" class="btn-supp">Supprimer</a><br><br><br>
+            <img th:src="${ popUpImage }" alt="Popup Image" class="popup-image">
+    
+            <!-- Formulaire pour uploader une image -->
+            <div class="upload-container">
+                <form id="uploadForm" enctype="multipart/form-data" method="post" action="/admin/uploadPopupImage">
+                    <input class="form" type="hidden" name="path" th:value="${currentPath}">
+                    <div class="file-upload-wrapper">
+                        <input class="file-input" type="file" name="fileInput" id="fileInput" accept="image/*" required style="display: none;">
+                        <label for="fileInput" class="file-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Choisir une image</span>
+                        </label>
+                        <div class="file-preview" id="filePreview"></div>
+                    </div>
+                    <button class="btn btn-inverse" type="submit">Upload</button>
+                </form>
+            </div>
+
         </div>
-    </div>
+    </div>    
+
+
+    <script>
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        const preview = document.getElementById('filePreview');
+        preview.innerHTML = '';
+        
+        if (files.length > 0) {
+            files.forEach((file, index) => {
+                // Déterminer l'icône selon le type de fichier
+                let iconClass;
+                const fileType = file.type;
+                const fileName = file.name;
+                
+                if (fileType.includes('image')) {
+                    iconClass = 'fas fa-image';
+                } else if (fileType.includes('pdf')) {
+                    iconClass = 'fas fa-file-pdf';
+                } else if (fileType.includes('text')) {
+                    iconClass = 'fas fa-file-alt';
+                } else if (fileType.includes('video')) {
+                    iconClass = 'fas fa-file-video';
+                } else if (fileType.includes('audio')) {
+                    iconClass = 'fas fa-file-audio';
+                } else {
+                    iconClass = 'fas fa-file';
+                }
+                
+                // Créer l'élément de prévisualisation
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <i class="${iconClass} fa-lg"></i>
+                    <span>${fileName}</span>
+                    <i class="fas fa-times remove-btn" data-index="${index}"></i>
+                `;
+                
+                preview.appendChild(fileItem);
+            });
+    
+            // Gestion de la suppression
+            preview.querySelectorAll('.remove-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    files.splice(index, 1);
+                    
+                    // Mettre à jour l'input file
+                    const newFileList = new DataTransfer();
+                    files.forEach(file => newFileList.items.add(file));
+                    document.getElementById('fileInput').files = newFileList.files;
+                    
+                    // Rafraîchir l'affichage
+                    this.closest('.file-item').remove();
+                    if (files.length === 0) {
+                        preview.innerHTML = '';
+                    }
+                });
+            });
+        }
+    });
+    </script>
 
     
     <!-- wrapper -->
@@ -71,7 +151,7 @@
                 <div class="fah-buttons-tp-frame fah-c-gone">
                     <p class="fah-stylized fah-m1 fah-phone"><span class="fah-m2">Phone:</span>(+261) 32 12 015 03</p>
                     <div class="fah-buttons">
-                        <a th:href="@{/contact(langue=${langueSelectionnee})}" class="fah-tp-btn"><i class="fa fa-phone"></i></a>
+                        <a th:href="@{/admin/contact(langue=${langueSelectionnee})}" class="fah-tp-btn"><i class="fa fa-phone"></i></a>
                         <div class="fah-tp-btn white">
                             <div class="fah-menu-btn white"><span></span></div>
                         </div>
@@ -86,6 +166,7 @@
                                 </a>
                             </div>
                         </div>
+                        <a class="fah-tp-btn dropdown-btn" href="/admin/go_back_home"><i class="fa fa-door-open"></i></a>
                     </div>
                 </div>
             </div>
@@ -96,8 +177,8 @@
                         <ul class="fah-main-menu fah-c-gone">
                             <li th:each="nav : ${allNavs}" class="fah-has-children">
                                 <a th:href="${nav.getGeneralInfo().lien}" th:utext="${nav.titre}"></a>
-                            </li> 
-                            <li><i style="color: black !important;" class="fa fa-eye"></i> <span th:utext="${totalVisites}"></span></li>
+                                <a class="btn-modif" th:href="@{/admin/general_info_static(cle=${nav.generalInfo.cle})}">Modifier</a>
+                            </li>                            
                         </ul>
                     </div>
                     <div class="fah-bottom blue">
@@ -154,7 +235,7 @@
                         </div>
                         <div class="fah-hero-img-frame" id="scroll">
                             <div class="fah-circle-text-frame fah-parallax-img" data-value-1="-60px" data-value-2="10px" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, -34.9923px, 0px);">
-                                <a href="#footer" class="fah-circle-text fah-scroll-to fah-c-gone" data-no-swup="">
+                                <a href="#" class="fah-circle-text fah-scroll-to fah-c-gone" data-no-swup="">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve" data-value="360" class="fah-rotate" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) rotate(160.994deg) scale(1.5, 1.5);">
                                         <defs>
                                             <path id="circlePath" d="M 150, 150 m -70, 0 a 70,70 0 0,1 140,0 a 70,70 0 0,1 -140,0 "></path>
@@ -174,7 +255,7 @@
                                 </a>
                             </div>
                             <div class="fah-hero-img fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                <img th:src="${staticImages['pdc']}" alt="hero" class="fah-scale-img" data-value-1="1.25" data-value-2="1" style="translate: none; rotate: none;">
+                                <img src="/assets/img/pdc.jpg" alt="hero" class="fah-scale-img" data-value-1="1.25" data-value-2="1" style="translate: none; rotate: none;">
                             </div>
                         </div>
                     </div>
@@ -185,7 +266,150 @@
                         <div class="container">
                             <div class="row fah-jcb">
                                 <div class="col-12">
-                                    <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${dgi?.entete}"></p>
+                                    <div class="col-2">
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='dgi')}">Modifier</a><br><br>
+                                        <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${dgi?.entete}"></p>
+                                        <form enctype="multipart/form-data" method="post" action="/admin/uploadDgImage" class="dg-upload-form">
+                                            <input class="form" type="hidden" name="path" th:value="${currentPath}">
+
+                                            <div class="file-upload-wrapper">
+                                                <!-- note: multiple ajouté pour permettre plusieurs fichiers -->
+                                                <input class="file-input dg-image-input" type="file" name="fileInput" accept="image/*" multiple style="display: none;" required>
+                                                
+                                                <label class="file-label" tabindex="0">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                    <span>Choisir une image</span>
+                                                </label>
+
+                                                <div class="file-preview"></div>
+                                            </div>
+
+                                            <button class="btn btn-inverse" type="submit">Upload</button>
+                                        </form>
+
+                                        <script>
+                                        (function () {
+                                            // selecteurs basés sur classes (aucun id)
+                                            const forms = document.querySelectorAll('.dg-upload-form');
+
+                                            forms.forEach(form => {
+                                                const fileInput = form.querySelector('.dg-image-input');       // l'input file associé au formulaire
+                                                const label = form.querySelector('.file-label');               // label cliquable
+                                                const preview = form.querySelector('.file-preview');          // zone de prévisualisation
+
+                                                // tableau interne pour stocker la sélection (évite problème d'index après suppression)
+                                                let selectedFiles = [];
+
+                                                // focus/keyboard accessibility for the label (optionnel)
+                                                if (label) {
+                                                    label.addEventListener('keydown', (ev) => {
+                                                        if (ev.key === 'Enter' || ev.key === ' ') {
+                                                            ev.preventDefault();
+                                                            fileInput.click();
+                                                        }
+                                                    });
+                                                    label.addEventListener('click', () => fileInput.click());
+                                                }
+
+                                                // quand l'utilisateur choisit des fichiers
+                                                fileInput.addEventListener('change', (e) => {
+                                                    const newFiles = Array.from(e.target.files || []);
+                                                    // concat sans duplicata (optionnel) : ici on accepte doublons si l'utilisateur veut
+                                                    selectedFiles = selectedFiles.concat(newFiles);
+                                                    renderPreview();
+                                                    syncInputFiles();
+                                                });
+
+                                                // rend la preview et attache suppression via delegation
+                                                function renderPreview() {
+                                                    preview.innerHTML = '';
+
+                                                    if (selectedFiles.length === 0) {
+                                                        // tu peux afficher un message d'aide ici si tu veux
+                                                        return;
+                                                    }
+
+                                                    selectedFiles.forEach((file, i) => {
+                                                        const type = (file && file.type) || '';
+                                                        let iconClass = 'fas fa-file';
+                                                        if (type.includes('image')) iconClass = 'fas fa-image';
+                                                        else if (type.includes('pdf')) iconClass = 'fas fa-file-pdf';
+                                                        else if (type.includes('text')) iconClass = 'fas fa-file-alt';
+                                                        else if (type.includes('video')) iconClass = 'fas fa-file-video';
+                                                        else if (type.includes('audio')) iconClass = 'fas fa-file-audio';
+
+                                                        const item = document.createElement('div');
+                                                        item.className = 'file-item';
+                                                        item.dataset.index = i;
+
+                                                        item.innerHTML = `
+                                                            <i class="${iconClass} fa-lg" aria-hidden="true"></i>
+                                                            <span class="file-name">${escapeHtml(file.name)}</span>
+                                                            <i class="fas fa-times remove-btn" role="button" tabindex="0" aria-label="Supprimer" data-index="${i}" style="cursor:pointer;"></i>
+                                                        `;
+
+                                                        preview.appendChild(item);
+                                                    });
+                                                }
+
+                                                // suppression via delegation (clic ou touche entrée/espace)
+                                                preview.addEventListener('click', (e) => {
+                                                    const btn = e.target.closest('.remove-btn');
+                                                    if (!btn) return;
+                                                    const idx = Number(btn.dataset.index);
+                                                    removeFile(idx);
+                                                });
+
+                                                preview.addEventListener('keydown', (e) => {
+                                                    const btn = e.target.closest('.remove-btn');
+                                                    if (!btn) return;
+                                                    if (e.key === 'Enter' || e.key === ' ') {
+                                                        e.preventDefault();
+                                                        const idx = Number(btn.dataset.index);
+                                                        removeFile(idx);
+                                                    }
+                                                });
+
+                                                // retire le fichier du tableau puis met à jour tout
+                                                function removeFile(index) {
+                                                    if (Number.isNaN(index)) return;
+                                                    selectedFiles.splice(index, 1);
+                                                    // ré-indexe les boutons en rerendant
+                                                    renderPreview();
+                                                    syncInputFiles();
+                                                }
+
+                                                // synchronise input.files avec selectedFiles (nécessaire avant submit)
+                                                function syncInputFiles() {
+                                                    const dt = new DataTransfer();
+                                                    selectedFiles.forEach(f => dt.items.add(f));
+                                                    // update the real input
+                                                    fileInput.files = dt.files;
+                                                }
+
+                                                // sécurité simple pour éviter injection HTML dans le nom de fichier
+                                                function escapeHtml(str) {
+                                                    return String(str)
+                                                        .replace(/&/g, '&amp;')
+                                                        .replace(/</g, '&lt;')
+                                                        .replace(/>/g, '&gt;')
+                                                        .replace(/"/g, '&quot;')
+                                                        .replace(/'/g, '&#039;');
+                                                }
+
+                                                // optionnel : s'assurer que, si le formulaire est soumis sans fichier, on empêche l'envoi
+                                                form.addEventListener('submit', (ev) => {
+                                                    // si required sur input ne suffit pas (car on manipule input.files), double-check:
+                                                    if (!fileInput.files || fileInput.files.length === 0) {
+                                                        ev.preventDefault();
+                                                        alert('Veuillez sélectionner au moins une image à uploader.');
+                                                    }
+                                                });
+                                            });
+                                        })();
+                                        </script>
+                                    </div>
+
                                 </div>
                                 <div class="col-lg-4">
                                     <img th:src="${dgImage}" style="width: 80%;height: auto;"><br>
@@ -194,7 +418,8 @@
                                     <!-- <p class="fah-text-md fah-deco-text fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-weight: bold;">Bienvenue à la Direction Générale des Impôts</p> -->
                                 </div>
                                 <div class="col-lg-7">
-                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-a2" th:text="${mot_du_dgi?.bouton}"></span> <span th:text="${mot_du_dgi?.entete}"></span></h2>
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='mot_du_dgi')}">Modifier</a><br><br>
+                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-rubber fah-a2"><th:block th:if="${mot_du_dgi != null and mot_du_dgi.bouton != null}" th:with="votrepart=${#strings.replace(#strings.replace(mot_du_dgi.bouton, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${mot_du_dgi != null and mot_du_dgi.bouton != null}">Texte par défaut</th:block></th:block></span> <span class="fah-rubber"><th:block th:if="${mot_du_dgi != null and mot_du_dgi.entete != null}" th:with="votrepart=${#strings.replace(#strings.replace(mot_du_dgi.entete, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${mot_du_dgi != null and mot_du_dgi.entete != null}">Texte par défaut</th:block></th:block></span></h2>
                                     <div class="fah-text-md fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${mot_du_dgi?.valeur}"><div>
                                 </div>
                             </div>
@@ -208,26 +433,29 @@
                             <div class="row fah-jcc">
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
-                                        <a th:href="@{/explorer(path='/historique', langue=${langueSelectionnee})}" id="histo"><i alt="icon" class="fah-mb30 fah-up fa fa-history icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/historique')}">Modifier</a><br><br>
+                                        <a th:href="@{/admin/explorer(path='/historique', langue=${langueSelectionnee})}" id="histo"><i alt="icon" class="fah-mb30 fah-up fa fa-history icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
                                         <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${historique?.entete}"></h4>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-mb60">
-                                        <a th:href="@{/explorer(path='/vision', langue=${langueSelectionnee})}">
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/vision')}">Modifier</a><br><br>
+                                        <a th:href="@{/admin/explorer(path='/vision', langue=${langueSelectionnee})}">
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-globe icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i>
                                         </a>
 
-                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${vision?.entete}">Vision </h4>
+                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${vision?.entete}"></h4>
                                         <p class="fah-text-md fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"></p>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-lg-4">
                                     <div class="fah-iconbox fah-tac fah-mb60">
-                                        <a id="attribution" th:href="@{/explorer(path='/attributions', langue=${langueSelectionnee})}"> 
+                                        <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/attributions')}">Modifier</a><br><br>
+                                        <a id="attribution" th:href="@{/admin/explorer(path='/attributions', langue=${langueSelectionnee})}"> 
                                             <i alt="icon" class="fah-mb30 fah-up fa fa-code-branch icon" style="translate: none; rotate: none; scale: none; transform: translate(0px, -40px) scale(1.04, 1.04);"></i></a>
-                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${attributions?.entete}">Attributions</h4>
+                                        <h4 class="fah-head4 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${attributions?.entete}"></h4>
                                         <p class="fah-text-md fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"></p>
                                     </div>
                                 </div>
@@ -247,11 +475,12 @@
                                     <ul class="fah-services-list fah-mb160">
                                         <li class="fah-service-item fah-768-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                             <div class="fah-item-text fah-mb30">
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/legislation')}">Modifier</a><br><br>
                                                 <h3 class="fah-head3 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${legislation?.titre}"></h3>
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${legislation?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a th:href="@{/explorer(path='/legislation', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/admin/explorer(path='/legislation', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-balance-scale"></i>
                                                     <span th:utext="${legislation?.bouton}"></span>
                                                 </a>
@@ -259,11 +488,12 @@
                                         </li>
                                         <li class="fah-service-item fah-768-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                             <div class="fah-item-text fah-mb30">
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/ressources')}">Modifier</a><br><br>
                                                 <h3 class="fah-head3 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${ressources?.titre}"></h3>
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${ressources?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a th:href="@{/explorer(path='/ressources', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/admin/explorer(path='/ressources', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-cube"></i>
                                                     <span th:utext="${ressources?.bouton}">voir plus</span>
                                                 </a>
@@ -271,11 +501,12 @@
                                         </li>
                                         <li class="fah-service-item fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                             <div class="fah-item-text fah-mb30">
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/analytiques_fiscales')}">Modifier</a><br><br>
                                                 <h3 class="fah-head3 fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${analytiques_fiscales?.titre}"></h3>
                                                 <div class="fah-text-md fah-deco-text fah-max-3row-text fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${analytiques_fiscales?.valeur}"></div>
                                             </div>
                                             <div class="fah-mb30 fah-up voirPlus" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                                <a th:href="@{/explorer(path='/analytiques_fiscales', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
+                                                <a th:href="@{/admin/explorer(path='/analytiques_fiscales', langue=${langueSelectionnee})}" class="fah-stylized-btn fah-c-gone">
                                                     <i class="fa fa-chart-line"></i>
                                                     <span th:utext="${analytiques_fiscales?.bouton}">voir plus</span>
                                                 </a>
@@ -287,6 +518,7 @@
                                     <div class="row ">
                                         <div class="col-md-4 col-lg-12">
                                             <div class="fah-counter-item fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='bureau')}">Modifier</a><br><br>
                                                 <h4 class="fah-offset-number fah-up counter" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-size: 40px;" th:data-target="${bureau?.entete}">0<span class="fah-a2"></span></h4>
                                                     <h1 class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> <span th:utext="${bureau?.titre}"><span></h5>
                                                 <div class="fah-counter-text">
@@ -295,6 +527,7 @@
                                         </div>
                                         <div class="col-md-4 col-lg-12">
                                             <div class="fah-counter-item fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='contribuable')}">Modifier</a><br><br>
                                                 <h4 class="fah-offset-number fah-up counter" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-size: 40px;" th:data-target="${contribuable?.entete}" >0<span class="fah-a2"></span></h4>
                                                     <h1 class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> <span th:utext="${contribuable?.titre}"><span></h5>
                                                 <div class="fah-counter-text">
@@ -303,6 +536,7 @@
                                         </div>
                                         <div class="col-md-4 col-lg-12">
                                             <div class="fah-counter-item fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
+                                                <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='recette')}">Modifier</a><br><br>
                                                 <h4 class="fah-offset-number fah-up counter" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-size: 40px;" th:data-target="${recette?.entete}">0<span class="fah-a2"></span></h4>
                                                     <h1 class="infoDoc fah-m1 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><i class="fa fa-chevron-circle-right fah-m1"></i> <span th:utext="${recette?.titre}"><span></h5>
                                                 <div class="fah-counter-text">
@@ -321,15 +555,17 @@
                         <div class="fah-half-container fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                             <div class="fah-text-box fah-g-m1 fah-p-160-160" style="background: #0c0c0c !important;">
                                 
-                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color: white;" > <span th:utext="${e_service?.entete}"></span>
-                                <h2 class="fah-display3 fah-mb60 fah-m4 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-head1 fah-a1" th:utext="${e_service?.titre}"></span></h2>
+                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color: white;" > <span th:utext="${e_service?.entete}"></span> <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/e_service')}">Modifier</a></p>
+
+                                <h2 class="fah-display3 fah-head1 fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color:rgb(227, 227, 227) !important;"><th:block th:if="${e_service != null and e_service.titre != null}" th:with="votrepart=${#strings.replace(#strings.replace(e_service.titre, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${e_service != null and e_service.titre != null}">Texte par défaut</th:block></th:block></h2>
+
                                 <div class="fah-text-md fah-deco-text fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: solid 4px #a9d9de ! important;color: white;" th:utext="${e_service?.valeur}"></div>
 
                             </div>
                             <div class="fah-image-box">
                                 <div class="fah-image-frame">
                                     <!-- <video src="/assets/img/vidéo-effet-SAFI-2-vidéo.mp4"></video> -->
-                                    <img th:src="${staticImages['safi']}" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
+                                    <img src="/assets/img/safi.png" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
                                     <div class="fah-overlay"></div>
                                 </div>
                             </div>
@@ -340,7 +576,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="fah-button-pad fah-a2">
-                                    <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a th:href="@{/explorer(path='/e_service', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${e_service?.bouton}">Se connecter</a></span>
+                                    <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a th:href="@{/admin/explorer(path='/e_service', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${e_service?.bouton}">Se connecter</a></span>
                                 </div>
                             </div>
                         </div>
@@ -396,7 +632,8 @@
                     <div class="fah-p-160-160" id="actualites">
                         <div class="container">
                             <div class="row fah-aie fah-mb30">
-                                <div class="col-md-6">
+                                <div class="col-md-6"><a class="btn-modif" href="/admin/actualites/add"><i class="fa fa-plus"></i>  ajouter</a><br><br><br>
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='actualites')}">Modifier</a><br><br>
                                     <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${actualites.titre}"></h2>
                                 </div>
                                 <div class="col-md-6">
@@ -420,7 +657,8 @@
                                                 </div>
                                                 <div class="fah-badges">
                                                    <!--  <div class="fah-category">design</div>-->
-                                                    <div class="fah-date" th:utext="${actualite.dateAjout}"></div>
+                                                   <a th:href="@{/admin/actualite/delete/{id}(id=${actualite.id})}" class="btn-supp">Supprimer</a>
+                                                    <div class="fah-date" th:utext="${actualite.dateAjout}"></div> 
                                                 </div>
                                             </div>
                                             <a th:href="@{/actualite/{id}(id=${actualite.id})}" class="fah-descr fah-c-gone">
@@ -431,7 +669,7 @@
                                                 <div class="fah-up fah-768-gone" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                                     <div class="fah-stylized-btn">
                                                         <i class="fa fa-book-open"></i>
-                                                        <span>voir plus</span>
+                                                        <span th:utext="${legislation?.bouton}"></span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -447,17 +685,20 @@
                     <div class="container" id="torohy">
                         <div class="fah-half-container fah-reverse fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0; ">
                             <div class="fah-text-box fah-g-m3 fah-p-160-160">
-                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span th:utext="${votre_avis?.entete}"></span></p>
-                                <h2 class="fah-display3 fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-footer-link" th:utext="${votre_avis?.titre}">VOTRE AVIS</span></h2>
-                                <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}">Exprimez votre avis sur nos services et contribuez à la lutte contre la fraude fiscale à travers notre plateforme sécurisée de signalement.</div>
+                                
+                                <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span th:utext="${votre_avis?.entete}"></span> <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='/votre_avis')}">Modifier</a></p>
+
+                                <h2 class="fah-display3 fah-footer-link fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><th:block th:if="${votre_avis != null and votre_avis.titre != null}" th:with="votrepart=${#strings.replace(#strings.replace(votre_avis.titre, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${votre_avis != null and votre_avis.titre != null}">Texte par défaut</th:block></th:block></h2>
+
+                                <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}"></div>
                                 <div class="fah-stylized fah-m2 fah-mb60 fah-up">
                                     <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                        <a th:href="@{/explorer(path='/votre_avis', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${votre_avis?.bouton}">Accéder à la plateforme</a></span>
+                                        <a th:href="@{/admin/explorer(path='/votre_avis', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${votre_avis?.bouton}">Accéder à la plateforme</a></span>
                                 </div>
                             </div>
                             <div class="fah-image-box">
                                 <div class="fah-image-frame">
-                                    <img th:src="${staticImages['torohy']}" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
+                                    <img src="/assets/img/torohy.jpg" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
                                     <div class="fah-overlay"></div>
                                 </div>
                             </div>
@@ -472,29 +713,28 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='centre_contact')}">Modifier</a><br><br>
                                     <a class="fah-footer-contact fah-mb90">
-                                        <h6 class="fah-footer-link fah-rubber fah-m1" th:utext="${centre_contact?.titre}"></h6>
+                                        <h6 class="fah-footer-link fah-rubber fah-m1"><th:block th:if="${centre_contact != null and centre_contact.titre != null}" th:with="cleanText=${#strings.replace(#strings.replace(centre_contact.titre, '<p>', ''), '</p>', '')}" th:text="${cleanText}"><th:block th:unless="${centre_contact != null and centre_contact.titre != null}">Texte par défaut</th:block></th:block></h6>
                                     </a>
 
                                     <div th:utext="${centre_contact?.valeur}">.</div>
                                     <div class="row">
                                         <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;margin-top: 10px;">
-                                            <a th:href="@{/contact(langue=${langueSelectionnee})}" class="fah-btn fah-btn-border fah-c-gone" style="background: #a9d9de !important;" th:utext="${centre_contact?.bouton}">Nous contacter</a></span>
+                                            <a th:href="@{/admin/contact(langue=${langueSelectionnee})}" class="fah-btn fah-btn-border fah-c-gone" style="background: #a9d9de !important;" th:utext="${centre_contact?.bouton}">Nous contacter</a></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 fah-up" >
                                     <div class="fah-hover-frame">
-                                        <img th:src="${staticImages['2call']}" alt="cover" class="fah-scale-img" data-value-1="1.15" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);width: 120%;height: auto;">
+                                        <img src="/assets/img/2call.png" alt="cover" class="fah-scale-img" data-value-1="1.15" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);width: 120%;height: auto;">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row fah-aie fah-mb30" style="margin-top: 100px;">
-                                <div class="col-lg-6">
-                                    <h2 class="fah-footer-link fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px) scale(1.04, 1.04); opacity: 0;margin-top: 60px" th:utext="${partenaires.titre}"></h2>
-                                </div>
-                                <div class="col-lg-6">
-                                    <p class="fah-stylized fah-m1 fah-tar fah-768-tal fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a href="" class="fah-arrow-link fah-c-gone"></a></p>
+                                <div class="col-lg-12">
+                                    <a class="btn-modif" th:href="@{/admin/general_info_static?cle={cle}(cle='partenaire')}">Modifier</a><br><br>
+                                    <h6 class="fah-footer-link fah-rubber fah-m1"><th:block th:if="${partenaires != null and partenaires.titre != null}" th:with="partclean=${#strings.replace(#strings.replace(partenaires.titre, '<p>', ''), '</p>', '')}" th:text="${partclean}"><th:block th:unless="${partenaires != null and partenaires.titre != null}">Texte par défaut</th:block></th:block></h6>
                                 </div>
                             </div>
                         </div>
@@ -615,9 +855,8 @@
                     </div>
                     <!-- partenaire end -->
 
-                    
                     <!-- footer -->
-                    <div class="container-fluid" id="footer">
+                    <div class="container-fluid">
                         <div class="row fah-no-g">
                             <div class="col-lg-12">
                                 <div class="fah-footer-menu-frame fah-mb90 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
@@ -625,7 +864,6 @@
                                         <li th:each="nav : ${allNavs}">
                                             <a class="fah-c-gone" th:href="${nav.getGeneralInfo().lien}" th:utext="${nav.titre}"></a>
                                         </li>
-                                        <li><i style="color: black !important;" class="fa fa-eye"></i> <span th:utext="${totalVisites}"></span></li>
                                     </ul>
                                     <ul class="fah-social fah-c-gone">
                                         <ul class="fah-social fah-c-gone">

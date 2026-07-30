@@ -22,7 +22,6 @@ import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
 import project.back.dgi.service.TotalVisitesService;
 import project.back.dgi.service.VisiteService;
-import project.back.dgi.util.StaticImageUtil;
 
 @Controller
 public class ClientGetController {
@@ -44,8 +43,6 @@ public class ClientGetController {
     private String popupUploadPath;
     @Value("${file.dg-image-dir}")
     private String dgImagePath;
-    @Value("${file.static-images-dir}")
-    private String staticImagesDir;
 
     ClientGetController(ActualiteController actualiteController) {
         this.actualiteController = actualiteController;
@@ -97,6 +94,8 @@ public class ClientGetController {
             values.add(generalInfoValeurService.getGeneralInfoByKey(item.getCle(), id_langue));
         }
 
+        values.sort((o1, o2) -> o1.getId().compareTo(o2.getId()));
+
         model.addAttribute("allNavs", values);
 
         // comptage du nombre de visite 
@@ -127,11 +126,12 @@ public class ClientGetController {
 
         File[] existingFiles = uploadDir.listFiles();
         if (existingFiles != null && existingFiles.length > 0) {
+            // Construire le chemin URL relatif
             String fileName = existingFiles[0].getName(); // Nom du fichier uniquement
             popUpImage = "/uploads/popup/" + fileName; // Chemin web relatif
         }
 
-// =====================================================================
+        // =====================================================================
         File dgFile = new File(dgImagePath);
         if (!dgFile.exists()) {
             dgFile.mkdirs();
@@ -146,10 +146,9 @@ public class ClientGetController {
         }
 
         model.addAttribute("dgImage", dgImage);
-// ======================================================================
-        model.addAttribute("popUpImage", popUpImage);
+        // ======================================================================
 
-        model.addAttribute("staticImages", StaticImageUtil.resolveAll(staticImagesDir));
+        model.addAttribute("popUpImage", popUpImage);
 
         model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
 

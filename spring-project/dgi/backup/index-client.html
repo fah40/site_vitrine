@@ -154,7 +154,7 @@
                         </div>
                         <div class="fah-hero-img-frame" id="scroll">
                             <div class="fah-circle-text-frame fah-parallax-img" data-value-1="-60px" data-value-2="10px" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, -34.9923px, 0px);">
-                                <a href="#footer" class="fah-circle-text fah-scroll-to fah-c-gone" data-no-swup="">
+                                <a href="#" class="fah-circle-text fah-scroll-to fah-c-gone" data-no-swup="">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve" data-value="360" class="fah-rotate" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) rotate(160.994deg) scale(1.5, 1.5);">
                                         <defs>
                                             <path id="circlePath" d="M 150, 150 m -70, 0 a 70,70 0 0,1 140,0 a 70,70 0 0,1 -140,0 "></path>
@@ -174,7 +174,7 @@
                                 </a>
                             </div>
                             <div class="fah-hero-img fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
-                                <img th:src="${staticImages['pdc']}" alt="hero" class="fah-scale-img" data-value-1="1.25" data-value-2="1" style="translate: none; rotate: none;">
+                                <img src="/assets/img/pdc.jpg" alt="hero" class="fah-scale-img" data-value-1="1.25" data-value-2="1" style="translate: none; rotate: none;">
                             </div>
                         </div>
                     </div>
@@ -189,12 +189,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <img th:src="${dgImage}" style="width: 80%;height: auto;"><br>
-                                    <div class="fah-text-md fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><div style="font-weight: bold;" th:utext="${dgi?.valeur}"></div><div th:utext="${dgi?.titre}"></div> 
+                                    <div class="fah-text-md fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><div style="font-weight: bold;" th:utext="${dgi?.valeur}">GERMAIN</div><div th:utext="${dgi?.titre}"></div> 
                                 </div>
                                     <!-- <p class="fah-text-md fah-deco-text fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;font-weight: bold;">Bienvenue à la Direction Générale des Impôts</p> -->
                                 </div>
+
                                 <div class="col-lg-7">
-                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-a2" th:text="${mot_du_dgi?.bouton}"></span> <span th:text="${mot_du_dgi?.entete}"></span></h2>
+                                    <h2 class="fah-head1 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04);"> <span class="fah-rubber fah-a2"><th:block th:if="${mot_du_dgi != null and mot_du_dgi.bouton != null}" th:with="votrepart=${#strings.replace(#strings.replace(mot_du_dgi.bouton, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${mot_du_dgi != null and mot_du_dgi.bouton != null}">Texte par défaut</th:block></th:block></span> <span class="fah-rubber"><th:block th:if="${mot_du_dgi != null and mot_du_dgi.entete != null}" th:with="votrepart=${#strings.replace(#strings.replace(mot_du_dgi.entete, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${mot_du_dgi != null and mot_du_dgi.entete != null}">Texte par défaut</th:block></th:block></span></h2>
                                     <div class="fah-text-md fah-mb30 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;" th:utext="${mot_du_dgi?.valeur}"><div>
                                 </div>
                             </div>
@@ -322,14 +323,16 @@
                             <div class="fah-text-box fah-g-m1 fah-p-160-160" style="background: #0c0c0c !important;">
                                 
                                 <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color: white;" > <span th:utext="${e_service?.entete}"></span>
-                                <h2 class="fah-display3 fah-mb60 fah-m4 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-head1 fah-a1" th:utext="${e_service?.titre}"></span></h2>
+
+                                <h2 class="fah-display3 fah-head1 fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;color:rgb(227, 227, 227) !important;"><th:block th:if="${e_service != null and e_service.titre != null}" th:with="votrepart=${#strings.replace(#strings.replace(e_service.titre, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${e_service != null and e_service.titre != null}">Texte par défaut</th:block></th:block></h2>
+
                                 <div class="fah-text-md fah-deco-text fah-shortened fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: solid 4px #a9d9de ! important;color: white;" th:utext="${e_service?.valeur}"></div>
 
                             </div>
                             <div class="fah-image-box">
                                 <div class="fah-image-frame">
                                     <!-- <video src="/assets/img/vidéo-effet-SAFI-2-vidéo.mp4"></video> -->
-                                    <img th:src="${staticImages['safi']}" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
+                                    <img src="/assets/img/safi.png" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
                                     <div class="fah-overlay"></div>
                                 </div>
                             </div>
@@ -420,7 +423,6 @@
                                                 </div>
                                                 <div class="fah-badges">
                                                    <!--  <div class="fah-category">design</div>-->
-                                                    <div class="fah-date" th:utext="${actualite.dateAjout}"></div>
                                                 </div>
                                             </div>
                                             <a th:href="@{/actualite/{id}(id=${actualite.id})}" class="fah-descr fah-c-gone">
@@ -448,8 +450,10 @@
                         <div class="fah-half-container fah-reverse fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0; ">
                             <div class="fah-text-box fah-g-m3 fah-p-160-160">
                                 <p class="fah-stylized fah-m2 fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span th:utext="${votre_avis?.entete}"></span></p>
-                                <h2 class="fah-display3 fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><span class="fah-footer-link" th:utext="${votre_avis?.titre}">VOTRE AVIS</span></h2>
-                                <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}">Exprimez votre avis sur nos services et contribuez à la lutte contre la fraude fiscale à travers notre plateforme sécurisée de signalement.</div>
+
+                                <h2 class="fah-display3 fah-footer-link fah-rubber fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><th:block th:if="${votre_avis != null and votre_avis.titre != null}" th:with="votrepart=${#strings.replace(#strings.replace(votre_avis.titre, '<p>', ''), '</p>', '')}" th:text="${votrepart}"><th:block th:unless="${votre_avis != null and votre_avis.titre != null}">Texte par défaut</th:block></th:block></h2>
+
+                                <div class="fah-text-md fah-mb30 fah-up" style="margin-top: -50px;translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;border-left: none !important;" th:utext="${votre_avis?.valeur}"></div>
                                 <div class="fah-stylized fah-m2 fah-mb60 fah-up">
                                     <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                         <a th:href="@{/explorer(path='/votre_avis', langue=${langueSelectionnee})}" style="background: #032f4b;color: white;" class="fah-btn fah-btn-border fah-c-gone" th:utext="${votre_avis?.bouton}">Accéder à la plateforme</a></span>
@@ -457,7 +461,7 @@
                             </div>
                             <div class="fah-image-box">
                                 <div class="fah-image-frame">
-                                    <img th:src="${staticImages['torohy']}" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
+                                    <img src="/assets/img/torohy.jpg" alt="img" class="fah-scale-img" data-value-1="2" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.5, 10);">
                                     <div class="fah-overlay"></div>
                                 </div>
                             </div>
@@ -473,9 +477,9 @@
                             <div class="row">
                                 <div class="col-lg-6 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">
                                     <a class="fah-footer-contact fah-mb90">
-                                        <h6 class="fah-footer-link fah-rubber fah-m1" th:utext="${centre_contact?.titre}"></h6>
+                                        <h6 class="fah-footer-link fah-rubber fah-m1"><th:block th:if="${centre_contact != null and centre_contact.titre != null}" th:with="cleanText=${#strings.replace(#strings.replace(centre_contact.titre, '<p>', ''), '</p>', '')}" th:text="${cleanText}"><th:block th:unless="${centre_contact != null and centre_contact.titre != null}">Texte par défaut</th:block></th:block></h6>
                                     </a>
-
+                                    
                                     <div th:utext="${centre_contact?.valeur}">.</div>
                                     <div class="row">
                                         <span class="fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;margin-top: 10px;">
@@ -484,17 +488,14 @@
                                 </div>
                                 <div class="col-lg-6 fah-up" >
                                     <div class="fah-hover-frame">
-                                        <img th:src="${staticImages['2call']}" alt="cover" class="fah-scale-img" data-value-1="1.15" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);width: 120%;height: auto;">
+                                        <img src="/assets/img/2call.png" alt="cover" class="fah-scale-img" data-value-1="1.15" data-value-2="1" style="translate: none; rotate: none; scale: none; transform: scale(1.15, 1.15);width: 120%;height: auto;">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row fah-aie fah-mb30" style="margin-top: 100px;">
-                                <div class="col-lg-6">
-                                    <h2 class="fah-footer-link fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px) scale(1.04, 1.04); opacity: 0;margin-top: 60px" th:utext="${partenaires.titre}"></h2>
-                                </div>
-                                <div class="col-lg-6">
-                                    <p class="fah-stylized fah-m1 fah-tar fah-768-tal fah-mb60 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;"><a href="" class="fah-arrow-link fah-c-gone"></a></p>
+                                <div class="col-lg-12">
+                                    <h6 class="fah-footer-link fah-rubber fah-m1"><th:block th:if="${partenaires != null and partenaires.titre != null}" th:with="partclean=${#strings.replace(#strings.replace(partenaires.titre, '<p>', ''), '</p>', '')}" th:text="${partclean}"><th:block th:unless="${partenaires != null and partenaires.titre != null}">Texte par défaut</th:block></th:block></h6>
                                 </div>
                             </div>
                         </div>
@@ -617,7 +618,7 @@
 
                     
                     <!-- footer -->
-                    <div class="container-fluid" id="footer">
+                    <div class="container-fluid">
                         <div class="row fah-no-g">
                             <div class="col-lg-12">
                                 <div class="fah-footer-menu-frame fah-mb90 fah-up" style="translate: none; rotate: none; scale: none; transform: translate(0px, 40px) scale(1.04, 1.04); opacity: 0;">

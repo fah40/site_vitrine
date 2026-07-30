@@ -1,33 +1,33 @@
 package project.back.dgi.controller;
+
 import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import project.back.dgi.entity.GeneralInfo;
 import project.back.dgi.entity.GeneralInfoValeur;
 import project.back.dgi.entity.Langue;
-import project.back.dgi.entity.Visite;
 import project.back.dgi.service.ActualiteService;
 import project.back.dgi.service.GeneralInfoService;
 import project.back.dgi.service.GeneralInfoValeurService;
 import project.back.dgi.service.LangueService;
 import project.back.dgi.service.TotalVisitesService;
-import project.back.dgi.service.VisiteService;
-import project.back.dgi.util.StaticImageUtil;
+import project.back.dgi.util.PasswordUtil;
 
 @Controller
-public class ClientGetController {
-
-    private final ActualiteController actualiteController;
+@RequestMapping("/admin")
+public class GetController {
     @Autowired
     private LangueService langueService;
     @Autowired
@@ -37,22 +37,20 @@ public class ClientGetController {
     @Autowired
     private ActualiteService actualiteService;
     @Autowired
-    private VisiteService visiteService;
-    @Autowired
     private TotalVisitesService totalVisitesService;
     @Value("${file.popup-upload-dir}")
     private String popupUploadPath;
     @Value("${file.dg-image-dir}")
     private String dgImagePath;
-    @Value("${file.static-images-dir}")
-    private String staticImagesDir;
 
-    ClientGetController(ActualiteController actualiteController) {
-        this.actualiteController = actualiteController;
+    @GetMapping("/go_back_home")
+    public String deconnection(HttpSession session) {
+        session.invalidate();
+        return "redirect:/accueil";
     }
 
     @GetMapping("/accueil")
-    public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model, HttpSession session) {
+    public String accueil(@RequestParam(required = false, defaultValue = "2") String langue, Model model) {
         List<Langue> langues = langueService.findAll();
         long id_langue = 2;
 
@@ -73,7 +71,8 @@ public class ClientGetController {
         model.addAttribute("mot_du_dgi", generalInfoValeurService.getGeneralInfoByKey("mot_du_dgi", id_langue));
         model.addAttribute("legislation", generalInfoValeurService.getGeneralInfoByKey("/legislation", id_langue));
         model.addAttribute("ressources", generalInfoValeurService.getGeneralInfoByKey("/ressources", id_langue));
-        model.addAttribute("analytiques_fiscales", generalInfoValeurService.getGeneralInfoByKey("/analytiques_fiscales", id_langue));
+        model.addAttribute("analytiques_fiscales",
+                generalInfoValeurService.getGeneralInfoByKey("/analytiques_fiscales", id_langue));
         model.addAttribute("historique", generalInfoValeurService.getGeneralInfoByKey("/historique", id_langue));
         model.addAttribute("vision", generalInfoValeurService.getGeneralInfoByKey("/vision", id_langue));
         model.addAttribute("actualites", generalInfoValeurService.getGeneralInfoByKey("actualites", id_langue));
@@ -88,7 +87,8 @@ public class ClientGetController {
 
         model.addAttribute("allActualites", actualiteService.getAllActualites());
 
-        List<GeneralInfo> list = generalInfoService.findChildrenByParent(generalInfoService.getByCle("navigation").orElse(null));
+        List<GeneralInfo> list = generalInfoService
+                .findChildrenByParent(generalInfoService.getByCle("navigation").orElse(null));
         List<GeneralInfoValeur> values = new ArrayList<>();
 
         System.out.println("taille : " + list.size());
@@ -96,26 +96,11 @@ public class ClientGetController {
         for (GeneralInfo item : list) {
             values.add(generalInfoValeurService.getGeneralInfoByKey(item.getCle(), id_langue));
         }
+        values.sort((o1, o2) -> o1.getId().compareTo(o2.getId()));
 
         model.addAttribute("allNavs", values);
 
-        // comptage du nombre de visite 
-        if (session.getAttribute("lastVisitDate") == null) {
-            LocalDate now = LocalDate.now();
-            session.setAttribute("lastVisitDate", now);
-            Visite visite = new Visite(now);
-            visiteService.insertVisite(visite);
-            
-        } else {
-            // Vérification de la date de la dernière visite
-            LocalDate lastVisitDate = (LocalDate) session.getAttribute("lastVisitDate");
-            if (lastVisitDate != null && lastVisitDate.isBefore(LocalDate.now().minusDays(1))) {
-                LocalDate now = LocalDate.now();
-                session.setAttribute("lastVisitDate", now);
-                Visite visite = new Visite(now);
-                visiteService.insertVisite(visite);
-            }
-        }
+        model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
 
         // Vérifier si le dossier d'upload existe, sinon le créer
         File uploadDir = new File(popupUploadPath);
@@ -127,11 +112,12 @@ public class ClientGetController {
 
         File[] existingFiles = uploadDir.listFiles();
         if (existingFiles != null && existingFiles.length > 0) {
+            // Construire le chemin URL relatif
             String fileName = existingFiles[0].getName(); // Nom du fichier uniquement
             popUpImage = "/uploads/popup/" + fileName; // Chemin web relatif
         }
 
-// =====================================================================
+        // =====================================================================
         File dgFile = new File(dgImagePath);
         if (!dgFile.exists()) {
             dgFile.mkdirs();
@@ -146,20 +132,83 @@ public class ClientGetController {
         }
 
         model.addAttribute("dgImage", dgImage);
-// ======================================================================
+        // ======================================================================
+
         model.addAttribute("popUpImage", popUpImage);
 
-        model.addAttribute("staticImages", StaticImageUtil.resolveAll(staticImagesDir));
-
-        model.addAttribute("totalVisites", totalVisitesService.getTotalVisites());
-
-        return "index-client";
+        return "index";
     }
 
-    @GetMapping({"/",""})
-    public String index() {
-        return "redirect:/accueil";
+    @GetMapping("/general_info_static")
+    public String generalInfoStatic(@RequestParam String cle, Model model) {
+        GeneralInfo generalInfo = generalInfoService.getByCle(cle).orElse(null);
+        List<Langue> langues = langueService.findAll();
+        Map<Long, GeneralInfoValeur> valeurs = generalInfoService
+                .getGeneralInfoValeursByGeneralInfoId(generalInfo.getId());
+        model.addAttribute("langues", langues);
+        model.addAttribute("generalInfo", generalInfo);
+        model.addAttribute("valeurs", valeurs);
+
+        return "general_info_static";
     }
 
+    @PostMapping("/general_info_static/update")
+    public String updateGeneralInfo(@RequestParam Map<String, String> params,
+            @RequestParam("icone") String icone) {
+        Long generalInfoId = Long.parseLong(params.get("id"));
+        GeneralInfo generalInfo = generalInfoService.getById(generalInfoId).orElse(null);
 
+        if (generalInfo == null) {
+            return "redirect:/error";
+        }
+
+        // Mise à jour des champs simples
+        generalInfo.setCle(params.get("cle"));
+        generalInfo.setLien(params.get("lien"));
+
+        // Gestion de l'icône
+        generalInfo.setIcone(icone);
+
+        generalInfoService.save(generalInfo);
+
+        // Mise à jour des valeurs de traduction
+        Map<Long, GeneralInfoValeur> valeursExistantes = generalInfoService
+                .getGeneralInfoValeursByGeneralInfoId(generalInfoId);
+        List<GeneralInfoValeur> valeursToUpdate = new ArrayList<>();
+
+        for (String key : params.keySet()) {
+            if (key.contains(".")) {
+                String[] parts = key.split("\\.");
+                Long idLangue = Long.parseLong(parts[0]);
+                String field = parts[1];
+
+                GeneralInfoValeur valeur = valeursExistantes.getOrDefault(idLangue, new GeneralInfoValeur());
+                valeur.setGeneralInfo(generalInfo);
+                valeur.setLangue(langueService.findById(idLangue));
+
+                switch (field) {
+                    case "titre":
+
+                        valeur.setTitre(params.getOrDefault(key, ""));
+
+                        break;
+                    case "entete":
+                        valeur.setEntete(params.getOrDefault(key, ""));
+                        break;
+                    case "bouton":
+                        valeur.setBouton(params.getOrDefault(key, ""));
+                        break;
+                    case "valeur":
+                        valeur.setValeur(params.getOrDefault(key, ""));
+                        break;
+                }
+
+                valeursToUpdate.add(valeur);
+            }
+        }
+
+        generalInfoValeurService.saveAll(valeursToUpdate);
+        PasswordUtil.waitError(3000);
+        return "redirect:/admin/accueil";
+    }
 }
